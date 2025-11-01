@@ -1412,6 +1412,22 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @since 7.0
 	 */
 	@Override
+	public void eraseContents() {
+		List<Operation> ownedOperations2 = ownedOperations;
+		if (ownedOperations2 != null) {
+			for (Operation asOperation : ownedOperations2) {
+				asOperation.eraseContents();
+			}
+			ownedOperations2.clear();
+		}
+	//	Namespace thisNamespace = this;
+	//	thisNamespace.eraseContents();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
 	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactory environmentFactory) {
 		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(this);
 		for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {

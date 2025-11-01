@@ -138,6 +138,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.NamespaceImpl;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
@@ -3138,6 +3139,9 @@ public class PivotUtil implements PivotConstants
 		for (int k = oldElements.size(); k-- > 0; ) {
 			Object oldElement = oldElements.get(k);
 			if (!newElements.contains(oldElement)) {
+				if (oldElement instanceof NamespaceImpl) {
+					((NamespaceImpl)oldElement).eraseContents();
+				}
 				oldElements.remove(k);			// Lose oldContent before adding possible 'duplicates'
 			}
 		}
