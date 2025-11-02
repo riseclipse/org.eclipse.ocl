@@ -463,6 +463,20 @@ public class ModelImpl extends NamespaceImpl implements Model
 		}
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public void eraseContents() {
+		List<org.eclipse.ocl.pivot.Package> ownedPackages2 = ownedPackages;
+		if (ownedPackages2 != null) {
+			for (org.eclipse.ocl.pivot.Package asPackage : ownedPackages2) {
+				asPackage.eraseContents();
+			}
+			ownedPackages2.clear();
+		}
+	}
+
 	@Override
 	public @Nullable EObject getESObject() {
 		throw new IllegalStateException("Model has an External Syntax Resource URI rather than EObject");
