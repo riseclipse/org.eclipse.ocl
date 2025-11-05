@@ -94,6 +94,23 @@ import org.eclipse.xtext.util.Triple;
 
 public class EssentialOCLCSResource extends LazyLinkingResource implements BaseCSResource
 {
+	protected static class OCLLinkingDiagnostic extends XtextLinkingDiagnostic
+	{
+		protected OCLLinkingDiagnostic(INode node, String message, String code, String... data) {
+			super(node, message, code, data);
+		}
+
+		@Override
+		public int getColumn() {
+			try {
+				return super.getColumn();
+			}
+			catch (Throwable e) {			// Older versions of Xtext give an NPE
+				return -1;
+			}
+		}
+	}
+
 	protected static class DefaultParserContext extends AbstractParserContext
 	{
 		protected DefaultParserContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri) {
@@ -418,22 +435,15 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	@Override			// FIXME Bug 380232 workaround
 	protected Diagnostic createDiagnostic(Triple<EObject, EReference, INode> triple, DiagnosticMessage message) {
 		EObject first = triple.getFirst();
+		INode node = triple.getThird();
+		String messageString = message.getMessage();
+		String issueCode = message.getIssueCode();
+		String[] issueData = message.getIssueData();
 		if (first instanceof PathElementWithURICS) {
-			return new ImportDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData());
+			return new ImportDiagnostic(node, messageString, issueCode, issueData);
 		}
 		else {
-			return new XtextLinkingDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData())
-			{
-				@Override
-				public int getColumn() {
-					try {
-						return super.getColumn();
-					}
-					catch (Throwable e) {			// Older versions of Xtext give an NPE
-						return -1;
-					}
-				}
-			};
+			return new OCLLinkingDiagnostic(node, messageString, issueCode, issueData);
 		}
 	}
 
