@@ -909,30 +909,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return completeClass.getOperations(featureFilter, name);
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	public @NonNull Iterable<? extends Property> getAllProperties(@NonNull Property pivotProperty) {
-//		FlatClass pivotClass = pivotProperty.getFlatClass(standardLibrary);
-		org.eclipse.ocl.pivot.Class pivotClass = pivotProperty.getOwningClass();
-/*		if (owningType != null) {
-			return standardLibrary.getInheritance(owningType);
-		}
-		else {
-			return null;
-		}
-		CompleteInheritance owningInheritance = pivotProperty.getInheritance(standardLibrary); */
-		if (pivotClass == null) {
-			throw new IllegalStateException("Missing owning type");
-		}
-		CompleteClass completeClass = getCompleteClass(pivotClass/*.getPivotClass()*/);
-		Iterable<? extends Property> memberProperties = completeClass.getProperties(pivotProperty.getName());
-		if (memberProperties != null) {
-			return memberProperties;
-		}
-		return Collections.singletonList(pivotProperty);
-	}
-
 	@Override
 	public @NonNull Iterable<@NonNull CompleteClass> getAllSuperCompleteClasses(@NonNull Type type) {
 		CompleteClass completeClass = getCompleteClass(type);
@@ -941,8 +917,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 /*	public @Nullable ExpressionInOCL getBodyExpression(@NonNull Operation operation) {
 		ExpressionInOCL bodyExpression = null;
-		for (@SuppressWarnings("null")@NonNull Operation domainOperation : getOperationOverloads(operation)) {
-			LanguageExpression anExpression = domainOperation.getBodyExpression();
+		for (@SuppressWarnings("null")@NonNull Operation asOperation : getOperationOverloads(operation)) {
+			LanguageExpression anExpression = asOperation.getBodyExpression();
 			if (anExpression != null) {
 				if (bodyExpression != null) {
 					throw new IllegalStateException("Multiple bodies for " + operation);
@@ -1206,8 +1182,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public @Nullable ExpressionInOCL getDefaultExpression(@NonNull Property property) {
 		ExpressionInOCL defaultExpression = null;
-		for (@SuppressWarnings("null")@NonNull Property domainProperty : getAllProperties(property)) {
-			LanguageExpression anExpression = domainProperty.getOwnedExpression();
+		for (@NonNull Property asProperty : getProperties(property)) {
+			LanguageExpression anExpression = asProperty.getOwnedExpression();
 			if (anExpression != null) {
 				if (defaultExpression != null) {
 					throw new IllegalStateException("Multiple derivations for " + property);
@@ -1371,8 +1347,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	/**
 	 * @since 7.0
 	 */
-	public org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
-		CompletePackage completePackage = getCompletePackage(domainPackage);
+	public org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
+		CompletePackage completePackage = getCompletePackage(asPackage);
 		CompletePackage memberPackage = completePackage.basicGetOwnedCompletePackage(name);
 		return memberPackage != null ? memberPackage.getPrimaryPackage() : null;
 	}
@@ -1381,8 +1357,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	/**
 	 * @since 7.0
 	 */
-	public org.eclipse.ocl.pivot.Class getNestedType(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
-		CompletePackage completePackage = getCompletePackage(domainPackage);
+	public org.eclipse.ocl.pivot.Class getNestedType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
+		CompletePackage completePackage = getCompletePackage(asPackage);
 		return completePackage.getMemberType(name);
 	}
 
@@ -1595,7 +1571,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 		String name = PivotUtil.getName(pivotProperty);
 		CompleteClass completeClass = getCompleteClass(pivotClass/*owningInheritance.getPivotClass()*/);
-		Iterable<@NonNull Property> memberProperties = completeClass.getProperties(pivotProperty.isIsStatic() ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC, name);
+		FeatureFilter featureFilter = FeatureFilter.getStaticFilter(pivotProperty.isIsStatic());
+		Iterable<@NonNull Property> memberProperties = completeClass.getPrimaryProperties(featureFilter, name);
 		if (Iterables.size(memberProperties) <= 1) {					// No ambiguity
 			return memberProperties.iterator().next();					// use merged unambiguous result (not necessarily pivotProperty)
 		}
@@ -1683,6 +1660,30 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			ownedCompletePackages.add(primitiveCompletePackage2);
 		}
 		return (PrimitiveCompletePackageImpl) primitiveCompletePackage2;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull Iterable<@NonNull Property> getProperties(@NonNull Property pivotProperty) {
+//		FlatClass pivotClass = pivotProperty.getFlatClass(standardLibrary);
+		org.eclipse.ocl.pivot.Class pivotClass = pivotProperty.getOwningClass();
+/*		if (owningType != null) {
+			return standardLibrary.getInheritance(owningType);
+		}
+		else {
+			return null;
+		}
+		CompleteInheritance owningInheritance = pivotProperty.getInheritance(standardLibrary); */
+		if (pivotClass == null) {
+			throw new IllegalStateException("Missing owning type");
+		}
+		CompleteClass completeClass = getCompleteClass(pivotClass/*.getPivotClass()*/);
+		Iterable<@NonNull Property> memberProperties = completeClass.getProperties(pivotProperty);
+		if (memberProperties != null) {
+			return memberProperties;
+		}
+		return Collections.singletonList(pivotProperty);
 	}
 
 	@Override
