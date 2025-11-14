@@ -481,6 +481,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	protected CompleteModelImpl()
 	{
 		super();
+		System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -767,6 +768,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			orphanage2.removePackageListener(getOrphanCompletePackage().getPartialPackages());
 			orphanage = null;
 		}
+		orphanCompletePackage = null;
+		primitiveCompletePackage = null;
 	}
 
 	/**
