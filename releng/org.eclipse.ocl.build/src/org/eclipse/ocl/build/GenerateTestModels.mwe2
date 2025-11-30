@@ -45,4 +45,7 @@ Workflow {
 	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
     	genModel = "/org.eclipse.ocl.xtext.tests/models/genmodel/Bug477283B.genmodel"
     }
+	component = ConvertToUnixLineEndings {
+		directory = "../../tests/org.eclipse.ocl.xtext.tests/emf-gen"
+	}
 }
