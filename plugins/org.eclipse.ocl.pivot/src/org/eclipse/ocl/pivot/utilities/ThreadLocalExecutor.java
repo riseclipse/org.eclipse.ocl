@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -149,7 +150,7 @@ public class ThreadLocalExecutor implements Nameable
 	protected static @NonNull ThreadLocalExecutor get() {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
 		if (threadLocalExecutor == null) {
-			threadLocalExecutor = createThreadLocalExecutor();
+			threadLocalExecutor = EMFPlugin.IS_ECLIPSE_RUNNING ? createThreadLocalExecutor() : new ThreadLocalExecutor();
 			INSTANCE.set(threadLocalExecutor);
 		}
 	//	System.out.println(getBracketedThreadName() + " get " + NameUtil.debugSimpleName(threadLocalExecutor));
