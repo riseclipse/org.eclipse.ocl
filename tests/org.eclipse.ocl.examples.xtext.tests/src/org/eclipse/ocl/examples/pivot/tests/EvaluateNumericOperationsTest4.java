@@ -1235,4 +1235,13 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		ocl.assertSemanticErrorQuery(null, "let u1 : UnlimitedNatural = null, u2 : UnlimitedNatural = null in u1 * u2", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "UnlimitedNatural", "*", "UnlimitedNatural");
 		ocl.dispose();
 	}
+	
+	
+	@Test public void testSin() {
+		TestOCL ocl = createOCL();
+		
+		// Real::sin()
+		ocl.assertQueryEquals(null, 0, "0.0.sin()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.sin(1), "1.0.sin()", doubleEpsilon);
+	}
 }
