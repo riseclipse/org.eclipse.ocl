@@ -974,8 +974,10 @@ public class OCLstdlibTables extends AbstractTables
 			10 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
 		public static final @NonNull Operation _Real__round = LIBRARY.createOperation(Types._Real, "round", ParameterTypes.EMPTY_LIST, Types._Integer,
 			11 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
+		public static final @NonNull Operation _Real__sin = LIBRARY.createOperation(Types._Real, "sin", ParameterTypes.EMPTY_LIST, Types._Real,
+			12 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.SinOperation.INSTANCE);
 		public static final @NonNull Operation _Real__toString = LIBRARY.createOperation(Types._Real, "toString", ParameterTypes.EMPTY_LIST, Types._String,
-			12 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+			13 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull Operation _Sequence___lt__gt_ = LIBRARY.createOperation(Types._Sequence, "<>", Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
@@ -1717,6 +1719,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Integer__max /* max(OclSelf[1]) */,
 			Operations._Integer__min /* min(OclSelf[1]) */,
 			Operations._Real__round /* round() */,
+			Operations._Real__sin /* sin() */,
 			Operations._Integer__toString /* toString() */
 		};
 
@@ -2373,6 +2376,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Real__max /* max(OclSelf[1]) */,
 			Operations._Real__min /* min(OclSelf[1]) */,
 			Operations._Real__round /* round() */,
+			Operations._Real__sin /* sin() */,
 			Operations._Real__toString /* toString() */
 		};
 		private static final @NonNull Operation @NonNull [] _Real__OclAny = {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2025 Willink Transformations and others.
+ * Copyright (c) 2010, 2026 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -1288,6 +1288,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Real_max = createOperation("max", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation", org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
 		private final @NonNull Operation op_Real_min = createOperation("min", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericMinOperation", org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
 		private final @NonNull Operation op_Real_round = createOperation("round", _Integer, "org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation", org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
+		private final @NonNull Operation op_Real_sin = createOperation("sin", _Real, "org.eclipse.ocl.pivot.library.numeric.SinOperation", org.eclipse.ocl.pivot.library.numeric.SinOperation.INSTANCE);
 		private final @NonNull Operation op_Real_toString = createOperation("toString", _String, "org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 		private final @NonNull Operation op_String__add_ = createOperation("+", _String, "org.eclipse.ocl.pivot.library.string.StringConcatOperation", org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
 		private final @NonNull Operation op_String__lt_ = createOperation("<", _Boolean, "org.eclipse.ocl.pivot.library.string.StringLessThanOperation", org.eclipse.ocl.pivot.library.string.StringLessThanOperation.INSTANCE);
@@ -1674,6 +1675,8 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("r", _OclSelf, true));
 			ownedOperations.add(operation = op_Real_round);
+			operation.setIsRequired(true);
+			ownedOperations.add(operation = op_Real_sin);
 			operation.setIsRequired(true);
 			ownedOperations.add(operation = op_Real_toString);
 			operation.setIsRequired(true);

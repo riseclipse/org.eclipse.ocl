@@ -1985,6 +1985,8 @@
           name="round" type="#tYtCd">
         <ownedComments body="&#xA;The integer that is closest to oclText[self]. When there are two such integers, the largest one.&#xA;"/>
       </ownedOperations>
+      <ownedOperations xmi:id="m6hgA" implementationClass="org.eclipse.ocl.pivot.library.numeric.SinOperation" isRequired="true" name="sin"
+          type="#Nr4QF"/>
       <ownedOperations xmi:id="6QrlW" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" isRequired="true"
           name="toString" type="#AlwVZ">
         <ownedComments body="&#xA;Converts oclText[self] to a string value.&#xA;"/>

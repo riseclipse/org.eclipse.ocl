@@ -1489,6 +1489,8 @@ type Real : PrimitiveType conformsTo OclComparable, OclSummable => 'org.eclipse.
 	Converts oclText[self] to a string value.
 	*/
 	operation toString() : String[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
+	
+	operation sin() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.SinOperation';
 }
 
 /*
