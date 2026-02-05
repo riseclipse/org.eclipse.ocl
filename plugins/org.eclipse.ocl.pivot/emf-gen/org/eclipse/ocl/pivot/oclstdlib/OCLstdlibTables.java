@@ -1087,8 +1087,10 @@ public class OCLstdlibTables extends AbstractTables
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__round = new ExecutorOperation("round", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__sin = new ExecutorOperation("sin", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.SinOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__toString = new ExecutorOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _Sequence___lt__gt_ = new ExecutorOperation("<>", Parameters._OclSelf, Types._Sequence,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
@@ -1813,6 +1815,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Integer__max /* max(OclSelf[1]) */,
 			OCLstdlibTables.Operations._Integer__min /* min(OclSelf[1]) */,
 			OCLstdlibTables.Operations._Real__round /* round() */,
+			OCLstdlibTables.Operations._Real__sin /* sin() */,
 			OCLstdlibTables.Operations._Integer__toString /* toString() */
 		};
 
@@ -2466,6 +2469,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Real__max /* max(OclSelf[1]) */,
 			OCLstdlibTables.Operations._Real__min /* min(OclSelf[1]) */,
 			OCLstdlibTables.Operations._Real__round /* round() */,
+			OCLstdlibTables.Operations._Real__sin /* sin() */,
 			OCLstdlibTables.Operations._Real__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Real__OclAny = {
