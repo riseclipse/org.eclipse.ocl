@@ -1243,5 +1243,9 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		// Real::sin()
 		ocl.assertQueryEquals(null, 0, "0.0.sin()", doubleEpsilon);
 		ocl.assertQueryEquals(null, Math.sin(1), "1.0.sin()", doubleEpsilon);
+		
+		// Integer::sin()
+		ocl.assertQueryEquals(null, 0, "0.sin()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.sin(-1), "-1.sin()", doubleEpsilon);
 	}
 }
