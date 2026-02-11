@@ -1,0 +1,68 @@
+/*******************************************************************************
+ * Copyright (c) 2010, 2013 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *   E.D.Willink - initial API and implementation
+ *   E.D.Willink (CEA LIST) - Bug 424034
+ *
+ * Run As->MWE2 Workflow to regenerate the pivot model.
+ *******************************************************************************/
+module GenerateOCLstdlibModel
+
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.ecore.resource.impl.*
+
+import fr.centralesupelec.edf.riseclipse.mathlib.build.utilities.*
+import fr.centralesupelec.edf.riseclipse.mathlib.build.xtend.*
+
+var sourceName = "fr.centralesupelec.edf.riseclipse.mathlib"
+
+/**
+ *	Generate the OCLstdlib Model, by converting oclstdlib.oclstdlib to OCLstdlib.java.
+ */
+Workflow {
+	bean = ResourceSetImpl : resourceSet {}
+    bean = StandaloneSetup { resourceSet = resourceSet
+    	platformUri = ".."
+    }
+    bean = EcoreGenModelSetup { resourceSet = resourceSet }
+ 	component = OCLInstanceSetup : oclInstanceSetup { resourceSet = resourceSet }
+    component = GenerateOCLstdlibXtend { oclInstanceSetup = oclInstanceSetup
+    	projectName = "${sourceName}"
+    	modelFile = "model/mathlib.oclstdlib"
+    	uri = "http://www.eclipse.org/ocl/2026/Mathlib"
+    	ecoreFile = "/fr.centralesupelec.edf.riseclipse.mathlib/model-gen/mathlib.ecore"
+    	javaFolder = "/fr.centralesupelec.edf.riseclipse.mathlib/emf-gen"
+    	javaPackageName = "fr.centralesupelec.edf.riseclipse.mathlib.model"
+    	javaClassName = "Mathlib"
+    	libraryName = "mathlib"
+    	libraryNsPrefix = "mathlib"
+    	excludedEClassifierName = "BooleanType"
+    	excludedEClassifierName = "Class"
+    	excludedEClassifierName = "CollectionType"
+    	excludedEClassifierName = "Enumeration"
+    	excludedEClassifierName = "EnumerationLiteral"
+    	excludedEClassifierName = "InvalidType"
+    	excludedEClassifierName = "MapType"
+    	excludedEClassifierName = "State"
+    	excludedEClassifierName = "Stereotype"
+    	excludedEClassifierName = "Type"
+    	excludedEClassifierName = "VoidType"
+    }
+    component = GenerateModel { oclInstanceSetup = oclInstanceSetup skipOnErrors = true clearResourceSet=false
+    	genModel = "/${sourceName}/model/mathlib.genmodel"
+    }
+    component = Model2tablesGenerator { oclInstanceSetup = oclInstanceSetup
+    	genModelFile = "/${sourceName}/model/mathlib.genmodel"
+    	genOCLstdlib = true
+    }
+	component = OCLInstanceDispose { oclInstanceSetup = oclInstanceSetup }
+	component = ConvertToUnixLineEndings {
+		directory = "../../plugins/${sourceName}/emf-gen"
+	}
+}

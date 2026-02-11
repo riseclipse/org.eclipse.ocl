@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pivot:Model [
+<!ENTITY _0 "http://www.eclipse.org/ocl/2015/Library.oclas">
+]>
+<pivot:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot"
+    xsi:schemaLocation="http://www.eclipse.org/ocl/2015/Pivot java://org.eclipse.ocl.pivot.PivotPackage" xmi:id="AAAAA" externalURI="platform:/resource/fr.centralesupelec.edf.riseclipse.mathlib/model/mathlib.oclstdlib" name="mathlib.oclstdlib"
+    xmiidVersion="1">
+  <ownedImports importedNamespace="pivot:Library &_0;#S673I" xmiidVersion="1"/>
+  <ownedPackages xsi:type="pivot:Library" xmi:id="CiREJ" URI="http://www.eclipse.org/ocl/2026/Mathlib" name="math" nsPrefix="math">
+    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="9zzFK" instanceClassName="org.eclipse.ocl.pivot.values.RealValue" name="Real"
+        superClasses="&_0;#zfDWR">
+      <ownedOperations xmi:id="Wg8zA" implementationClass="fr.centralesupelec.edf.riseclipse.mathlib.SinOperation" isRequired="true" name="sin"
+          type="#9zzFK"/>
+    </ownedClasses>
+  </ownedPackages>
+</pivot:Model>

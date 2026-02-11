@@ -1,0 +1,8 @@
+import 'http://www.eclipse.org/ocl/2015/Library';
+
+library math : math = 'http://www.eclipse.org/ocl/2026/Mathlib'
+{
+	type Real => 'org.eclipse.ocl.pivot.values.RealValue' {
+		operation sin() : Real[1] => 'fr.centralesupelec.edf.riseclipse.mathlib.SinOperation';
+	}
+}

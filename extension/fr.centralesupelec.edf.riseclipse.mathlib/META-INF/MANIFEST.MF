@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Mathlib
+Bundle-SymbolicName: fr.centralesupelec.edf.riseclipse.mathlib;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.ocl.pivot;bundle-version="7.0.0"
+Automatic-Module-Name: fr.centralesupelec.edf.riseclipse.mathlib
+Bundle-RequiredExecutionEnvironment: JavaSE-21
