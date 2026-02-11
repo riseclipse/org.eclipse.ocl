@@ -10,7 +10,7 @@
     <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="9zzFK" instanceClassName="org.eclipse.ocl.pivot.values.RealValue" name="Real"
         superClasses="&_0;#zfDWR">
       <ownedOperations xmi:id="Wg8zA" implementationClass="fr.centralesupelec.edf.riseclipse.mathlib.SinOperation" isRequired="true" name="sin"
-          type="#9zzFK"/>
+          type="pivot:PrimitiveType &_0;#Nr4QF"/>
     </ownedClasses>
   </ownedPackages>
 </pivot:Model>

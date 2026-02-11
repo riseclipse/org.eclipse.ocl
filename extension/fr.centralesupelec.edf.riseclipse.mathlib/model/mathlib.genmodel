@@ -13,8 +13,8 @@
   <modelPluginVariables>org.eclipse.ocl.pivot</modelPluginVariables>
   <modelPluginVariables>org.eclipse.ocl.codegen</modelPluginVariables>
   <modelPluginVariables>org.eclipse.jdt.annotation</modelPluginVariables>
-  <genPackages prefix="Mathlib" basePackage="org.eclipse.ocl.pivot" disposableProviderFactory="true"
-      ecorePackage="../model-gen/mathlib.ecore#/">
+  <genPackages prefix="Mathlib" basePackage="fr.centralesupelec.edf.riseclipse.mathlib"
+      disposableProviderFactory="true" ecorePackage="../model-gen/mathlib.ecore#/">
     <genDataTypes ecoreDataType="../model-gen/mathlib.ecore#//Real"/>
   </genPackages>
 </genmodel:GenModel>

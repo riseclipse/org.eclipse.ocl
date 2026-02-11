@@ -1,6 +1,6 @@
 /**
  */
-package org.eclipse.ocl.pivot.mathlib;
+package fr.centralesupelec.edf.riseclipse.mathlib.mathlib;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.values.RealValue;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see org.eclipse.ocl.pivot.mathlib.MathlibPackage
+ * @see fr.centralesupelec.edf.riseclipse.mathlib.mathlib.MathlibPackage
  * @generated
  */
 public class MathlibFactory extends EFactoryImpl {

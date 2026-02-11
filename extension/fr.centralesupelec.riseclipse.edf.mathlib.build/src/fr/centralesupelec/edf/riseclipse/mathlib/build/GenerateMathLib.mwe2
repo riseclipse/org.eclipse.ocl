@@ -53,6 +53,15 @@ Workflow {
     	excludedEClassifierName = "Stereotype"
     	excludedEClassifierName = "Type"
     	excludedEClassifierName = "VoidType"
+    	useOCLstdlib = true
+    	generatedClassNameMap = {
+    		from = "http://www.eclipse.org/ocl/2015/Pivot"
+    		to = "org.eclipse.ocl.pivot.model.OCLmetamodel"
+    	}
+    	generatedClassNameMap = {
+    		from = "http://www.eclipse.org/ocl/2015/Library"
+    		to = "org.eclipse.ocl.pivot.model.OCLstdlib"
+    	}
     }
     component = GenerateModel { oclInstanceSetup = oclInstanceSetup skipOnErrors = true clearResourceSet=false
     	genModel = "/${sourceName}/model/mathlib.genmodel"

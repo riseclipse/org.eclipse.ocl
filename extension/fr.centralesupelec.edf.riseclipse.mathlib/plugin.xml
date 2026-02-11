@@ -24,19 +24,20 @@
       </library>
    </runtime>
 
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated mathlib -->
-      <package
-            uri="http://www.eclipse.org/ocl/2026/Mathlib"
-            class="org.eclipse.ocl.pivot.mathlib.MathlibPackage"
-            genModel="model/mathlib.genmodel"/>
-   </extension>
    <extension
          point="org.eclipse.ocl.pivot.standard_library">
       <library
             class="fr.centralesupelec.edf.riseclipse.mathlib.model.Mathlib$Loader"
             uri="http://www.eclipse.org/ocl/2026/Mathlib">
       </library>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated mathlib -->
+      <package
+            uri="http://www.eclipse.org/ocl/2026/Mathlib"
+            class="fr.centralesupelec.edf.riseclipse.mathlib.mathlib.MathlibPackage"
+            genModel="model/mathlib.genmodel"/>
    </extension>
 
 </plugin>

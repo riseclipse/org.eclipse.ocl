@@ -9,7 +9,7 @@
  *
  * Do not edit it.
  *******************************************************************************/
-package org.eclipse.ocl.pivot.mathlib;
+package fr.centralesupelec.edf.riseclipse.mathlib.mathlib;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
@@ -120,7 +120,7 @@ public class MathlibTables extends AbstractTables
 		private static final @NonNull FlatFragment _Real__OclComparable = LIBRARY.createFragment(Types._Real, OCLstdlibTables.Types._OclComparable);
 		private static final @NonNull FlatFragment _Real__OclElement = LIBRARY.createFragment(Types._Real, OCLstdlibTables.Types._OclElement);
 		private static final @NonNull FlatFragment _Real__OclSummable = LIBRARY.createFragment(Types._Real, OCLstdlibTables.Types._OclSummable);
-		private static final @NonNull FlatFragment _Real__Real = LIBRARY.createFragment(Types._Real, Types._Real);
+		private static final @NonNull FlatFragment _Real__Real = LIBRARY.createFragment(Types._Real, OCLstdlibTables.Types._Real);
 
 		static {
 			Init.initEnd();
@@ -194,7 +194,7 @@ public class MathlibTables extends AbstractTables
 			10 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
 		public static final @NonNull Operation _Real__round = LIBRARY.createOperation(OCLstdlibTables.Types._Real, "round", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Integer,
 			11 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
-		public static final @NonNull Operation _Real__sin = LIBRARY.createOperation(Types._Real, "sin", ParameterTypes.EMPTY_LIST, Types._Real,
+		public static final @NonNull Operation _Real__sin = LIBRARY.createOperation(Types._Real, "sin", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Real,
 			12 | IsRequired, TemplateParameters.EMPTY_LIST, fr.centralesupelec.edf.riseclipse.mathlib.SinOperation.INSTANCE);
 		public static final @NonNull Operation _Real__toString = LIBRARY.createOperation(OCLstdlibTables.Types._Real, "toString", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._String,
 			13 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
@@ -255,7 +255,7 @@ public class MathlibTables extends AbstractTables
 		 *	Install the fragment descriptors in the class descriptors.
 		 */
 		static {
-			Types._Real.initFragments(_Real, __Real);
+			Types._Real.initFragments(_Real, __Real, OCLstdlibTables.Types._Real);
 
 			Init.initEnd();
 		}

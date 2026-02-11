@@ -62,7 +62,7 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.mathlib.MathlibPackage;
+import fr.centralesupelec.edf.riseclipse.mathlib.mathlib.MathlibPackage;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
@@ -288,7 +288,7 @@ public class Mathlib extends ASResourceImpl
 		protected final org.eclipse.ocl.pivot.@NonNull Package standardLibraryPackage;
 
 		protected AbstractLibraryContents() {
-			standardLibraryPackage = getLibrary(getModel("http://www.eclipse.org/ocl/2015/Library"), "ocl");
+			standardLibraryPackage = getPackage(org.eclipse.ocl.pivot.model.OCLstdlib.getDefaultModel(), "ocl");
 		}
 	}
 
@@ -313,20 +313,21 @@ public class Mathlib extends ASResourceImpl
 		
 			private final @NonNull AnyType _OclAny = getAnyType(standardLibraryPackage, "OclAny");
 			private final org.eclipse.ocl.pivot.@NonNull Class _OclElement = getClass(standardLibraryPackage, "OclElement");
+			private final org.eclipse.ocl.pivot.@NonNull Class _Real = getPrimitiveType(standardLibraryPackage, "Real");
 		
 		private void installPackages() {
 			model.getOwnedPackages().add(library);
 				model.getOwnedImports().add(createImport(null, standardLibraryPackage));
 		}
 		
-				private final @NonNull PrimitiveType _Real = createPrimitiveType(MathlibPackage.Literals.REAL);
+				private final @NonNull PrimitiveType _Real_1 = createPrimitiveType(MathlibPackage.Literals.REAL);
 		
 		private void installPrimitiveTypes() {
 			List<org.eclipse.ocl.pivot.Class> ownedClasses;
 			PrimitiveType type;
 		
 				ownedClasses = library.getOwnedClasses();
-				type = _Real;
+				type = _Real_1;
 				type.getSuperClasses().add(_OclElement);
 				ownedClasses.add(type);
 		}
@@ -339,7 +340,7 @@ public class Mathlib extends ASResourceImpl
 			Operation operation;
 			Parameter parameter;
 		
-						ownedOperations = _Real.getOwnedOperations();
+						ownedOperations = _Real_1.getOwnedOperations();
 			ownedOperations.add(operation = op_Real_sin);
 			operation.setIsRequired(true);
 		}

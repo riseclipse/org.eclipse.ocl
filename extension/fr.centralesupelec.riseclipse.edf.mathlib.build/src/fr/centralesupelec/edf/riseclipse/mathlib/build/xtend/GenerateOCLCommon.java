@@ -854,10 +854,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 					return "get" + element.eClass().getName() + "(" + getSymbolName(eContainer) + ", " + templateableElement.getOwnedTemplateParameters().indexOf(element) + ")";
 				}
 			}
-			if (eContainer instanceof ModelImpl model) {
+			/*if (eContainer instanceof ModelImpl model) {
 				return "get" + element.eClass().getName() + "(getModel(\"" + model.getExternalURI() + "\"), \"" + ((NamedElement)element).getName() + "\")";
 			} 
-			else if (eContainer instanceof NamedElement) {
+			else*/ if (eContainer instanceof NamedElement) {
 				return "get" + element.eClass().getName() + "(" + getPrefixedSymbolName(eContainer, ((NamedElement)eContainer).getName()) + ", \"" + ((NamedElement)element).getName() + "\")";
 			}
 			else {

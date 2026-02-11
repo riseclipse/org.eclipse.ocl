@@ -1,6 +1,6 @@
 /**
  */
-package org.eclipse.ocl.pivot.mathlib;
+package fr.centralesupelec.edf.riseclipse.mathlib.mathlib;
 
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.values.RealValue;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see org.eclipse.ocl.pivot.mathlib.MathlibFactory
+ * @see fr.centralesupelec.edf.riseclipse.mathlib.mathlib.MathlibFactory
  * @generated
  */
 public class MathlibPackage extends EPackageImpl {
@@ -54,14 +54,14 @@ public class MathlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final MathlibPackage eINSTANCE = org.eclipse.ocl.pivot.mathlib.MathlibPackage.init();
+	public static final MathlibPackage eINSTANCE = fr.centralesupelec.edf.riseclipse.mathlib.mathlib.MathlibPackage.init();
 
 	/**
 	 * The meta object id for the '<em>Real</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.ocl.pivot.values.RealValue
-	 * @see org.eclipse.ocl.pivot.mathlib.MathlibPackage#getReal()
+	 * @see fr.centralesupelec.edf.riseclipse.mathlib.mathlib.MathlibPackage#getReal()
 	 * @generated
 	 */
 	public static final int REAL = 0;
@@ -84,7 +84,7 @@ public class MathlibPackage extends EPackageImpl {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipse.ocl.pivot.mathlib.MathlibPackage#eNS_URI
+	 * @see fr.centralesupelec.edf.riseclipse.mathlib.mathlib.MathlibPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
@@ -246,7 +246,7 @@ public class MathlibPackage extends EPackageImpl {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.eclipse.ocl.pivot.values.RealValue
-		 * @see org.eclipse.ocl.pivot.mathlib.MathlibPackage#getReal()
+		 * @see fr.centralesupelec.edf.riseclipse.mathlib.mathlib.MathlibPackage#getReal()
 		 * @generated
 		 */
 		public static final EDataType REAL = eINSTANCE.getReal();
