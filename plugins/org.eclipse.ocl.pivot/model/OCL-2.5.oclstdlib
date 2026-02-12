@@ -1489,6 +1489,8 @@ type Real : PrimitiveType conformsTo OclComparable, OclSummable => 'org.eclipse.
 	Converts oclText[self] to a string value.
 	*/
 	operation toString() : String[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
+	
+	operation fromCSV(row : Real[1], column : Real[1]) : Real[1] => 'org.eclipse.ocl.pivot.library.csv.RealFromCSVOperation';
 }
 
 /*
@@ -1942,7 +1944,6 @@ type Class {
 	*/
 	operation allInstances() : Set(OclSelf[*|1]) => 'org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation';
 }
-
 
 type CollectionType {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='UML');

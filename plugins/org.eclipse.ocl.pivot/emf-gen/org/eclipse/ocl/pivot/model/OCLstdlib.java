@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2025 Willink Transformations and others.
+ * Copyright (c) 2010, 2026 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -1285,6 +1285,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Real__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Real_abs = createOperation("abs", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation", org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
 		private final @NonNull Operation op_Real_floor = createOperation("floor", _Integer, "org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation", org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation.INSTANCE);
+		private final @NonNull Operation op_Real_fromCSV = createOperation("fromCSV", _Real, "org.eclipse.ocl.pivot.library.csv.RealFromCSVOperation", org.eclipse.ocl.pivot.library.csv.RealFromCSVOperation.INSTANCE);
 		private final @NonNull Operation op_Real_max = createOperation("max", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation", org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
 		private final @NonNull Operation op_Real_min = createOperation("min", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericMinOperation", org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
 		private final @NonNull Operation op_Real_round = createOperation("round", _Integer, "org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation", org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
@@ -1665,6 +1666,11 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 			ownedOperations.add(operation = op_Real_floor);
 			operation.setIsRequired(true);
+			ownedOperations.add(operation = op_Real_fromCSV);
+			operation.setIsRequired(true);
+			ownedParameters = operation.getOwnedParameters();
+			ownedParameters.add(parameter = createParameter("row", _Real, true));
+			ownedParameters.add(parameter = createParameter("column", _Real, true));
 			ownedOperations.add(operation = op_Real_max);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();

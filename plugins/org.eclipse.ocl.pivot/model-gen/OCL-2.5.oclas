@@ -1971,6 +1971,11 @@
           name="floor" type="#tYtCd">
         <ownedComments body="&#xA;The largest integer that is less than or equal to oclText[self].&#xA;"/>
       </ownedOperations>
+      <ownedOperations xmi:id="vkTx7" implementationClass="org.eclipse.ocl.pivot.library.csv.RealFromCSVOperation" isRequired="true" name="fromCSV"
+          type="#Nr4QF">
+        <ownedParameters xmi:id="n4Sae" isRequired="true" name="row" type="#Nr4QF"/>
+        <ownedParameters xmi:id="jekpN" isRequired="true" name="column" type="#Nr4QF"/>
+      </ownedOperations>
       <ownedOperations xmi:id="7detV" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation" isRequired="true"
           name="max" type="#Nr4QF">
         <ownedComments body="&#xA;The maximum of oclText[self] and r.&#xA;"/>

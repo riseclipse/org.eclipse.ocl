@@ -443,6 +443,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull ParameterTypes _OclStereotype = new ParameterTypes(Types._OclStereotype);
 		public static final @NonNull ParameterTypes _OclType = new ParameterTypes(Types._OclType);
 		public static final @NonNull ParameterTypes _OrderedCollection__$$0__ = new ParameterTypes(MODEL.getCollectionType(Types._OrderedCollection, TypeParameters.$$0, false));
+		public static final @NonNull ParameterTypes _Real___Real = new ParameterTypes(Types._Real, Types._Real);
 		public static final @NonNull ParameterTypes _String = new ParameterTypes(Types._String);
 		public static final @NonNull ParameterTypes _String___Boolean = new ParameterTypes(Types._String, Types._Boolean);
 		public static final @NonNull ParameterTypes _String___String = new ParameterTypes(Types._String, Types._String);
@@ -968,14 +969,16 @@ public class OCLstdlibTables extends AbstractTables
 			7 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
 		public static final @NonNull Operation _Real__floor = LIBRARY.createOperation(Types._Real, "floor", ParameterTypes.EMPTY_LIST, Types._Integer,
 			8 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation.INSTANCE);
+		public static final @NonNull Operation _Real__fromCSV = LIBRARY.createOperation(Types._Real, "fromCSV", Parameters._Real___Real, Types._Real,
+			9 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.csv.RealFromCSVOperation.INSTANCE);
 		public static final @NonNull Operation _Real__max = LIBRARY.createOperation(Types._Real, "max", Parameters._OclSelf, Types._Real,
-			9 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
+			10 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
 		public static final @NonNull Operation _Real__min = LIBRARY.createOperation(Types._Real, "min", Parameters._OclSelf, Types._Real,
-			10 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
+			11 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
 		public static final @NonNull Operation _Real__round = LIBRARY.createOperation(Types._Real, "round", ParameterTypes.EMPTY_LIST, Types._Integer,
-			11 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
+			12 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
 		public static final @NonNull Operation _Real__toString = LIBRARY.createOperation(Types._Real, "toString", ParameterTypes.EMPTY_LIST, Types._String,
-			12 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+			13 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull Operation _Sequence___lt__gt_ = LIBRARY.createOperation(Types._Sequence, "<>", Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
@@ -1714,6 +1717,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Real___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Integer__abs /* abs() */,
 			Operations._Real__floor /* floor() */,
+			Operations._Real__fromCSV /* fromCSV(Real[1],Real[1]) */,
 			Operations._Integer__max /* max(OclSelf[1]) */,
 			Operations._Integer__min /* min(OclSelf[1]) */,
 			Operations._Real__round /* round() */,
@@ -2370,6 +2374,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Real___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Real__abs /* abs() */,
 			Operations._Real__floor /* floor() */,
+			Operations._Real__fromCSV /* fromCSV(Real[1],Real[1]) */,
 			Operations._Real__max /* max(OclSelf[1]) */,
 			Operations._Real__min /* min(OclSelf[1]) */,
 			Operations._Real__round /* round() */,
