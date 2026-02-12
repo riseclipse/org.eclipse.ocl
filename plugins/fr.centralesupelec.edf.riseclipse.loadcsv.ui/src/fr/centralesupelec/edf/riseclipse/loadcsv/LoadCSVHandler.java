@@ -32,7 +32,7 @@ public class LoadCSVHandler extends AbstractHandler {
 		ResourceSet resourceSet = getResourceSet(applicationContext);
 		
 		try {
-			resourceSet.createResource(URI.createURI("platform:/resource/StoreData/test.xml")).save(null);
+			resourceSet.createResource(URI.createURI("platform:/resource/StoreData/test.csv")).save(null);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

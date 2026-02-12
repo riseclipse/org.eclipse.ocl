@@ -2,30 +2,11 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            class="fr.centralesupelec.edf.riseclipse.loadcsv.LoadCSVHandler"
-            commandId="fr.centralesupelec.edf.riseclipse.loadcsv">
-      </handler>
-   </extension>
-   <extension
-         point="org.eclipse.ui.commands">
-      <command
-            id="fr.centralesupelec.edf.riseclipse.loadcsv"
-            name="Load CSV">
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            allPopups="false"
-            locationURI="popup:org.eclipse.ocl.examples.ui.Menu?after=load">
-         <command
-               commandId="fr.centralesupelec.edf.riseclipse.loadcsv"
-               defaultHandler="fr.centralesupelec.edf.riseclipse.loadcsv.LoadCSVHandler"
-               name="Load CSV">
-         </command>
-      </menuContribution>
+         point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            class="fr.centralesupelec.edf.riseclipse.loadcsv.CSVResourceFactory"
+            type="csv">
+      </parser>
    </extension>
 
 </plugin>
