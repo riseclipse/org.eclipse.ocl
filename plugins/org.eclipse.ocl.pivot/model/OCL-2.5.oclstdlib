@@ -471,6 +471,14 @@ abstract type Collection(T) : CollectionType conformsTo OclAny => 'java.util.Col
 	**/
 	operation asSet() : Set(T) => 'org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation';
 	/**
+	The average of the elements in this collection, only for Real and Integer.
+	The 'sum' part is done with CollectionSumOperation which as of OCL 6.23.0 only works for Real and Integer
+	but according to https://github.com/eclipse-ocl/org.eclipse.ocl/issues/510 should be fixed ?
+	In the code base it is not, please check org.eclipse.ocl.pivot.library.collection.CollectionSumOperation
+	The 'divide by n' part is done with NumbericDivideOperation which also only works for Real and Integer
+	**/
+	operation average() : T[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionAverageOperation';
+	/**
 	The number of times that object occurs in the collection oclText[self].
 	**/
 	operation count(object : T[?]) : Integer[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionCountOperation';
@@ -1515,7 +1523,17 @@ type Real : PrimitiveType conformsTo OclComparable, OclSummable => 'org.eclipse.
 	**/
 	operation toString() : String[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
 	
-	operation sin() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.SinOperation';
+	operation sin() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericSinOperation';
+	
+	operation cos() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericCosOperation';
+	
+	operation tan() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericTanOperation';
+	
+	operation asin() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericAsinOperation';
+	
+	operation acos() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericAcosOperation';
+	
+	operation atan() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericAtanOperation';
 }
 
 /**

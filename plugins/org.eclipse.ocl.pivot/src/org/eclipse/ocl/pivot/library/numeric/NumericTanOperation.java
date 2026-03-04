@@ -6,14 +6,14 @@ import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.RealValue;
 
-public class SinOperation extends AbstractSimpleUnaryOperation {
+public class NumericTanOperation extends AbstractSimpleUnaryOperation {
 	
-	public static final @NonNull SinOperation INSTANCE = new SinOperation();
+	public static final @NonNull NumericTanOperation INSTANCE = new NumericTanOperation();
 	
 	@Override
 	public @NonNull RealValue evaluate(@Nullable Object sourceVal) {
 		RealValue numericValue = asRealValue(sourceVal); 
-		double d = Math.sin(numericValue.asDouble());
+		double d = Math.tan(numericValue.asDouble());
 		return ValueUtil.realValueOf(d);
 	}
 }
