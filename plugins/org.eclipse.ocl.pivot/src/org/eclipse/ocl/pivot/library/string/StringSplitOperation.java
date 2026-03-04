@@ -36,7 +36,7 @@ public class StringSplitOperation extends AbstractBinaryOperation
 		String regex = asString(firstArgumentValue);
 		Pattern pattern = executor.getRegexPattern(regex);
 		@SuppressWarnings("null")
-		@NonNull List<String> splittedString = Arrays.asList(pattern.split(sourceString));
-		return createSequenceValue(SEQ_STRING, splittedString);
+		@NonNull List<String> splitString = Arrays.asList(pattern.split(sourceString));
+		return createSequenceValue(SEQ_STRING, splitString);
 	}
 }

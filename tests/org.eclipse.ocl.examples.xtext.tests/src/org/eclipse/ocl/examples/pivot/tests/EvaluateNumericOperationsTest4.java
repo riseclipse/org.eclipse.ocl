@@ -1344,8 +1344,8 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, Math.pow(2.5,-3.4), "2.5.pow(-3.4)", doubleEpsilon);
 		
 		// Integer::pow()
-		ocl.assertQueryEquals(null, 1, "1.log(2)", doubleEpsilon);
-		ocl.assertQueryEquals(null, Math.log(10), "10.log()", doubleEpsilon);
+		ocl.assertQueryEquals(null, 1, "1.pow(2)", doubleEpsilon);
+		ocl.assertQueryEquals(null, 100, "10.pow(2)", doubleEpsilon);
 	}
 
 	@Test public void testSqrt() {

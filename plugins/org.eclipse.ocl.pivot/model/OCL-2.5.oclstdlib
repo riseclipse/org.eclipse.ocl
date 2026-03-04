@@ -1786,6 +1786,10 @@ type String : PrimitiveType conformsTo OclComparable, OclSummable => 'java.lang.
 	**/
 	operation size() : Integer[1] => 'org.eclipse.ocl.pivot.library.string.StringSizeOperation';
 	/**
+	Return a sequence of split parts in oclText[self] divided by regex.
+	**/
+	operation split(regex: String[1]) : String[1] => 'org.eclipse.ocl.pivot.library.string.StringSizeOperation'; 
+	/**
 	Returns true if oclText[self] starts with the string s.
 	Every string starts with the empty string.
 	**/

@@ -1686,6 +1686,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_String_replaceAll = createOperation("replaceAll", _String, "org.eclipse.ocl.pivot.library.string.StringReplaceAllOperation", org.eclipse.ocl.pivot.library.string.StringReplaceAllOperation.INSTANCE);
 		private final @NonNull Operation op_String_replaceFirst = createOperation("replaceFirst", _String, "org.eclipse.ocl.pivot.library.string.StringReplaceFirstOperation", org.eclipse.ocl.pivot.library.string.StringReplaceFirstOperation.INSTANCE);
 		private final @NonNull Operation op_String_size = createOperation("size", _Integer, "org.eclipse.ocl.pivot.library.string.StringSizeOperation", org.eclipse.ocl.pivot.library.string.StringSizeOperation.INSTANCE);
+		private final @NonNull Operation op_String_split = createOperation("split", _String, "org.eclipse.ocl.pivot.library.string.StringSizeOperation", org.eclipse.ocl.pivot.library.string.StringSizeOperation.INSTANCE);
 		private final @NonNull Operation op_String_startsWith = createOperation("startsWith", _Boolean, "org.eclipse.ocl.pivot.library.string.StringStartsWithOperation", org.eclipse.ocl.pivot.library.string.StringStartsWithOperation.INSTANCE);
 		private final @NonNull Operation op_String_substituteAll = createOperation("substituteAll", _String, "org.eclipse.ocl.pivot.library.string.StringSubstituteAllOperation", org.eclipse.ocl.pivot.library.string.StringSubstituteAllOperation.INSTANCE);
 		private final @NonNull Operation op_String_substituteFirst = createOperation("substituteFirst", _String, "org.eclipse.ocl.pivot.library.string.StringSubstituteFirstOperation", org.eclipse.ocl.pivot.library.string.StringSubstituteFirstOperation.INSTANCE);
@@ -2107,6 +2108,9 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("regex", _String, true));
 			ownedParameters.add(parameter = createParameter("replacement", _String, true));
 			ownedOperations.add(operation = op_String_size);
+			ownedOperations.add(operation = op_String_split);
+			ownedParameters = operation.getOwnedParameters();
+			ownedParameters.add(parameter = createParameter("regex", _String, true));
 			ownedOperations.add(operation = op_String_startsWith);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("s", _String, true));
@@ -3616,6 +3620,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_String_replaceAll, "*\nReturn a string derived from self by replacing all matches of regex by replacement.");
 			installComment(op_String_replaceFirst, "*\nReturn a string derived from self by replacing the first match of regex by replacement.");
 			installComment(op_String_size, "*\nThe number of characters in oclText[self].");
+			installComment(op_String_split, "*\nReturn a sequence of split parts in oclText[self] divided by regex.");
 			installComment(op_String_startsWith, "*\nReturns true if oclText[self] starts with the string s.\nEvery string starts with the empty string.");
 			installComment(op_String_substituteAll, "*\nReturn a string derived from self by replacing all occurrences of oldSubstring by newSubstring.");
 			installComment(op_String_substituteFirst, "*\nReturn a string derived from self by replacing the first occurrence of oldSubstring by newSubstring.\nReturns invalid if there is no first occurrence.");
