@@ -1236,7 +1236,6 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 	
-	
 	@Test public void testAsin() {
 		TestOCL ocl = createOCL();
 			
@@ -1273,6 +1272,7 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, Math.atan(-0.5), "(-0.5).atan()", doubleEpsilon);
 	}
 	
+
 	@Test public void testSin() {
 		TestOCL ocl = createOCL();
 			
@@ -1307,5 +1307,70 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		// Integer::tan()
 		ocl.assertQueryEquals(null, 1, "0.cos()", doubleEpsilon);
 		ocl.assertQueryEquals(null, Math.tan(-1), "(-1).tan()", doubleEpsilon);
+	}
+	
+	@Test public void testLog() {
+		TestOCL ocl = createOCL();
+		
+		// Real::log()
+		ocl.assertQueryEquals(null, 0, "1.0.log()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.log(10), "10.0.log()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.log(0.1), "0.1.log()", doubleEpsilon);
+		
+		// Integer::log()
+		ocl.assertQueryEquals(null, 0, "1.log()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.log(10), "10.log()", doubleEpsilon);
+	}
+	
+	@Test public void testLog10() {
+		TestOCL ocl = createOCL();
+		
+		// Real::log10()
+		ocl.assertQueryEquals(null, 0, "1.0.log10()", doubleEpsilon);
+		ocl.assertQueryEquals(null, 1, "10.0.log10()", doubleEpsilon);
+		ocl.assertQueryEquals(null, -1, "0.1.log10()", doubleEpsilon);
+		
+		// Integer::log10()
+		ocl.assertQueryEquals(null, 0, "1.log10()", doubleEpsilon);
+		ocl.assertQueryEquals(null, 1, "10.log10()", doubleEpsilon);
+	}
+	
+	@Test public void testPow() {
+		TestOCL ocl = createOCL();
+		
+		// Real::pow()
+		ocl.assertQueryEquals(null, 1, "1.0.pow(2)", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.pow(3.1,5.2), "3.1.pow(5.2)", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.pow(2.5,-3.4), "2.5.pow(-3.4)", doubleEpsilon);
+		
+		// Integer::pow()
+		ocl.assertQueryEquals(null, 1, "1.log(2)", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.log(10), "10.log()", doubleEpsilon);
+	}
+
+	@Test public void testSqrt() {
+		TestOCL ocl = createOCL();
+		
+		// Real::sqrt()
+		ocl.assertQueryEquals(null, 0, "0.0.sqrt()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.sqrt(10), "10.0.sqrt()", doubleEpsilon);
+		ocl.assertQueryEquals(null, 0.1, "0.01.sqrt()", doubleEpsilon);
+		
+		// Integer::sqrt()
+		ocl.assertQueryEquals(null, 1, "1.sqrt()", doubleEpsilon);
+		ocl.assertQueryEquals(null, 10, "100.sqrt()", doubleEpsilon);
+	}
+	
+	@Test public void testCbrt() {
+		TestOCL ocl = createOCL();
+		
+		// Real::cbrt()
+		ocl.assertQueryEquals(null, 0, "0.0.cbrt()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.cbrt(10), "10.0.cbrt()", doubleEpsilon);
+		ocl.assertQueryEquals(null, 0.1, "0.001.cbrt()", doubleEpsilon);
+		
+		// Integer::cbrt()
+		ocl.assertQueryEquals(null, 1, "1.cbrt()", doubleEpsilon);
+		ocl.assertQueryEquals(null, 10, "1000.cbrt()", doubleEpsilon);
 	}
 }
