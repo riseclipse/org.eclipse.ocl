@@ -564,6 +564,10 @@
           type="#zyYl9">
         <ownedComments body="*&#xA;The Set containing all the elements from oclText[self], with duplicates removed.&#xA;"/>
       </ownedOperations>
+      <ownedOperations xmi:id="6Q,Lx" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionAverageOperation" name="average"
+          type="#qs59R">
+        <ownedComments body="*&#xA;The average of the elements in this collection, only for Real and Integer.&#xA;The 'sum' part is done with CollectionSumOperation which as of OCL 6.23.0 only works for Real and Integer&#xA;but according to https://github.com/eclipse-ocl/org.eclipse.ocl/issues/510 should be fixed ?&#xA;In the code base it is not, please check org.eclipse.ocl.pivot.library.collection.CollectionSumOperation&#xA;The 'divide by n' part is done with NumbericDivideOperation which also only works for Real and Integer&#xA;"/>
+      </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="oenaP" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
           name="collect" type="#Be91P">
         <ownedComments body="*&#xA;The Collection of elements that results from applying body to every member of the source set.&#xA;The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.&#xA;collectNested is defined individually for each subclass of CollectionType.&#xA;"/>
@@ -1985,8 +1989,21 @@
       <ownedOperations xmi:id="ApdgA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation" name="abs" type="#Nr4QF">
         <ownedComments body="*&#xA;The absolute value of oclText[self].&#xA;"/>
       </ownedOperations>
+      <ownedOperations xmi:id="UtfrA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericAcosOperation" name="acos" type="#Nr4QF"/>
+      <ownedOperations xmi:id="lajrA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericAsinOperation" name="asin" type="#Nr4QF"/>
+      <ownedOperations xmi:id="uljrA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericAtanOperation" name="atan" type="#Nr4QF"/>
+      <ownedOperations xmi:id="vCurA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericCbrtOperation" name="cbrt" type="#Nr4QF">
+        <ownedComments body="*&#xA;The cube root of oclText[self].&#xA;"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="VNegA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericCosOperation" name="cos" type="#Nr4QF"/>
       <ownedOperations xmi:id="aXIUG" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation" name="floor" type="#tYtCd">
         <ownedComments body="*&#xA;The largest integer that is less than or equal to oclText[self].&#xA;"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="SUggA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericLogOperation" name="log" type="#Nr4QF">
+        <ownedComments body="*&#xA;The log of oclText[self].&#xA;"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="xokpG" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericLog10Operation" name="log10" type="#Nr4QF">
+        <ownedComments body="*&#xA;The log of oclText[self].&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="7detV" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation" name="max" type="#Nr4QF">
         <ownedComments body="*&#xA;The maximum of oclText[self] and r.&#xA;"/>
@@ -1996,10 +2013,18 @@
         <ownedComments body="*&#xA;The minimum of oclText[self] and r.&#xA;"/>
         <ownedParameters xmi:id="it0Fg" name="r" type="#zlfMH"/>
       </ownedOperations>
+      <ownedOperations xmi:id="vRftV" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericPowOperation" name="pow" type="#Nr4QF">
+        <ownedComments body="*&#xA;The result of oclText[self] at power r.&#xA;"/>
+        <ownedParameters xmi:id="Q9zRg" name="r" type="#zlfMH"/>
+      </ownedOperations>
       <ownedOperations xmi:id="cNx+G" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation" name="round" type="#tYtCd">
         <ownedComments body="*&#xA;The integer that is closest to oclText[self]. When there are two such integers, the largest one.&#xA;"/>
       </ownedOperations>
-      <ownedOperations xmi:id="m6hgA" implementationClass="org.eclipse.ocl.pivot.library.numeric.SinOperation" name="sin" type="#Nr4QF"/>
+      <ownedOperations xmi:id="m6hgA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericSinOperation" name="sin" type="#Nr4QF"/>
+      <ownedOperations xmi:id="u7ltA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericSqrtOperation" name="sqrt" type="#Nr4QF">
+        <ownedComments body="*&#xA;The square root of oclText[self].&#xA;"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="vFigA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericTanOperation" name="tan" type="#Nr4QF"/>
       <ownedOperations xmi:id="6QrlW" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" name="toString"
           type="#AlwVZ">
         <ownedComments body="*&#xA;Converts oclText[self] to a string value.&#xA;"/>
