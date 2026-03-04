@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.string;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -35,8 +36,11 @@ public class StringSplitOperation extends AbstractBinaryOperation
 		String sourceString = asString(sourceValue);
 		String regex = asString(firstArgumentValue);
 		Pattern pattern = executor.getRegexPattern(regex);
-		@SuppressWarnings("null")
-		@NonNull List<String> splitString = Arrays.asList(pattern.split(sourceString));
-		return createSequenceValue(SEQ_STRING, splitString);
+		String[] stringtkt = pattern.split(sourceString);
+		List<Object> results = new ArrayList<>(stringtkt.length);
+		for (String str : stringtkt) {
+			results.add(str);
+		}
+		return createSequenceValue(SEQ_STRING, results);
 	}
 }

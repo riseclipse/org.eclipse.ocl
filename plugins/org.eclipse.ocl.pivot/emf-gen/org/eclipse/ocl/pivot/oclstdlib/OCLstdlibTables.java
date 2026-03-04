@@ -1231,7 +1231,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull ExecutorOperation _String__size = new ExecutorOperation("size", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringSizeOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _String__split = new ExecutorOperation("split", Parameters._String, Types._String,
-			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringSizeOperation.INSTANCE);
+			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringSplitOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _String__startsWith = new ExecutorOperation("startsWith", Parameters._String, Types._String,
 			20, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringStartsWithOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _String__substituteAll = new ExecutorOperation("substituteAll", Parameters._String___String, Types._String,

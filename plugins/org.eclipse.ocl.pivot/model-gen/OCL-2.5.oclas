@@ -2393,7 +2393,7 @@
       <ownedOperations xmi:id="2JZdS" implementationClass="org.eclipse.ocl.pivot.library.string.StringSizeOperation" name="size" type="#tYtCd">
         <ownedComments body="*&#xA;The number of characters in oclText[self].&#xA;"/>
       </ownedOperations>
-      <ownedOperations xmi:id="P1MAQ" implementationClass="org.eclipse.ocl.pivot.library.string.StringSizeOperation" name="split" type="#AlwVZ">
+      <ownedOperations xmi:id="P1MAQ" implementationClass="org.eclipse.ocl.pivot.library.string.StringSplitOperation" name="split" type="#4nGDi">
         <ownedComments body="*&#xA;Return a sequence of split parts in oclText[self] divided by regex.&#xA;"/>
         <ownedParameters xmi:id="FSCQj" name="regex" type="#AlwVZ"/>
       </ownedOperations>
