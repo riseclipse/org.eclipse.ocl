@@ -1495,7 +1495,17 @@ type Real : PrimitiveType conformsTo OclComparable, OclSummable => 'org.eclipse.
 	**/
 	operation toString() : String[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
 	
-	operation sin() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.SinOperation';
+	operation sin() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericSinOperation';
+	
+	operation cos() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericCosOperation';
+	
+	operation tan() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericTanOperation';
+	
+	operation asin() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericAsinOperation';
+	
+	operation acos() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericAcosOperation';
+	
+	operation atan() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericAtanOperation';
 }
 
 /**
