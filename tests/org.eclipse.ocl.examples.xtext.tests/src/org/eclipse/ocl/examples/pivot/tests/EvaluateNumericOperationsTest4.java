@@ -1237,15 +1237,75 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 	}
 	
 	
+	@Test public void testAsin() {
+		TestOCL ocl = createOCL();
+			
+		// Real::asin()
+		ocl.assertQueryEquals(null, 0, "0.0.asin()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.asin(0.5), "0.5.asin()", doubleEpsilon);
+		
+		// Integer::asin()
+		ocl.assertQueryEquals(null, 0, "0.asin()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.asin(-0.5), "(-0.5).asin()", doubleEpsilon);
+	}
+	
+	@Test public void testAcos() {
+		TestOCL ocl = createOCL();
+			
+		// Real::acos()
+		ocl.assertQueryEquals(null, Math.acos(0), "0.0.acos()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.acos(0.5), "0.5.acos()", doubleEpsilon);
+		
+		// Integer::acos()
+		ocl.assertQueryEquals(null, Math.acos(0), "0.acos()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.acos(-0.5), "(-0.5).acos()", doubleEpsilon);
+	}
+	
+	@Test public void testAtan() {
+		TestOCL ocl = createOCL();
+			
+		// Real::atan()
+		ocl.assertQueryEquals(null, 0, "0.0.atan()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.atan(0.5), "0.5.atan()", doubleEpsilon);
+		
+		// Integer::atan()
+		ocl.assertQueryEquals(null, 0, "0.atan()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.atan(-0.5), "(-0.5).atan()", doubleEpsilon);
+	}
+	
 	@Test public void testSin() {
 		TestOCL ocl = createOCL();
-		
+			
 		// Real::sin()
 		ocl.assertQueryEquals(null, 0, "0.0.sin()", doubleEpsilon);
 		ocl.assertQueryEquals(null, Math.sin(1), "1.0.sin()", doubleEpsilon);
 		
 		// Integer::sin()
 		ocl.assertQueryEquals(null, 0, "0.sin()", doubleEpsilon);
-		ocl.assertQueryEquals(null, Math.sin(-1), "-1.sin()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.sin(-1), "(-1).sin()", doubleEpsilon);
+	}
+	
+	@Test public void testCos() {
+		TestOCL ocl = createOCL();
+			
+		// Real::cos()
+		ocl.assertQueryEquals(null, 1, "0.0.cos()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.cos(1), "1.0.cos()", doubleEpsilon);
+		
+		// Integer::cos()
+		ocl.assertQueryEquals(null, 1, "0.cos()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.cos(-1), "(-1).cos()",doubleEpsilon);
+	}
+	
+	@Test public void testTan() {
+		TestOCL ocl = createOCL();
+			
+		// Real::tan()
+		ocl.assertQueryEquals(null, 0, "0.0.tan()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.tan(1), "1.0.tan()", doubleEpsilon);
+		
+		// Integer::tan()
+		ocl.assertQueryEquals(null, 1, "0.cos()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.tan(-1), "(-1).tan()", doubleEpsilon);
 	}
 }
