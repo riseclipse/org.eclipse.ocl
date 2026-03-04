@@ -663,80 +663,82 @@ public class OCLstdlibTables extends AbstractTables
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__asSet = new ExecutorOperation("asSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Collection__average = new ExecutorOperation("average", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
+			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAverageOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__collect = new ExecutorOperation("collect", Parameters._Lambda_0_T_1_V, Types._Collection,
-			7, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			8, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__collectBy = new ExecutorOperation("collectBy", Parameters._Lambda_0_T_1_V, Types._Collection,
-			8, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
+			9, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_0_T_1_V, Types._Collection,
-			9, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			10, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__count = new ExecutorOperation("count", Parameters._0_T, Types._Collection,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionCountOperation.INSTANCE);
+			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionCountOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__excludes = new ExecutorOperation("excludes", Parameters._0_T, Types._Collection,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation.INSTANCE);
+			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__excludesAll = new ExecutorOperation("excludesAll", Parameters._Collection__1_T2__, Types._Collection,
-			12, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation.INSTANCE);
+			13, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__excluding = new ExecutorOperation("excluding", Parameters._0_T, Types._Collection,
-			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__excludingAll = new ExecutorOperation("excludingAll", Parameters._Collection, Types._Collection,
-			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__2_exists = new ExecutorOperation("exists", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__1_exists = new ExecutorOperation("exists", Parameters._Lambda_0_T_Boolean, Types._Collection,
 			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__0_exists = new ExecutorOperation("exists", Parameters._Lambda_0_T_Boolean, Types._Collection,
+		public static final @NonNull ExecutorOperation _Collection__1_exists = new ExecutorOperation("exists", Parameters._Lambda_0_T_Boolean, Types._Collection,
 			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+		public static final @NonNull ExecutorOperation _Collection__0_exists = new ExecutorOperation("exists", Parameters._Lambda_0_T_Boolean, Types._Collection,
+			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__flatten = new ExecutorOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
-			18, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
+			19, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__2_forAll = new ExecutorOperation("forAll", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__1_forAll = new ExecutorOperation("forAll", Parameters._Lambda_0_T_Boolean, Types._Collection,
 			20, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__0_forAll = new ExecutorOperation("forAll", Parameters._Lambda_0_T_Boolean, Types._Collection,
+		public static final @NonNull ExecutorOperation _Collection__1_forAll = new ExecutorOperation("forAll", Parameters._Lambda_0_T_Boolean, Types._Collection,
 			21, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+		public static final @NonNull ExecutorOperation _Collection__0_forAll = new ExecutorOperation("forAll", Parameters._Lambda_0_T_Boolean, Types._Collection,
+			22, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__includes = new ExecutorOperation("includes", Parameters._0_T, Types._Collection,
-			22, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation.INSTANCE);
+			23, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__includesAll = new ExecutorOperation("includesAll", Parameters._Collection__1_T2__, Types._Collection,
-			23, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation.INSTANCE);
+			24, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__including = new ExecutorOperation("including", Parameters._0_T, Types._Collection,
-			24, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+			25, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__includingAll = new ExecutorOperation("includingAll", Parameters._Collection, Types._Collection,
-			25, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+			26, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__0_intersection = new ExecutorOperation("intersection", Parameters._Collection, Types._Collection,
-			26, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__1_intersection = new ExecutorOperation("intersection", Parameters._UniqueCollection__0_T__, Types._Collection,
 			27, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Collection__1_intersection = new ExecutorOperation("intersection", Parameters._UniqueCollection__0_T__, Types._Collection,
+			28, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__isEmpty = new ExecutorOperation("isEmpty", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
-			28, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation.INSTANCE);
+			29, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__isUnique = new ExecutorOperation("isUnique", Parameters._Lambda_0_T_OclAny, Types._Collection,
-			29, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
+			30, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__iterate = new ExecutorOperation("iterate", Parameters._Lambda_0_T_1_Tacc, Types._Collection,
-			30, TypeUtil.createTemplateParameters(TypeParameters._1_Tacc), org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
+			31, TypeUtil.createTemplateParameters(TypeParameters._1_Tacc), org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__max = new ExecutorOperation("max", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
-			31, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation.INSTANCE);
+			32, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__min = new ExecutorOperation("min", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
-			32, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionMinOperation.INSTANCE);
+			33, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionMinOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__notEmpty = new ExecutorOperation("notEmpty", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
-			33, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation.INSTANCE);
+			34, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__one = new ExecutorOperation("one", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			34, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
+			35, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__product = new ExecutorOperation("product", Parameters._Collection__1_T2__, Types._Collection,
-			35, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionProductOperation.INSTANCE);
+			36, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionProductOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__reject = new ExecutorOperation("reject", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			36, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+			37, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__select = new ExecutorOperation("select", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			37, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			38, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__selectByKind = new ExecutorOperation("selectByKind", Parameters._1_TT, Types._Collection,
-			38, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			39, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__selectByType = new ExecutorOperation("selectByType", Parameters._1_TT, Types._Collection,
-			39, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
+			40, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__size = new ExecutorOperation("size", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
-			40, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation.INSTANCE);
+			41, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__sortedBy = new ExecutorOperation("sortedBy", Parameters._Lambda_0_T_OclAny, Types._Collection,
-			41, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			42, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__sum = new ExecutorOperation("sum", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
-			42, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSumOperation.INSTANCE);
+			43, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSumOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__union = new ExecutorOperation("union", Parameters._Collection, Types._Collection,
-			43, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
+			44, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _Integer___mul_ = new ExecutorOperation("*", Parameters._OclSelf, Types._Integer,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation.INSTANCE);
@@ -1079,18 +1081,38 @@ public class OCLstdlibTables extends AbstractTables
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__abs = new ExecutorOperation("abs", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__acos = new ExecutorOperation("acos", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAcosOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__asin = new ExecutorOperation("asin", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAsinOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__atan = new ExecutorOperation("atan", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAtanOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__cbrt = new ExecutorOperation("cbrt", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericCbrtOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__cos = new ExecutorOperation("cos", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericCosOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__floor = new ExecutorOperation("floor", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation.INSTANCE);
+			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__log = new ExecutorOperation("log", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericLogOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__log10 = new ExecutorOperation("log10", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericLog10Operation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__max = new ExecutorOperation("max", Parameters._OclSelf, Types._Real,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
+			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__min = new ExecutorOperation("min", Parameters._OclSelf, Types._Real,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
+			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__pow = new ExecutorOperation("pow", Parameters._OclSelf, Types._Real,
+			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericPowOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__round = new ExecutorOperation("round", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
+			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__sin = new ExecutorOperation("sin", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.SinOperation.INSTANCE);
+			20, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericSinOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__sqrt = new ExecutorOperation("sqrt", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			21, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericSqrtOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__tan = new ExecutorOperation("tan", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			22, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericTanOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__toString = new ExecutorOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
-			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+			23, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _Sequence___lt__gt_ = new ExecutorOperation("<>", Parameters._OclSelf, Types._Sequence,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
@@ -1606,6 +1628,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__asOrderedSet /* asOrderedSet() */,
 			OCLstdlibTables.Operations._Collection__asSequence /* asSequence() */,
 			OCLstdlibTables.Operations._Collection__asSet /* asSet() */,
+			OCLstdlibTables.Operations._Collection__average /* average() */,
 			OCLstdlibTables.Operations._Bag__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Bag__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
@@ -1704,6 +1727,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__asOrderedSet /* asOrderedSet() */,
 			OCLstdlibTables.Operations._Collection__asSequence /* asSequence() */,
 			OCLstdlibTables.Operations._Collection__asSet /* asSet() */,
+			OCLstdlibTables.Operations._Collection__average /* average() */,
 			OCLstdlibTables.Operations._Collection__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
@@ -1811,11 +1835,21 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Real___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Real___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Integer__abs /* abs() */,
+			OCLstdlibTables.Operations._Real__acos /* acos() */,
+			OCLstdlibTables.Operations._Real__asin /* asin() */,
+			OCLstdlibTables.Operations._Real__atan /* atan() */,
+			OCLstdlibTables.Operations._Real__cbrt /* cbrt() */,
+			OCLstdlibTables.Operations._Real__cos /* cos() */,
 			OCLstdlibTables.Operations._Real__floor /* floor() */,
+			OCLstdlibTables.Operations._Real__log /* log() */,
+			OCLstdlibTables.Operations._Real__log10 /* log10() */,
 			OCLstdlibTables.Operations._Integer__max /* max(OclSelf[1]) */,
 			OCLstdlibTables.Operations._Integer__min /* min(OclSelf[1]) */,
+			OCLstdlibTables.Operations._Real__pow /* pow(OclSelf[1]) */,
 			OCLstdlibTables.Operations._Real__round /* round() */,
 			OCLstdlibTables.Operations._Real__sin /* sin() */,
+			OCLstdlibTables.Operations._Real__sqrt /* sqrt() */,
+			OCLstdlibTables.Operations._Real__tan /* tan() */,
 			OCLstdlibTables.Operations._Integer__toString /* toString() */
 		};
 
@@ -2298,6 +2332,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__asOrderedSet /* asOrderedSet() */,
 			OCLstdlibTables.Operations._Collection__asSequence /* asSequence() */,
 			OCLstdlibTables.Operations._Collection__asSet /* asSet() */,
+			OCLstdlibTables.Operations._Collection__average /* average() */,
 			OCLstdlibTables.Operations._Collection__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
@@ -2387,6 +2422,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__asOrderedSet /* asOrderedSet() */,
 			OCLstdlibTables.Operations._Collection__asSequence /* asSequence() */,
 			OCLstdlibTables.Operations._Collection__asSet /* asSet() */,
+			OCLstdlibTables.Operations._Collection__average /* average() */,
 			OCLstdlibTables.Operations._OrderedSet__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
@@ -2465,11 +2501,21 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Real___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Real___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Real__abs /* abs() */,
+			OCLstdlibTables.Operations._Real__acos /* acos() */,
+			OCLstdlibTables.Operations._Real__asin /* asin() */,
+			OCLstdlibTables.Operations._Real__atan /* atan() */,
+			OCLstdlibTables.Operations._Real__cbrt /* cbrt() */,
+			OCLstdlibTables.Operations._Real__cos /* cos() */,
 			OCLstdlibTables.Operations._Real__floor /* floor() */,
+			OCLstdlibTables.Operations._Real__log /* log() */,
+			OCLstdlibTables.Operations._Real__log10 /* log10() */,
 			OCLstdlibTables.Operations._Real__max /* max(OclSelf[1]) */,
 			OCLstdlibTables.Operations._Real__min /* min(OclSelf[1]) */,
+			OCLstdlibTables.Operations._Real__pow /* pow(OclSelf[1]) */,
 			OCLstdlibTables.Operations._Real__round /* round() */,
 			OCLstdlibTables.Operations._Real__sin /* sin() */,
+			OCLstdlibTables.Operations._Real__sqrt /* sqrt() */,
+			OCLstdlibTables.Operations._Real__tan /* tan() */,
 			OCLstdlibTables.Operations._Real__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Real__OclAny = {
@@ -2533,6 +2579,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__asOrderedSet /* asOrderedSet() */,
 			OCLstdlibTables.Operations._Collection__asSequence /* asSequence() */,
 			OCLstdlibTables.Operations._Collection__asSet /* asSet() */,
+			OCLstdlibTables.Operations._Collection__average /* average() */,
 			OCLstdlibTables.Operations._Sequence__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Sequence__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
@@ -2621,6 +2668,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__asOrderedSet /* asOrderedSet() */,
 			OCLstdlibTables.Operations._Collection__asSequence /* asSequence() */,
 			OCLstdlibTables.Operations._Collection__asSet /* asSet() */,
+			OCLstdlibTables.Operations._Collection__average /* average() */,
 			OCLstdlibTables.Operations._Set__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Set__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
@@ -2765,6 +2813,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__asOrderedSet /* asOrderedSet() */,
 			OCLstdlibTables.Operations._Collection__asSequence /* asSequence() */,
 			OCLstdlibTables.Operations._Collection__asSet /* asSet() */,
+			OCLstdlibTables.Operations._Collection__average /* average() */,
 			OCLstdlibTables.Operations._Collection__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
