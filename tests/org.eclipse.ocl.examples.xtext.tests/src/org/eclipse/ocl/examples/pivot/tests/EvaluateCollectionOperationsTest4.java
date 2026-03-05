@@ -1982,4 +1982,33 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 3, "Set{1, 2.0, 3}->oclAsType(Collection(Real[2..4]))->oclType().upper"); // no change to dynamic bound
 		ocl.dispose();
 	}
+	
+	@Test public void testCollectionAverage() {
+		TestOCL ocl = createOCL();
+		ocl.assertQueryEquals(null, 3, "Sequence{1, 3, 5}->average()", 1e-10);
+		ocl.assertQueryEquals(null, 2.5, "Sequence{1, 2, 3, 4}->average()", 1e-10);
+		ocl.assertQueryInvalid(null, "Sequence{}->average()");
+		ocl.assertQueryInvalid(null, "Sequence{1, invalid, 5}->average()");
+		ocl.assertQueryInvalid(null, "Sequence{1, 3, null}->average()");
+		
+		ocl.assertQueryEquals(null, 3.5, "Bag{1, 3, 5, 5}->average()", 1e-10);
+		ocl.assertQueryEquals(null, 2.5, "Bag{1, 2, 3, 4}->average()", 1e-10);
+		ocl.assertQueryInvalid(null, "Bag{}->average()");
+		ocl.assertQueryInvalid(null, "Bag{1, invalid, 5}->average()");
+		ocl.assertQueryInvalid(null, "Bag{1, 3, null}->average()");
+		
+		ocl.assertQueryEquals(null, 3, "Set{1, 3, 5}->average()", 1e-10);
+		ocl.assertQueryEquals(null, 2.5, "Set{1, 2, 3, 4}->average()", 1e-10);
+		ocl.assertQueryInvalid(null, "Set{}->average()");
+		ocl.assertQueryInvalid(null, "Set{1, invalid, 5}->average()");
+		ocl.assertQueryInvalid(null, "Set{1, 3, null}->average()");
+		
+		ocl.assertQueryEquals(null, 3, "OrderedSet{1, 3, 5}->average()", 1e-10);
+		ocl.assertQueryEquals(null, 2.5, "OrderedSet{1, 2, 3, 4}->average()", 1e-10);
+		ocl.assertQueryInvalid(null, "OrderedSet{}->average()");
+		ocl.assertQueryInvalid(null, "OrderedSet{1, invalid, 5}->average()");
+		ocl.assertQueryInvalid(null, "OrderedSet{1, 3, null}->average()");
+		
+		ocl.dispose();
+	}
 }

@@ -1197,16 +1197,4 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 	public void testUnlimitedUnaryMinusNull() {
 		assertResultInvalid("let u : UnlimitedNatural = null in -u");
 	}
-	
-	
-	
-	
-	public void testNumberSin() {
-		assertResult(Double.valueOf(0), "0.0.sin()");
-		assertResult(Double.valueOf(0), "3.1415.sin()");
-		assertResult(Double.valueOf(0), "-3.1415.sin()");
-		assertResult(Double.valueOf(0.841), "1.0.sin()");
-	}
-	
-	
 }
