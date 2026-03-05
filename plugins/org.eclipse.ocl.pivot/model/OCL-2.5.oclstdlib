@@ -152,6 +152,11 @@ type Bag(T) : BagType conformsTo Collection(T) => 'org.eclipse.ocl.pivot.values.
 	**/
 	operation flatten(T2)() : Bag(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation';
 	/**
+	Redefines the Collection operation. If the element type is not a collection type, this results in the same bag as oclText[self].
+	If the element type is a collection type, the result is the bag containing all the elements of all the recursively flattened elements of oclText[self]. 
+	**/
+	operation flattenWidth(T2)() : Bag(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation';
+	/**
 	The bag containing all elements of oclText[self] plus object.
 	**/
 	operation including(object : T[?]) : Bag(T) => 'org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation';
@@ -503,6 +508,11 @@ abstract type Collection(T) : CollectionType conformsTo OclAny => 'java.util.Col
 	If the element type is a collection type, the result is a collection containing all the elements of all the recursively flattened elements of oclText[self].
 	**/
 	operation flatten(T2)() : Collection(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation';
+	/**
+	If the element type is not a collection type, this results in the same collection as oclText[self].
+	If the element type is a collection type, the result is a collection containing all the elements of all the recursively flattened elements of oclText[self].
+	**/
+	operation flattenWidth(T2)() : Collection(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation';
 	/**
 	True if object is an element of oclText[self], oclText[false] otherwise.
 	**/
@@ -1394,6 +1404,7 @@ type OrderedSet(T) : OrderedSetType conformsTo OrderedCollection(T),UniqueCollec
 	**/
 	operation excludingAll(objects : Collection(T)) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation';
 	operation flatten(T2)() : OrderedSet(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation';
+	operation flattenWidth(T2)() : OrderedSet(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation';
 	/**
 	The ordered set containing all elements of oclText[self] plus object added as the last element if not already present.
 	**/
@@ -1607,6 +1618,12 @@ type Sequence(T) : SequenceType conformsTo OrderedCollection(T) => 'java.util.Li
 	**/
 	operation flatten(T2)() : Sequence(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation';
 	/**
+	Redefines the Collection operation. If the element type is not a collection type, this results in the same sequence as oclText[self].
+	If the element type is a collection type, the result is the sequence containing all the elements
+	of all the recursively flattened elements of oclText[self]. The order of the elements is partial. 
+	**/
+	operation flattenWidth(T2)() : Sequence(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation';
+	/**
 	The sequence containing all elements of oclText[self] plus object added as the last element.
 	**/
 	operation including(object : T[?]) : Sequence(T) => 'org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation';
@@ -1700,6 +1717,11 @@ type Set(T) : SetType conformsTo UniqueCollection(T) => 'java.util.Set' {
 	If the element type is a collection type, the result is the set containing all the elements of all the recursively flattened elements of oclText[self].
 	**/
 	operation flatten(T2)() : Set(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation';
+	/**
+	Redefines the Collection operation. If the element type is not a collection type, this results in the same set as oclText[self].
+	If the element type is a collection type, the result is the set containing all the elements of all the recursively flattened elements of oclText[self].
+	**/
+	operation flattenWidth(T2)() : Set(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation';
 	/**
 	The set containing all elements of oclText[self] plus object.
 	**/

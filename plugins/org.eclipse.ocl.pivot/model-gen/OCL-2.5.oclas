@@ -70,6 +70,13 @@
           <ownedParameters xmi:id="n6+jq" name="T2"/>
         </ownedSignature>
       </ownedOperations>
+      <ownedOperations xmi:id="BDtc7" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation" name="flattenWidth"
+          type="#syvm6">
+        <ownedComments body="*&#xA;Redefines the Collection operation. If the element type is not a collection type, this results in the same bag as oclText[self].&#xA;If the element type is a collection type, the result is the bag containing all the elements of all the recursively flattened elements of oclText[self].&#xA;"/>
+        <ownedSignature>
+          <ownedParameters xmi:id="1uRei" name="T2"/>
+        </ownedSignature>
+      </ownedOperations>
       <ownedOperations xmi:id="lpjkQ" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation" name="including"
           type="#yEcHF">
         <ownedComments body="*&#xA;The bag containing all elements of oclText[self] plus object.&#xA;"/>
@@ -649,6 +656,13 @@
         <ownedComments body="*&#xA;If the element type is not a collection type, this results in the same collection as oclText[self].&#xA;If the element type is a collection type, the result is a collection containing all the elements of all the recursively flattened elements of oclText[self].&#xA;"/>
         <ownedSignature>
           <ownedParameters xmi:id="V4fY9" name="T2"/>
+        </ownedSignature>
+      </ownedOperations>
+      <ownedOperations xmi:id=",Qpeo" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation" name="flattenWidth"
+          type="#ADOqU">
+        <ownedComments body="*&#xA;If the element type is not a collection type, this results in the same collection as oclText[self].&#xA;If the element type is a collection type, the result is a collection containing all the elements of all the recursively flattened elements of oclText[self].&#xA;"/>
+        <ownedSignature>
+          <ownedParameters xmi:id="jsyS1" name="T2"/>
         </ownedSignature>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="WqmML" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
@@ -1805,6 +1819,12 @@
           <ownedParameters xmi:id="oGEci" name="T2"/>
         </ownedSignature>
       </ownedOperations>
+      <ownedOperations xmi:id="6H3md" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation" name="flattenWidth"
+          type="#yj4yL">
+        <ownedSignature>
+          <ownedParameters xmi:id="26WWa" name="T2"/>
+        </ownedSignature>
+      </ownedOperations>
       <ownedOperations xmi:id="eutuy" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation" name="including"
           type="#fIXUp">
         <ownedComments body="*&#xA;The ordered set containing all elements of oclText[self] plus object added as the last element if not already present.&#xA;"/>
@@ -2098,6 +2118,13 @@
           <ownedParameters xmi:id="kNz0x" name="T2"/>
         </ownedSignature>
       </ownedOperations>
+      <ownedOperations xmi:id="WzS9l" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation" name="flattenWidth"
+          type="#ap7RV">
+        <ownedComments body="*&#xA;Redefines the Collection operation. If the element type is not a collection type, this results in the same sequence as oclText[self].&#xA;If the element type is a collection type, the result is the sequence containing all the elements&#xA;of all the recursively flattened elements of oclText[self]. The order of the elements is partial.&#xA;"/>
+        <ownedSignature>
+          <ownedParameters xmi:id="yBGvp" name="T2"/>
+        </ownedSignature>
+      </ownedOperations>
       <ownedOperations xmi:id="6ZJF7" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation" name="including"
           type="#rk5ZZ">
         <ownedComments body="*&#xA;The sequence containing all elements of oclText[self] plus object added as the last element.&#xA;"/>
@@ -2232,6 +2259,13 @@
         <ownedComments body="*&#xA;Redefines the Collection operation. If the element type is not a collection type, this results in the same set as oclText[self].&#xA;If the element type is a collection type, the result is the set containing all the elements of all the recursively flattened elements of oclText[self].&#xA;"/>
         <ownedSignature>
           <ownedParameters xmi:id="p0xDT" name="T2"/>
+        </ownedSignature>
+      </ownedOperations>
+      <ownedOperations xmi:id="ze3c8" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation" name="flattenWidth"
+          type="#4gm0O">
+        <ownedComments body="*&#xA;Redefines the Collection operation. If the element type is not a collection type, this results in the same set as oclText[self].&#xA;If the element type is a collection type, the result is the set containing all the elements of all the recursively flattened elements of oclText[self].&#xA;"/>
+        <ownedSignature>
+          <ownedParameters xmi:id="3oE+K" name="T2"/>
         </ownedSignature>
       </ownedOperations>
       <ownedOperations xmi:id="XFukR" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation" name="including"
@@ -2605,6 +2639,11 @@
         <ownedSubstitutions actual="#n6+jq" formal="#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="syvm6" isNullFree="true" name="Bag" superClasses="#9OYoJ">
+      <ownedBindings>
+        <ownedSubstitutions actual="#1uRei" formal="#k2OA6"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="kYj3+" isNullFree="true" name="Bag" superClasses="#10L5N">
       <ownedBindings>
         <ownedSubstitutions actual="#tHLI9" formal="#k2OA6"/>
@@ -2745,6 +2784,11 @@
         <ownedSubstitutions actual="#V4fY9" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ADOqU" isNullFree="true" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#jsyS1" formal="#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="+dsXX" isNullFree="true" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#RAum0" formal="#qs59R"/>
@@ -2760,9 +2804,19 @@
         <ownedSubstitutions actual="#n6+jq" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9OYoJ" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#1uRei" formal="#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="4UbjG" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#oGEci" formal="#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="W8ln2" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#26WWa" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="U+78f" name="Collection" superClasses="#jbMkR">
@@ -2770,9 +2824,19 @@
         <ownedSubstitutions actual="#kNz0x" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ylGBQ" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#yBGvp" formal="#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="RUAyt" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#p0xDT" formal="#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="v7K2d" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#3oE+K" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="4oB7Y" isNullFree="true" name="Collection" superClasses="#jbMkR">
@@ -3020,9 +3084,19 @@
         <ownedSubstitutions actual="#oGEci" formal="#feFHs"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="jMb+s" name="OrderedCollection" superClasses="#W8ln2">
+      <ownedBindings>
+        <ownedSubstitutions actual="#26WWa" formal="#feFHs"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="hOxTW" name="OrderedCollection" superClasses="#U+78f">
       <ownedBindings>
         <ownedSubstitutions actual="#kNz0x" formal="#feFHs"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id=",17XG" name="OrderedCollection" superClasses="#ylGBQ">
+      <ownedBindings>
+        <ownedSubstitutions actual="#yBGvp" formal="#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="byOPx" name="OrderedCollection" superClasses="#OiZ46">
@@ -3115,6 +3189,11 @@
         <ownedSubstitutions actual="#oGEci" formal="#53+C2"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="yj4yL" isNullFree="true" name="OrderedSet" superClasses="#jMb+s #H3Vjm">
+      <ownedBindings>
+        <ownedSubstitutions actual="#26WWa" formal="#53+C2"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="qJsDQ" isNullFree="true" name="OrderedSet" superClasses="#byOPx #,cJ0q">
       <ownedBindings>
         <ownedSubstitutions actual="#uTQA1" formal="#53+C2"/>
@@ -3148,6 +3227,11 @@
     <ownedClasses xsi:type="pivot:SequenceType" xmi:id="8BxNl" isNullFree="true" name="Sequence" superClasses="#hOxTW">
       <ownedBindings>
         <ownedSubstitutions actual="#kNz0x" formal="#l1i6D"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="ap7RV" isNullFree="true" name="Sequence" superClasses="#,17XG">
+      <ownedBindings>
+        <ownedSubstitutions actual="#yBGvp" formal="#l1i6D"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SequenceType" xmi:id="SPviZ" isNullFree="true" name="Sequence" superClasses="#3bvoK">
@@ -3220,6 +3304,11 @@
         <ownedSubstitutions actual="#p0xDT" formal="#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="4gm0O" isNullFree="true" name="Set" superClasses="#g26xN">
+      <ownedBindings>
+        <ownedSubstitutions actual="#3oE+K" formal="#ODsm5"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="wGaFT" isNullFree="true" name="Set" superClasses="#YcuCS">
       <ownedBindings>
         <ownedSubstitutions actual="#vB+nl" formal="#ODsm5"/>
@@ -3279,9 +3368,19 @@
         <ownedSubstitutions actual="#oGEci" formal="#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="H3Vjm" name="UniqueCollection" superClasses="#W8ln2">
+      <ownedBindings>
+        <ownedSubstitutions actual="#26WWa" formal="#jdfjE"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="CPwtd" name="UniqueCollection" superClasses="#RUAyt">
       <ownedBindings>
         <ownedSubstitutions actual="#p0xDT" formal="#jdfjE"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="g26xN" name="UniqueCollection" superClasses="#v7K2d">
+      <ownedBindings>
+        <ownedSubstitutions actual="#3oE+K" formal="#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id=",cJ0q" name="UniqueCollection" superClasses="#OiZ46">
