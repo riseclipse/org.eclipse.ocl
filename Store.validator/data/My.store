@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<store:Store xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:store="https://riseclipse.github.io/ocl/example/model/store">
-  <products xsi:type="store:Book" title="Les Misérables" pageCount="100" author="//@artists.0"/>
-  <artists name="Victor Hugo"/>
-</store:Store>
