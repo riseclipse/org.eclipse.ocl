@@ -456,6 +456,15 @@ public class EvaluateStringOperationsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
+	@Test public void testStringSplit() {
+		TestOCL ocl = createOCL();
+		ocl.assertQueryResults(null, "Sequence{'a','b','c'}", "'a b c'.split(' ')");
+		ocl.assertQueryResults(null, "Sequence{'a b c'}", "'a b c'.split('_')");
+		ocl.assertQueryResults(null, "Sequence{'aaa','b','cc'}", "'aaa b cc'.split(' ')");
+		ocl.assertQueryResults(null, "Sequence{'a','b','','c'}", "'a b  c'.split(' ')");
+		ocl.assertQueryResults(null, "Sequence{'a','b'}", "'a b  '.split(' ')");
+	}
+	
 	@Test public void testStringStartsWith() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryFalse(null, "'abcdef'.startsWith('abcdefg')");
@@ -677,14 +686,5 @@ public class EvaluateStringOperationsTest4 extends PivotTestSuite
 		// null
 		ocl.assertQueryInvalid(null, "let s : String = null in s.trim()");
 		ocl.dispose();
-	}
-	
-	@Test public void testStringSplit() {
-		TestOCL ocl = createOCL();
-		ocl.assertQueryEquals(null, "Sequence{'a','b','c'}", "'a b c'.split(' ')");
-		ocl.assertQueryEquals(null, "Sequence{'abc'}", "'a b c'.split('_')");
-		ocl.assertQueryEquals(null, "Sequence{'aaa','b','cc'}", "'aaa b cc'.split(' ')");
-		ocl.assertQueryEquals(null, "Sequence{'a','b','','c'}", "'a b  c'.split(' ')");
-		ocl.assertQueryEquals(null, "Sequence{'a','b'}", "'a b  '.split(' ')");
 	}
 }
