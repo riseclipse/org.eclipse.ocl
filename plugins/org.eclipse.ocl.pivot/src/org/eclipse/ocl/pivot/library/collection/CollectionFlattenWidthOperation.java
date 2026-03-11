@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Queue;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -23,23 +22,21 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BagValueImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
 import org.eclipse.ocl.pivot.internal.values.RangeOrderedSetValueImpl;
-import org.eclipse.ocl.pivot.internal.values.SequenceValueImpl;
+import org.eclipse.ocl.pivot.internal.values.RangeSequenceValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseOrderedSetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.UndefinedValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.Bag;
-import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SetValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 
 /**
  * CollectionFlattenWidthOperation realises the Collection::flattenWidth() library operation.
@@ -53,13 +50,15 @@ public class CollectionFlattenWidthOperation extends AbstractSimpleUnaryOperatio
 		CollectionValue collectionValue = asCollectionValue(argument);
 		Collection<? extends Object> elements = collectionValue.getElements();
 		Deque<Object> toVisitFile = new ArrayDeque<Object>(elements);
+		CollectionTypeId valuesType = collectionValue.getTypeId();
 		return switch (collectionValue) {
 			case UndefinedValueImpl u -> throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
-			case BagValue b -> createBagValue(collectionValue.getTypeId(), flattenAux(toVisitFile, new BagImpl<>()));
-			case SetValue s -> createSetValue(collectionValue.getTypeId(), flattenAux(toVisitFile, new HashSet<>()));
+			case BagValueImpl b -> createBagValue(valuesType, flattenAux(toVisitFile, new BagImpl<>()));
+			case SetValueImpl s -> createSetValue(valuesType, flattenAux(toVisitFile, new HashSet<>()));
 			case RangeOrderedSetValueImpl r -> collectionValue;
-			case SparseOrderedSetValueImpl s -> createOrderedSetValue(collectionValue.getTypeId(), flattenAux(toVisitFile, new OrderedSetImpl<>()));
-			default -> createSequenceValue(collectionValue.getTypeId(), flattenAux(toVisitFile, new ArrayList<>()));	
+			case SparseOrderedSetValueImpl s -> createOrderedSetValue(valuesType, flattenAux(toVisitFile, new OrderedSetImpl<>()));
+			case RangeSequenceValueImpl r -> collectionValue;
+			default -> createSequenceValue(valuesType, flattenAux(toVisitFile, new ArrayList<>()));	
 		};
 	}
 	
@@ -71,7 +70,7 @@ public class CollectionFlattenWidthOperation extends AbstractSimpleUnaryOperatio
 				toVisit.addAll(collectionElement.getElements());
 			} else {
 				flattenedElements.add(element);
-			};
+			}
 		}
 		return flattenedElements;
 	}

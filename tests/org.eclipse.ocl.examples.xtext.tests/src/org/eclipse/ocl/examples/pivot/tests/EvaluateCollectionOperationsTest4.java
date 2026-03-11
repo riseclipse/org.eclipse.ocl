@@ -815,6 +815,55 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "Set{1}", "let s : Set(Integer) = null in 1->flatten()");
 		ocl.assertQueryResults(null, "Set{1}", "let o : OrderedSet(Integer) = null in 1->flatten()");
 	}
+	
+	@Test public void testCollectionFlattenWidth() {
+		TestOCL ocl = createOCL();
+		ocl.assertQueryEquals(null, ocl.getEmptySequenceValue(), "Sequence{}->flattenWidth()");
+		ocl.assertQueryEquals(null, ocl.getEmptyBagValue(), "Bag{}->flattenWidth()");
+		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "Set{}->flattenWidth()");
+		ocl.assertQueryEquals(null, ocl.getEmptyOrderedSetValue(), "OrderedSet{}->flattenWidth()");
+
+		String expression = "Sequence{Set{1,2,3}, Sequence{2.0, 3.0}, Bag{'test'}}->flattenWidth()";
+		String expectedResultExpression = "Sequence{1, 2, 3, 2.0, 3.0, 'test'}";
+		/*
+		 * as the Sequence is ordered and we cannot know in which order the
+		 * result of the Set flattening were inserted, simply check that the
+		 * result is a Sequence and contains all elements.
+		 */
+		ocl.assertResultContainsAll(null, expectedResultExpression, expression);
+
+		expression = "Bag{Set{Bag{'test', 2, 3.0}}, Sequence{OrderedSet{2.0, 3, 1}}}->flattenWidth()";
+		expectedResultExpression = "Bag{1, 2, 3, 2.0, 3.0, 'test'}";
+		ocl.assertQueryResults(null, expectedResultExpression, expression);
+
+		expression = "Set{OrderedSet{Set{3.0, 'test'}, Sequence{2.0, 2}, Bag{1, 3}}}->flattenWidth()";
+		expectedResultExpression = "Set{1, 2.0, 3.0, 'test'}";
+		ocl.assertResultContainsAll(null, expectedResultExpression, expression);
+
+		expression = "OrderedSet{Set{Set{3.0, 'test'}, Sequence{2.0, Sequence{4,'test2','test'}}, Bag{1, 3}}}->flattenWidth()";
+		expectedResultExpression = "OrderedSet{3.0, 'test', 2.0, 1, 4, 'test2'}";
+		ocl.assertResultContainsAll(null, expectedResultExpression, expression);
+
+		expression = "Set{Sequence{Sequence{Sequence{3.0, 'test'}}}, Sequence{Sequence{2.0, 2}, Sequence{1, 3}}}->flattenWidth()";
+		expectedResultExpression = "Set{1, 2, 3, 'test'}";
+		ocl.assertResultContainsAll(null, expectedResultExpression, expression);
+		// invalid collection
+		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = invalid in s->flattenWidth()");
+		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = invalid in b->flattenWidth()");
+		ocl.assertQueryInvalid(null, "let s : Set(Integer) = invalid in s->flattenWidth()");
+		ocl.assertQueryInvalid(null, "let o : OrderedSet(Integer) = invalid in o->flattenWidth()");
+		// non collection
+		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in s->flattenWidth()");
+		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = null in b->flattenWidth()");
+		ocl.assertQueryInvalid(null, "let s : Set(Integer) = null in s->flattenWidth()");
+		ocl.assertQueryInvalid(null, "let o : OrderedSet(Integer) = null in o->flattenWidth()");
+		// pseudo collection
+		ocl.assertQueryResults(null, "Set{1}", "1->flattenWidth()");
+		ocl.assertQueryResults(null, "Set{1}", "let s : Sequence(Integer) = null in 1->flattenWidth()");
+		ocl.assertQueryResults(null, "Set{1}", "let b : Bag(Integer) = null in 1->flattenWidth()");
+		ocl.assertQueryResults(null, "Set{1}", "let s : Set(Integer) = null in 1->flattenWidth()");
+		ocl.assertQueryResults(null, "Set{1}", "let o : OrderedSet(Integer) = null in 1->flattenWidth()");
+	}
 
 	@Test public void testCollectionIncludes() {
 		TestOCL ocl = createOCL();
@@ -1985,7 +2034,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 	
 	@Test public void testCollectionAverage() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryEquals(null, 3, "Sequence{1, 3, 5}->average()", 1e-10);
+		ocl.assertQueryEquals(null, 3.0, "Sequence{1, 3, 5}->average()", 1e-10);
 		ocl.assertQueryEquals(null, 2.5, "Sequence{1, 2, 3, 4}->average()", 1e-10);
 		ocl.assertQueryInvalid(null, "Sequence{}->average()");
 		ocl.assertQueryInvalid(null, "Sequence{1, invalid, 5}->average()");

@@ -153,7 +153,8 @@ type Bag(T) : BagType conformsTo Collection(T) => 'org.eclipse.ocl.pivot.values.
 	operation flatten(T2)() : Bag(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation';
 	/**
 	Redefines the Collection operation. If the element type is not a collection type, this results in the same bag as oclText[self].
-	If the element type is a collection type, the result is the bag containing all the elements of all the recursively flattened elements of oclText[self]. 
+	If the element type is a collection type, the result is the bag containing all the elements of all the recursively flattened elements of oclText[self].
+	Returns the same thing as flatten for Bags.
 	**/
 	operation flattenWidth(T2)() : Bag(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation';
 	/**
@@ -482,7 +483,7 @@ abstract type Collection(T) : CollectionType conformsTo OclAny => 'java.util.Col
 	In the code base it is not, please check org.eclipse.ocl.pivot.library.collection.CollectionSumOperation
 	The 'divide by n' part is done with NumbericDivideOperation which also only works for Real and Integer
 	**/
-	operation average() : T[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionAverageOperation';
+	operation average() : Real[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionAverageOperation';
 	/**
 	The number of times that object occurs in the collection oclText[self].
 	**/
@@ -1720,6 +1721,7 @@ type Set(T) : SetType conformsTo UniqueCollection(T) => 'java.util.Set' {
 	/**
 	Redefines the Collection operation. If the element type is not a collection type, this results in the same set as oclText[self].
 	If the element type is a collection type, the result is the set containing all the elements of all the recursively flattened elements of oclText[self].
+	Returns the same thing as flatten for Sets.
 	**/
 	operation flattenWidth(T2)() : Set(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation';
 	/**

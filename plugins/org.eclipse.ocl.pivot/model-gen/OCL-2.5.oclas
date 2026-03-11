@@ -72,7 +72,7 @@
       </ownedOperations>
       <ownedOperations xmi:id="BDtc7" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation" name="flattenWidth"
           type="#syvm6">
-        <ownedComments body="*&#xA;Redefines the Collection operation. If the element type is not a collection type, this results in the same bag as oclText[self].&#xA;If the element type is a collection type, the result is the bag containing all the elements of all the recursively flattened elements of oclText[self].&#xA;"/>
+        <ownedComments body="*&#xA;Redefines the Collection operation. If the element type is not a collection type, this results in the same bag as oclText[self].&#xA;If the element type is a collection type, the result is the bag containing all the elements of all the recursively flattened elements of oclText[self].&#xA;Returns the same thing as flatten for Bags.&#xA;"/>
         <ownedSignature>
           <ownedParameters xmi:id="1uRei" name="T2"/>
         </ownedSignature>
@@ -572,7 +572,7 @@
         <ownedComments body="*&#xA;The Set containing all the elements from oclText[self], with duplicates removed.&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="6Q,Lx" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionAverageOperation" name="average"
-          type="#qs59R">
+          type="#Nr4QF">
         <ownedComments body="*&#xA;The average of the elements in this collection, only for Real and Integer.&#xA;The 'sum' part is done with CollectionSumOperation which as of OCL 6.23.0 only works for Real and Integer&#xA;but according to https://github.com/eclipse-ocl/org.eclipse.ocl/issues/510 should be fixed ?&#xA;In the code base it is not, please check org.eclipse.ocl.pivot.library.collection.CollectionSumOperation&#xA;The 'divide by n' part is done with NumbericDivideOperation which also only works for Real and Integer&#xA;"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="oenaP" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
@@ -2263,7 +2263,7 @@
       </ownedOperations>
       <ownedOperations xmi:id="ze3c8" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation" name="flattenWidth"
           type="#4gm0O">
-        <ownedComments body="*&#xA;Redefines the Collection operation. If the element type is not a collection type, this results in the same set as oclText[self].&#xA;If the element type is a collection type, the result is the set containing all the elements of all the recursively flattened elements of oclText[self].&#xA;"/>
+        <ownedComments body="*&#xA;Redefines the Collection operation. If the element type is not a collection type, this results in the same set as oclText[self].&#xA;If the element type is a collection type, the result is the set containing all the elements of all the recursively flattened elements of oclText[self].&#xA;Returns the same thing as flatten for Sets.&#xA;"/>
         <ownedSignature>
           <ownedParameters xmi:id="3oE+K" name="T2"/>
         </ownedSignature>

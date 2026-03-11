@@ -17,13 +17,14 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
 import org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.RealValue;
 
 public class CollectionAverageOperation extends AbstractUnaryOperation
 {
 	public static final @NonNull CollectionAverageOperation INSTANCE = new CollectionAverageOperation();
 
 	@Override
-	public @NonNull Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
+	public @NonNull RealValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
 		CollectionValue value = asCollectionValue(sourceVal);
 		Object sum = CollectionSumOperation.INSTANCE.evaluate(executor, returnTypeId, sourceVal);
 		
