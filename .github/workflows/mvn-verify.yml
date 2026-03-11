@@ -1,6 +1,7 @@
 name: Verify tests
 
-on: workflow_dispatch
+on:
+  push
 
 jobs:
   build:
@@ -19,18 +20,6 @@ jobs:
         distribution: 'oracle'
         java-version: '21'
         cache: 'maven'
-
-    - name: Install Xvfb
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y xvfb
-
-    #- name: Install Eclipse
-    #    run: |
-    #      ECLIPSE_VERSION=$(curl -sL https://download.eclipse.org/technology/epp/downloads/release/release.xml | grep -oP '(?<=<present>).*?(?=/R</present>)')
-    #      eclipsetgz="eclipse-java-${ECLIPSE_VERSION}-R-linux-gtk-x86_64.tar.gz"
-    #      curl --remote-name "{ECLIPSE_DOWNLOADS}/${ECLIPSE_VERSION}/R"
-    #      tar zxf ${eclipsetgz} && rm ${eclipsetgz}
 
     - name: Build with Maven
       run: |
