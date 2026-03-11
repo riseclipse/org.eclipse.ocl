@@ -10,10 +10,13 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.collection;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Queue;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -49,28 +52,26 @@ public class CollectionFlattenWidthOperation extends AbstractSimpleUnaryOperatio
 	public @NonNull CollectionValue evaluate(@Nullable Object argument) {
 		CollectionValue collectionValue = asCollectionValue(argument);
 		Collection<? extends Object> elements = collectionValue.getElements();
-		List<Object> toVisit = new ArrayList<Object>(elements);
+		Deque<Object> toVisitFile = new ArrayDeque<Object>(elements);
 		return switch (collectionValue) {
 			case UndefinedValueImpl u -> throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
-			case BagValue b -> createBagValue(collectionValue.getTypeId(), flattenAux(toVisit, new BagImpl<>()));
-			case SetValue s -> createSetValue(collectionValue.getTypeId(), flattenAux(toVisit, new HashSet<>()));
+			case BagValue b -> createBagValue(collectionValue.getTypeId(), flattenAux(toVisitFile, new BagImpl<>()));
+			case SetValue s -> createSetValue(collectionValue.getTypeId(), flattenAux(toVisitFile, new HashSet<>()));
 			case RangeOrderedSetValueImpl r -> collectionValue;
-			case SparseOrderedSetValueImpl s -> createOrderedSetValue(collectionValue.getTypeId(), flattenAux(toVisit, new OrderedSetImpl<>()));
-			default -> createSequenceValue(collectionValue.getTypeId(), flattenAux(toVisit, new ArrayList<>()));	
+			case SparseOrderedSetValueImpl s -> createOrderedSetValue(collectionValue.getTypeId(), flattenAux(toVisitFile, new OrderedSetImpl<>()));
+			default -> createSequenceValue(collectionValue.getTypeId(), flattenAux(toVisitFile, new ArrayList<>()));	
 		};
 	}
 	
-	private <T extends Collection<?>> T flattenAux(List<Object> toVisit, T flattenedElements){
-		int i = 0;
-		while (i != toVisit.size()) {
-			Object element = toVisit.get(i);
+	private <T extends Collection<Object>> T flattenAux(@NonNull Queue<Object> toVisit, @NonNull T flattenedElements){
+		while (!toVisit.isEmpty()) {
+			Object element = toVisit.poll();
 			CollectionValue collectionElement = ValueUtil.isCollectionValue(element);
 			if (collectionElement != null) {
 				toVisit.addAll(collectionElement.getElements());
 			} else {
 				flattenedElements.add(element);
 			};
-			i++;
 		}
 		return flattenedElements;
 	}
