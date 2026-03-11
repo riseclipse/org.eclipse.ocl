@@ -1405,6 +1405,9 @@ type OrderedSet(T) : OrderedSetType conformsTo OrderedCollection(T),UniqueCollec
 	**/
 	operation excludingAll(objects : Collection(T)) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation';
 	operation flatten(T2)() : OrderedSet(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation';
+	/** 
+	The ordered set containing flattened elements of oclText[self]. 
+	**/
 	operation flattenWidth(T2)() : OrderedSet(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenWidthOperation';
 	/**
 	The ordered set containing all elements of oclText[self] plus object added as the last element if not already present.
