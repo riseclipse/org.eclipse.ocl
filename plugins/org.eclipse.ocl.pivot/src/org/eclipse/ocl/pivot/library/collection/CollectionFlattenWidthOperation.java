@@ -51,15 +51,22 @@ public class CollectionFlattenWidthOperation extends AbstractSimpleUnaryOperatio
 		Collection<? extends Object> elements = collectionValue.getElements();
 		Deque<Object> toVisitFile = new ArrayDeque<Object>(elements);
 		CollectionTypeId valuesType = collectionValue.getTypeId();
-		return switch (collectionValue) {
-			case UndefinedValueImpl u -> throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
-			case BagValueImpl b -> createBagValue(valuesType, flattenAux(toVisitFile, new BagImpl<>()));
-			case SetValueImpl s -> createSetValue(valuesType, flattenAux(toVisitFile, new HashSet<>()));
-			case RangeOrderedSetValueImpl r -> collectionValue;
-			case SparseOrderedSetValueImpl s -> createOrderedSetValue(valuesType, flattenAux(toVisitFile, new OrderedSetImpl<>()));
-			case RangeSequenceValueImpl r -> collectionValue;
-			default -> createSequenceValue(valuesType, flattenAux(toVisitFile, new ArrayList<>()));	
-		};
+		
+		if (collectionValue instanceof UndefinedValueImpl) {
+			throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
+		} else if (collectionValue instanceof BagValueImpl) {
+			return createBagValue(valuesType, flattenAux(toVisitFile, new BagImpl<>()));
+		} else if (collectionValue instanceof SetValueImpl) {
+			return createSetValue(valuesType, flattenAux(toVisitFile, new HashSet<>()));
+		} else if (collectionValue instanceof RangeOrderedSetValueImpl) {
+			return collectionValue;
+		} else if (collectionValue instanceof SparseOrderedSetValueImpl) {
+			return createOrderedSetValue(valuesType, flattenAux(toVisitFile, new OrderedSetImpl<>()));
+		} else if (collectionValue instanceof RangeSequenceValueImpl) {
+			return collectionValue;
+		} else {
+			return createSequenceValue(valuesType, flattenAux(toVisitFile, new ArrayList<>()));	
+		}
 	}
 	
 	private <T extends Collection<Object>> T flattenAux(@NonNull Queue<Object> toVisit, @NonNull T flattenedElements){
