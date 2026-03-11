@@ -22,5 +22,5 @@ jobs:
 
     - name: Build with Maven
       run: |
-        cd ${{ github.event.repository.name }}
+        cd ${{ github.event.repository.name }}/releng/org.eclipse.ocl.releng.tycho/
         mvn --batch-mode verify
