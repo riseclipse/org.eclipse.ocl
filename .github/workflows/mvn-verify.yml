@@ -27,7 +27,7 @@ jobs:
         xvfb-run mvn -f releng/org.eclipse.ocl.releng.tycho/pom.xml -DGOAL=verify -DJAVADOC= -DPDFDOC= -DBUILD_TYPE=nightly -DBRANCH_NAME=origin/feat/mathlib-stdlib-6.23 -DBUILD_TYPE=nightly --show-version clean verify -Pnightly
 
     - name: Upload flat p2 update site
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/feat/mathlib-stdlib-6.23'
       uses: crowbarmaster/GH-Automatic-Releases@latest
       with:
         repo_token: "${{secrets.GITHUB_TOKEN}}"
