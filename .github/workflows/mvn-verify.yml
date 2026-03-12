@@ -24,4 +24,15 @@ jobs:
     - name: Build with Maven
       run: |
         cd ${{ github.event.repository.name }}
-        xvfb-run mvn -f releng/org.eclipse.ocl.releng.tycho/pom.xml -DBUILD_TYPE=nightly -Pnightly clean verify
+        xvfb-run mvn -f releng/org.eclipse.ocl.releng.tycho/pom.xml -DGOAL=verify -DJAVADOC= -DPDFDOC= -DBUILD_TYPE=nightly -DBRANCH_NAME=origin/feat/mathlib-stdlib-6.23 -DBUILD_TYPE=nightly --show-version clean verify -Pnightly
+
+    - name: Upload flat p2 update site
+      if: github.ref == 'refs/heads/master'
+      uses: crowbarmaster/GH-Automatic-Releases@latest
+      with:
+        repo_token: "${{secrets.GITHUB_TOKEN}}"
+        automatic_release_tag: "nightly"
+        prerelease: true
+        title: "Nightly build"
+        files: |
+          ${{ github.event.repository.name }}/releng/org.eclipse.ocl.releng.build-site/target/flat-repository/*
