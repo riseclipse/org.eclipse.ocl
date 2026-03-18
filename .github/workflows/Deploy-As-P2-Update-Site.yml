@@ -12,7 +12,8 @@
 
 name: Release on GitHub as Eclipse p2 update site
 
-on: workflow_dispatch
+#on: workflow_dispatch
+on: push
 
 jobs:
   build:
