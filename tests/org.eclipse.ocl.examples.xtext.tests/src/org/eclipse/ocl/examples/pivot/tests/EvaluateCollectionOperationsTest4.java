@@ -1982,4 +1982,35 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 3, "Set{1, 2.0, 3}->oclAsType(Collection(Real[2..4]))->oclType().upper"); // no change to dynamic bound
 		ocl.dispose();
 	}
+	
+	@Test public void testSequenceWeightedAverage() {
+		TestOCL ocl = createOCL();		
+		
+		ocl.assertQueryEquals(null, 3, "Sequence{3.0}->weightedAverage(Sequence{0.5})");
+		ocl.assertQueryEquals(null, 13.4, "Sequence{16, 12, 10}->weightedAverage(Sequence{0.5, 0.2, 0.3})", 1e-20); // because 13.4 != 13.40000000000000000000000000000000
+		ocl.assertQueryEquals(null, 4, "let s : Sequence(Real) = Sequence{0.2, -0.4} in Sequence{2, 3}->weightedAverage(s)"); 
+		
+		// empty sequences
+		ocl.assertQueryInvalid(null, "Sequence{}->weightedAverage(Sequence{})");
+		
+		// different size
+		ocl.assertQueryInvalid(null, "Sequence{1}->weightedAverage(Sequence{})");
+		ocl.assertQueryInvalid(null, "Sequence{}->weightedAverage(Sequence{2})");
+		
+		// invalid collection
+		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = invalid in s->weightedAverage(Sequence{5})");
+		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = invalid in Sequence{5}->weightedAverage(s)");
+		// invalid collection element
+		ocl.assertQueryInvalid(null, "Sequence{4.0, invalid, 6.0}->weightedAverage(Sequence{1, 2, 3})");
+		ocl.assertQueryInvalid(null, "Sequence{4.0, 5.0, 6.0}->weightedAverage(Sequence{1, invalid, 3})");
+		
+		// null collection
+		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in s->weightedAverage(Sequence{5})");
+		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in Sequence{5}->weightedAverage(s)");
+		// null collection element
+		ocl.assertQueryInvalid(null, "Sequence{4.0, null, 6.0}->weightedAverage(Sequence{1, 2, 3})");
+		ocl.assertQueryInvalid(null, "Sequence{4.0, 5.0, 6.0}->weightedAverage(Sequence{1, null, 3})");
+
+		ocl.dispose();
+	}
 }
