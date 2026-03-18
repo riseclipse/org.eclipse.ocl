@@ -10,4 +10,5 @@ This extension has been made pending the completion of additional library suppor
 
 ## Added functions
 
+- Trigonometric functions: sin(), cos(), tan(), asin(), acos(), atan()
 
