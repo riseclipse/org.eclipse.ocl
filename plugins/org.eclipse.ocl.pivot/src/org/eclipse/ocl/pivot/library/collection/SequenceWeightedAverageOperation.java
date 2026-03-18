@@ -1,10 +1,13 @@
 package org.eclipse.ocl.pivot.library.collection;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
+import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation;
 import org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation;
 import org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation;
@@ -36,7 +39,6 @@ public class SequenceWeightedAverageOperation extends AbstractBinaryOperation {
 		// compute sum of weights
 		TypeId realTypeId = executor.getStandardLibrary().getRealType().getTypeId();
 		RealValue weightsSum = asRealValue(CollectionSumOperation.INSTANCE.evaluate(executor, realTypeId, weights));
-			
 		if (weightsSum.bigDecimalValue().signum() == 0) {
 			throw new InvalidValueException(PivotMessages.InvalidArgument, "sum of weights is zero");
 		}
