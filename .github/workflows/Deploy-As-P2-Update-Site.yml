@@ -12,8 +12,7 @@
 
 name: Release on GitHub as Eclipse p2 update site
 
-#on: workflow_dispatch
-on: push
+on: workflow_dispatch
 
 jobs:
   build:
@@ -34,16 +33,12 @@ jobs:
         cache: 'maven'
 
     - name: Build with Maven
-      #run: |
-      #  cd ${{ github.event.repository.name }}
-      #  xvfb-run mvn -f releng/org.eclipse.ocl.releng.tycho/pom.xml -DGOAL=verify -DJAVADOC= -DPDFDOC= -DBUILD_TYPE=nightly -DBRANCH_NAME=origin/riseclipse/master -DBUILD_TYPE=nightly --show-version clean verify -Pnightly
       run: |
         cd ${{ github.event.repository.name }}
-        xvfb-run mvn -f releng/org.eclipse.ocl.releng.tycho/pom.xml -DGOAL=verify -DJAVADOC= -DPDFDOC= -DBUILD_TYPE=nightly -DBRANCH_NAME=origin/3-add-a-workflow-to-deploy-on-github-as-a-p2-update-sit -DBUILD_TYPE=nightly --show-version clean verify -Pnightly
+        xvfb-run mvn -f releng/org.eclipse.ocl.releng.tycho/pom.xml -DGOAL=verify -DJAVADOC= -DPDFDOC= -DBUILD_TYPE=nightly -DBRANCH_NAME=origin/riseclipse/master -DBUILD_TYPE=nightly --show-version clean verify -Pnightly
 
     - name: Upload flat p2 update site
-      #if: github.ref == 'refs/heads/riseclipse/master'
-      if: github.ref == 'refs/heads/3-add-a-workflow-to-deploy-on-github-as-a-p2-update-site'
+      if: github.ref == 'refs/heads/riseclipse/master'
       uses: crowbarmaster/GH-Automatic-Releases@latest
       with:
         repo_token: "${{secrets.GITHUB_TOKEN}}"
