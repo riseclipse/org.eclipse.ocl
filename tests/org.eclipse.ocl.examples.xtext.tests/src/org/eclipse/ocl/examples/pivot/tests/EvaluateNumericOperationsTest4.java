@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2021 Eclipse Modeling Project and others.
+ * Copyright (c) 2010, 2026 Eclipse Modeling Project and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *   L.Goubet, E.D.Willink - Initial API and implementation
+ *   CentraleSupélec (students V. Carrez and Y.-S. Chesnel--Bicep, professor D. Marcadet)
  *******************************************************************************/
 
 package org.eclipse.ocl.examples.pivot.tests;
@@ -1233,6 +1234,139 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		ocl.assertSemanticErrorQuery(null, "let u : UnlimitedNatural = null in u * *", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "UnlimitedNatural", "*", "UnlimitedNatural");
 
 		ocl.assertSemanticErrorQuery(null, "let u1 : UnlimitedNatural = null, u2 : UnlimitedNatural = null in u1 * u2", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "UnlimitedNatural", "*", "UnlimitedNatural");
+		ocl.dispose();
+	}
+	
+	@Test public void testNumberAsin() {
+		TestOCL ocl = createOCL();
+		
+		// Integer::asin()
+		ocl.assertQueryEquals(null, 0, "0.asin()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.asin(-0.5), "(-0.5).asin()", doubleEpsilon);
+			
+		// Real::asin()
+		ocl.assertQueryEquals(null, 0, "0.0.asin()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.asin(0.5), "0.5.asin()", doubleEpsilon);
+
+		// invalid
+		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.asin()");
+		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.asin()");
+
+		// null
+		ocl.assertQueryInvalid(null, "let i : Integer = null in i.asin()");
+		ocl.assertQueryInvalid(null, "let r : Real = null in r.asin()");
+
+		ocl.dispose();
+	}
+	
+	@Test public void testNumberAcos() {
+		TestOCL ocl = createOCL();
+		
+		// Integer::acos()
+		ocl.assertQueryEquals(null, Math.acos(0), "0.acos()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.acos(-0.5), "(-0.5).acos()", doubleEpsilon);
+			
+		// Real::acos()
+		ocl.assertQueryEquals(null, Math.acos(0), "0.0.acos()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.acos(0.5), "0.5.acos()", doubleEpsilon);
+
+		// invalid
+		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.acos()");
+		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.acos()");
+
+		// null
+		ocl.assertQueryInvalid(null, "let i : Integer = null in i.acos()");
+		ocl.assertQueryInvalid(null, "let r : Real = null in r.acos()");
+
+		ocl.dispose();
+	}
+	
+	@Test public void testNumberAtan() {
+		TestOCL ocl = createOCL();
+		
+		// Integer::atan()
+		ocl.assertQueryEquals(null, 0, "0.atan()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.atan(-0.5), "(-0.5).atan()", doubleEpsilon);
+			
+		// Real::atan()
+		ocl.assertQueryEquals(null, 0, "0.0.atan()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.atan(0.5), "0.5.atan()", doubleEpsilon);
+
+		// invalid
+		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.atan()");
+		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.atan()");
+
+		// null
+		ocl.assertQueryInvalid(null, "let i : Integer = null in i.atan()");
+		ocl.assertQueryInvalid(null, "let r : Real = null in r.atan()");
+
+		ocl.dispose();
+	}
+	
+
+	@Test public void testNumberSin() {
+		TestOCL ocl = createOCL();
+		
+		// Integer::sin()
+		ocl.assertQueryEquals(null, 0, "0.sin()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.sin(-1), "(-1).sin()", doubleEpsilon);
+			
+		// Real::sin()
+		ocl.assertQueryEquals(null, 0, "0.0.sin()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.sin(1), "1.0.sin()", doubleEpsilon);
+
+		// invalid
+		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.sin()");
+		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.sin()");
+
+		// null
+		ocl.assertQueryInvalid(null, "let i : Integer = null in i.sin()");
+		ocl.assertQueryInvalid(null, "let r : Real = null in r.sin()");
+
+		ocl.dispose();
+	}
+	
+	@Test public void testNumberCos() {
+		TestOCL ocl = createOCL();
+		
+		// Integer::cos()
+		ocl.assertQueryEquals(null, 1, "0.cos()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.cos(-1), "(-1).cos()",doubleEpsilon);
+			
+		// Real::cos()
+		ocl.assertQueryEquals(null, 1, "0.0.cos()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.cos(1), "1.0.cos()", doubleEpsilon);
+
+		// invalid
+		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.cos()");
+		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.cos()");
+
+		// null
+		ocl.assertQueryInvalid(null, "let i : Integer = null in i.cos()");
+		ocl.assertQueryInvalid(null, "let r : Real = null in r.cos()");
+
+		ocl.dispose();
+	}
+	
+	@Test public void testNumberTan() {
+		TestOCL ocl = createOCL();
+		
+		// Integer::tan()
+		ocl.assertQueryEquals(null, 1, "0.cos()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.tan(-1), "(-1).tan()", doubleEpsilon);
+			
+		// Real::tan()
+		ocl.assertQueryEquals(null, 0, "0.0.tan()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.tan(1), "1.0.tan()", doubleEpsilon);
+
+		// invalid
+		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.tan()");
+		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.tan()");
+
+		// null
+		ocl.assertQueryInvalid(null, "let i : Integer = null in i.tan()");
+		ocl.assertQueryInvalid(null, "let r : Real = null in r.tan()");
+
 		ocl.dispose();
 	}
 }
