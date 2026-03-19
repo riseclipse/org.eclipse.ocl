@@ -1,7 +1,5 @@
 package org.eclipse.ocl.pivot.library.collection;
 
-import java.util.Iterator;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -15,6 +13,9 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 
+/**
+ * SequenceWeightedAverageOperation realises the Sequence::weightedAverage() library operation.
+ */
 public class SequenceWeightedAverageOperation extends AbstractBinaryOperation {
 	
 	public static final SequenceWeightedAverageOperation INSTANCE = new SequenceWeightedAverageOperation();
