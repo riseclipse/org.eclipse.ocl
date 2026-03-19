@@ -101,6 +101,10 @@ type Bag(T) : BagType conformsTo Collection(T) => 'org.eclipse.ocl.pivot.values.
 	/**
 	The closure of applying body transitively to every distinct element of the source collection.
 	**/
+	iteration breadthClosure(i : T[1] | lambda : Lambda T() : Set(T)) : Set(T) => 'org.eclipse.ocl.pivot.library.iterator.BreadthClosureIteration';
+	/**
+	The closure of applying body transitively to every distinct element of the source collection.
+	**/
 	iteration closure(i : T[1] | lambda : Lambda T() : Set(T)) : Set(T) => 'org.eclipse.ocl.pivot.library.iterator.ClosureIteration';
 	iteration collect(V)(i : T[?] | lambda : Lambda T() : V[?]) : Bag(V) => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
 	/**
@@ -1336,6 +1340,10 @@ type OrderedSet(T) : OrderedSetType conformsTo OrderedCollection(T),UniqueCollec
 	/**
 	The closure of applying body transitively to every distinct element of the source collection.
 	**/
+	iteration breadthClosure(i : T[1] | lambda : Lambda T() : OrderedSet(T)) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.BreadthClosureIteration';
+	/**
+	The closure of applying body transitively to every distinct element of the source collection.
+	**/
 	iteration closure(i : T[1] | lambda : Lambda T() : OrderedSet(T)) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.ClosureIteration';
 	/**
 	The Sequence of elements that results from applying body to every member of the source set.
@@ -1560,6 +1568,10 @@ type Sequence(T) : SequenceType conformsTo OrderedCollection(T) => 'java.util.Li
 	/**
 	The closure of applying body transitively to every distinct element of the source collection.
 	**/
+	iteration breadthClosure(i : T[1] | lambda : Lambda T() : OrderedSet(T)) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.BreadthClosureIteration';
+	/**
+	The closure of applying body transitively to every distinct element of the source collection.
+	**/
 	iteration closure(i : T[1] | lambda : Lambda T() : OrderedSet(T)) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.ClosureIteration';
 	/**
 	The Bag of elements that results from applying body to every member of the source sequence.
@@ -1662,6 +1674,10 @@ type Sequence(T) : SequenceType conformsTo OrderedCollection(T) => 'java.util.Li
 
 type Set(T) : SetType conformsTo UniqueCollection(T) => 'java.util.Set' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
+	/**
+	The closure of applying body transitively to every distinct element of the source collection.
+	**/
+	iteration breadthClosure(i : T[1] | lambda : Lambda T() : Set(T)) : Set(T) => 'org.eclipse.ocl.pivot.library.iterator.BreadthClosureIteration';
 	/**
 	The closure of applying body transitively to every distinct element of the source collection.
 	**/
