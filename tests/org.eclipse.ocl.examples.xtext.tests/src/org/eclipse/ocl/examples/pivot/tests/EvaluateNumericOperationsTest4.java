@@ -1242,7 +1242,7 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		
 		// Integer::asin()
 		ocl.assertQueryEquals(null, 0, "0.asin()", doubleEpsilon);
-		ocl.assertQueryEquals(null, Math.asin(-0.5), "(-0.5).asin()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.asin(1), "1.asin()", doubleEpsilon);
 			
 		// Real::asin()
 		ocl.assertQueryEquals(null, 0, "0.0.asin()", doubleEpsilon);
@@ -1264,7 +1264,7 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		
 		// Integer::acos()
 		ocl.assertQueryEquals(null, Math.acos(0), "0.acos()", doubleEpsilon);
-		ocl.assertQueryEquals(null, Math.acos(-0.5), "(-0.5).acos()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.acos(1), "1.acos()", doubleEpsilon);
 			
 		// Real::acos()
 		ocl.assertQueryEquals(null, Math.acos(0), "0.0.acos()", doubleEpsilon);
@@ -1286,7 +1286,7 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		
 		// Integer::atan()
 		ocl.assertQueryEquals(null, 0, "0.atan()", doubleEpsilon);
-		ocl.assertQueryEquals(null, Math.atan(-0.5), "(-0.5).atan()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.atan(1), "1.atan()", doubleEpsilon);
 			
 		// Real::atan()
 		ocl.assertQueryEquals(null, 0, "0.0.atan()", doubleEpsilon);
