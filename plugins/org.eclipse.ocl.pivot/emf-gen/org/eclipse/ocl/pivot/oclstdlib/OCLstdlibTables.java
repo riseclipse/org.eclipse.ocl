@@ -1080,16 +1080,28 @@ public class OCLstdlibTables extends AbstractTables
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__abs = new ExecutorOperation("abs", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__acos = new ExecutorOperation("acos", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAcosOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__asin = new ExecutorOperation("asin", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAsinOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__atan = new ExecutorOperation("atan", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAtanOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__cos = new ExecutorOperation("cos", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericCosOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__floor = new ExecutorOperation("floor", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation.INSTANCE);
+			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__max = new ExecutorOperation("max", Parameters._OclSelf, Types._Real,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
+			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__min = new ExecutorOperation("min", Parameters._OclSelf, Types._Real,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
+			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__round = new ExecutorOperation("round", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
+			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__sin = new ExecutorOperation("sin", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericSinOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Real__tan = new ExecutorOperation("tan", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
+			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericTanOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Real__toString = new ExecutorOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _Sequence___lt__gt_ = new ExecutorOperation("<>", Parameters._OclSelf, Types._Sequence,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
@@ -1812,10 +1824,16 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Real___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Real___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Integer__abs /* abs() */,
+			OCLstdlibTables.Operations._Real__acos /* acos() */,
+			OCLstdlibTables.Operations._Real__asin /* asin() */,
+			OCLstdlibTables.Operations._Real__atan /* atan() */,
+			OCLstdlibTables.Operations._Real__cos /* cos() */,
 			OCLstdlibTables.Operations._Real__floor /* floor() */,
 			OCLstdlibTables.Operations._Integer__max /* max(OclSelf[1]) */,
 			OCLstdlibTables.Operations._Integer__min /* min(OclSelf[1]) */,
 			OCLstdlibTables.Operations._Real__round /* round() */,
+			OCLstdlibTables.Operations._Real__sin /* sin() */,
+			OCLstdlibTables.Operations._Real__tan /* tan() */,
 			OCLstdlibTables.Operations._Integer__toString /* toString() */
 		};
 
@@ -2465,10 +2483,16 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Real___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Real___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Real__abs /* abs() */,
+			OCLstdlibTables.Operations._Real__acos /* acos() */,
+			OCLstdlibTables.Operations._Real__asin /* asin() */,
+			OCLstdlibTables.Operations._Real__atan /* atan() */,
+			OCLstdlibTables.Operations._Real__cos /* cos() */,
 			OCLstdlibTables.Operations._Real__floor /* floor() */,
 			OCLstdlibTables.Operations._Real__max /* max(OclSelf[1]) */,
 			OCLstdlibTables.Operations._Real__min /* min(OclSelf[1]) */,
 			OCLstdlibTables.Operations._Real__round /* round() */,
+			OCLstdlibTables.Operations._Real__sin /* sin() */,
+			OCLstdlibTables.Operations._Real__tan /* tan() */,
 			OCLstdlibTables.Operations._Real__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Real__OclAny = {
