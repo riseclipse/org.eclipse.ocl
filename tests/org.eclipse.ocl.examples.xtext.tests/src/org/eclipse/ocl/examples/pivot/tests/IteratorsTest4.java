@@ -226,6 +226,57 @@ public class IteratorsTest4 extends PivotTestSuite
 				"Bag{1, 2, 3}->any(null.oclAsType(Boolean))");
 		ocl.dispose();
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Test public void test_breadthClosure_recursions_401302() throws IOException {
+		MyOCL ocl = createOCL();
+		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
+			OCLinEcoreStandaloneSetup.doSetup();
+		}
+		String nodeModel =
+				"package nodes : nodes = 'http://nodes'{\n" +
+						//			"    class Root {\n" +
+						//			"    	property nodes : Node[*] {composes};\n" +
+						//			"	 }\n" +
+						"    class Node {\n" +
+						"    	property nodes : Node[*] {ordered,!unique};\n" +
+						"    	property name : String;\n" +
+						"	 }\n" +
+						"}\n";
+		URI uri = createEcoreFile(ocl, "NodeModel", nodeModel);
+		Resource ecoreResource = ocl.getResourceSet().getResource(uri, true);
+		EPackage nodesEPackage = (EPackage) ecoreResource.getContents().get(0);
+		//		EClass rootEClass = (EClass) nodesEPackage.getEClassifier("Root");
+		EClass nodeEClass = (EClass) nodesEPackage.getEClassifier("Node");
+		EAttribute nameEAttribute = (EAttribute) nodeEClass.getEStructuralFeature("name");
+		EReference nodesEReference = (EReference) nodeEClass.getEStructuralFeature("nodes");
+		EFactory nodesEFactory = nodesEPackage.getEFactoryInstance();
+		//		EObject root = nodesEFactory.create(rootEClass);
+		EObject node1 = nodesEFactory.create(nodeEClass);
+		EObject node2 = nodesEFactory.create(nodeEClass);
+		EObject node3 = nodesEFactory.create(nodeEClass);
+		EObject node4 = nodesEFactory.create(nodeEClass);
+		EObject node5 = nodesEFactory.create(nodeEClass);
+		node1.eSet(nameEAttribute, "node1");
+		node2.eSet(nameEAttribute, "node2");
+		node3.eSet(nameEAttribute, "node3");
+		node4.eSet(nameEAttribute, "node4");
+		node5.eSet(nameEAttribute, "node5");
+		//
+		((List<EObject>)node1.eGet(nodesEReference)).add(node2);
+		//
+		((List<EObject>)node2.eGet(nodesEReference)).add(node1);
+		((List<EObject>)node2.eGet(nodesEReference)).add(node1);			// This repetition terminated recursion erroneously
+		((List<EObject>)node2.eGet(nodesEReference)).add(node2);
+		((List<EObject>)node2.eGet(nodesEReference)).add(node3);
+		((List<EObject>)node2.eGet(nodesEReference)).add(node4);
+		((List<EObject>)node2.eGet(nodesEReference)).add(node5);
+		((List<EObject>)node2.eGet(nodesEReference)).add(node2);
+		((List<EObject>)node2.eGet(nodesEReference)).add(node1);
+		((List<EObject>)node2.eGet(nodesEReference)).add(node1);
+		ocl.assertQueryEquals(node1, 5, "self->breadthClosure(nodes)->size()");
+		ocl.dispose();
+	}
 
 	/**
 	 * Tests the closure() iterator.
