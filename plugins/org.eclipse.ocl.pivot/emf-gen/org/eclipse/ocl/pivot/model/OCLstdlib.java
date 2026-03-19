@@ -1651,10 +1651,16 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Real__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Real__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Real_abs = createOperation("abs", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation", org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
+		private final @NonNull Operation op_Real_acos = createOperation("acos", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericAcosOperation", org.eclipse.ocl.pivot.library.numeric.NumericAcosOperation.INSTANCE);
+		private final @NonNull Operation op_Real_asin = createOperation("asin", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericAsinOperation", org.eclipse.ocl.pivot.library.numeric.NumericAsinOperation.INSTANCE);
+		private final @NonNull Operation op_Real_atan = createOperation("atan", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericAtanOperation", org.eclipse.ocl.pivot.library.numeric.NumericAtanOperation.INSTANCE);
+		private final @NonNull Operation op_Real_cos = createOperation("cos", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericCosOperation", org.eclipse.ocl.pivot.library.numeric.NumericCosOperation.INSTANCE);
 		private final @NonNull Operation op_Real_floor = createOperation("floor", _Integer, "org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation", org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation.INSTANCE);
 		private final @NonNull Operation op_Real_max = createOperation("max", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation", org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
 		private final @NonNull Operation op_Real_min = createOperation("min", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericMinOperation", org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
 		private final @NonNull Operation op_Real_round = createOperation("round", _Integer, "org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation", org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
+		private final @NonNull Operation op_Real_sin = createOperation("sin", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericSinOperation", org.eclipse.ocl.pivot.library.numeric.NumericSinOperation.INSTANCE);
+		private final @NonNull Operation op_Real_tan = createOperation("tan", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericTanOperation", org.eclipse.ocl.pivot.library.numeric.NumericTanOperation.INSTANCE);
 		private final @NonNull Operation op_Real_toString = createOperation("toString", _String, "org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 		private final @NonNull Operation op_String__add_ = createOperation("+", _String, "org.eclipse.ocl.pivot.library.string.StringConcatOperation", org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
 		private final @NonNull Operation op_String__lt_ = createOperation("<", _Boolean, "org.eclipse.ocl.pivot.library.string.StringLessThanOperation", org.eclipse.ocl.pivot.library.string.StringLessThanOperation.INSTANCE);
@@ -2015,6 +2021,10 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
 			ownedOperations.add(operation = op_Real_abs);
+			ownedOperations.add(operation = op_Real_acos);
+			ownedOperations.add(operation = op_Real_asin);
+			ownedOperations.add(operation = op_Real_atan);
+			ownedOperations.add(operation = op_Real_cos);
 			ownedOperations.add(operation = op_Real_floor);
 			ownedOperations.add(operation = op_Real_max);
 			ownedParameters = operation.getOwnedParameters();
@@ -2023,6 +2033,8 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("r", _OclSelf, true));
 			ownedOperations.add(operation = op_Real_round);
+			ownedOperations.add(operation = op_Real_sin);
+			ownedOperations.add(operation = op_Real_tan);
 			ownedOperations.add(operation = op_Real_toString);
 
 			ownedOperations = _String.getOwnedOperations();
@@ -3562,10 +3574,16 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Real__lt__gt_, "*\nReturns oclText[true] if the numeric value of oclText[self] is the not the same as the numeric value of object2, oclText[false] otherwise.");
 			installComment(op_Real__eq_, "*\nReturns oclText[true] if the numeric value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.");
 			installComment(op_Real_abs, "*\nThe absolute value of oclText[self].");
+			installComment(op_Real_acos, "*\nThe inverse cosine of oclText[self].");
+			installComment(op_Real_asin, "*\nThe inverse sine of oclText[self].");
+			installComment(op_Real_atan, "*\nThe inverse tangent of oclText[self].");
+			installComment(op_Real_cos, "*\nThe cosine of oclText[self].");
 			installComment(op_Real_floor, "*\nThe largest integer that is less than or equal to oclText[self].");
 			installComment(op_Real_max, "*\nThe maximum of oclText[self] and r.");
 			installComment(op_Real_min, "*\nThe minimum of oclText[self] and r.");
 			installComment(op_Real_round, "*\nThe integer that is closest to oclText[self]. When there are two such integers, the largest one.");
+			installComment(op_Real_sin, "*\nThe sine of oclText[self].");
+			installComment(op_Real_tan, "*\nThe tangent of oclText[self].");
 			installComment(op_Real_toString, "*\nConverts oclText[self] to a string value.");
 			installComment(_String, "*\nThe standard type String represents strings, which can be both ASCII or Unicode.\nString is itself an instance of the metatype PrimitiveType (from UML).");
 			installComment(op_String__add_, "*\nThe concatenation of oclText[self] and s.");

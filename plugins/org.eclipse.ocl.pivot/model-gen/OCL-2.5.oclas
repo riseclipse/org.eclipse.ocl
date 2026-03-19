@@ -1985,6 +1985,18 @@
       <ownedOperations xmi:id="ApdgA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation" name="abs" type="#Nr4QF">
         <ownedComments body="*&#xA;The absolute value of oclText[self].&#xA;"/>
       </ownedOperations>
+      <ownedOperations xmi:id="UtfrA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericAcosOperation" name="acos" type="#Nr4QF">
+        <ownedComments body="*&#xA;The inverse cosine of oclText[self].&#xA;"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="lajrA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericAsinOperation" name="asin" type="#Nr4QF">
+        <ownedComments body="*&#xA;The inverse sine of oclText[self].&#xA;"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="uljrA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericAtanOperation" name="atan" type="#Nr4QF">
+        <ownedComments body="*&#xA;The inverse tangent of oclText[self].&#xA;"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="VNegA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericCosOperation" name="cos" type="#Nr4QF">
+        <ownedComments body="*&#xA;The cosine of oclText[self].&#xA;"/>
+      </ownedOperations>
       <ownedOperations xmi:id="aXIUG" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation" name="floor" type="#tYtCd">
         <ownedComments body="*&#xA;The largest integer that is less than or equal to oclText[self].&#xA;"/>
       </ownedOperations>
@@ -1998,6 +2010,12 @@
       </ownedOperations>
       <ownedOperations xmi:id="cNx+G" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation" name="round" type="#tYtCd">
         <ownedComments body="*&#xA;The integer that is closest to oclText[self]. When there are two such integers, the largest one.&#xA;"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="m6hgA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericSinOperation" name="sin" type="#Nr4QF">
+        <ownedComments body="*&#xA;The sine of oclText[self].&#xA;"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="vFigA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericTanOperation" name="tan" type="#Nr4QF">
+        <ownedComments body="*&#xA;The tangent of oclText[self].&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="6QrlW" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" name="toString"
           type="#AlwVZ">
