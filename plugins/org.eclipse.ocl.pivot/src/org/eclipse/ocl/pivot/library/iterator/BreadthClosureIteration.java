@@ -11,7 +11,7 @@
 package org.eclipse.ocl.pivot.library.iterator;
 
 import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.Queue;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -20,6 +20,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
@@ -89,18 +90,19 @@ public class BreadthClosureIteration extends AbstractIteration
 	
 	@Override
 	public @Nullable Object evaluateIteration(@NonNull IterationManager iterationManager) {
-		Deque<IterationManager> fileAttente = new ArrayDeque<IterationManager>();
+		System.out.println("-----------------------");
+		Queue<IterationManagerSupplier> queue = new ArrayDeque<>();
 		try {
 			while (true) {
 				if (!iterationManager.hasCurrent()) {
-					IterationManager nextIterator = fileAttente.pollFirst();
+					IterationManagerSupplier nextIterator = queue.poll();
 					if (nextIterator == null) {
 						return resolveTerminalValue(iterationManager);
 					} else {
-						iterationManager = nextIterator;
+						iterationManager = nextIterator.create();
 					}
 				} else {
-					updateAccumulatorAux(iterationManager, fileAttente);
+					updateAccumulatorAux(iterationManager, queue);
 					iterationManager.advanceIterators();
 				}
 			}
@@ -112,7 +114,7 @@ public class BreadthClosureIteration extends AbstractIteration
 	
 	
 	
-	protected void updateAccumulatorAux(@NonNull IterationManager iterationManager, Deque<IterationManager> fileAttente) {
+	protected void updateAccumulatorAux(@NonNull IterationManager iterationManager, Queue<IterationManagerSupplier> queue) {
 		IterationManager.IterationManagerExtension2 iterationManager2 = (IterationManager.IterationManagerExtension2)iterationManager;
 		// The parent is the iterator
 		Object value = iterationManager.get();
@@ -138,12 +140,35 @@ public class BreadthClosureIteration extends AbstractIteration
 			CollectionTypeId sequenceId = TypeId.SEQUENCE.getSpecializedId(elementType.getTypeId());
 			collectionValue = executor.getIdResolver().createSequenceOfEach(sequenceId, bodyVal);
 		}
-		fileAttente.add(iterationManager2.createNestedIterationManager(collectionValue));
+		queue.offer(new IterationManagerSupplier(iterationManager2, collectionValue));
 	}
 
 	@Override
 	protected @Nullable Object updateAccumulator(
 			@NonNull IterationManager iterationManager) {
 		throw new UnsupportedOperationException("should not happen");
+	}
+	
+	/**
+	 * This object postpones the creation of {@link IterationManager} until necessary.
+	 * Indeed, when an {@link IterationManager} is created, the {@link EvaluationEnvironment}
+	 * used to evaluate lambda is configured with the first value in the iterable.
+	 * Therefore, if two {@link IterationManager} are created sequentially, the execution
+	 * of {@link IterationManager#evaluateBody()} with the first {@link IterationManager} 
+	 * will use the first value of the second {@link IterationManager} !
+	 */
+	protected static class IterationManagerSupplier {
+		
+		private final IterationManager.IterationManagerExtension2 parent;
+		private final @NonNull IterableValue collectionValue;
+		
+		public IterationManagerSupplier(IterationManager. @NonNull IterationManagerExtension2 parent, @NonNull IterableValue collectionValue) {
+			this.parent = parent;
+			this.collectionValue = collectionValue;
+		}
+		
+		public @NonNull IterationManager create() {
+			return parent.createNestedIterationManager(collectionValue);
+		}
 	}
 }
