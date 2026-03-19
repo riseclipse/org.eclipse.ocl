@@ -226,57 +226,6 @@ public class IteratorsTest4 extends PivotTestSuite
 				"Bag{1, 2, 3}->any(null.oclAsType(Boolean))");
 		ocl.dispose();
 	}
-	
-	/*@SuppressWarnings("unchecked")
-	@Test public void test_breadthClosure_recursions_401302() throws IOException {
-		MyOCL ocl = createOCL();
-		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
-			OCLinEcoreStandaloneSetup.doSetup();
-		}
-		String nodeModel =
-				"package nodes : nodes = 'http://nodes'{\n" +
-						//			"    class Root {\n" +
-						//			"    	property nodes : Node[*] {composes};\n" +
-						//			"	 }\n" +
-						"    class Node {\n" +
-						"    	property nodes : Node[*] {ordered,!unique};\n" +
-						"    	property name : String;\n" +
-						"	 }\n" +
-						"}\n";
-		URI uri = createEcoreFile(ocl, "NodeModel", nodeModel);
-		Resource ecoreResource = ocl.getResourceSet().getResource(uri, true);
-		EPackage nodesEPackage = (EPackage) ecoreResource.getContents().get(0);
-		//		EClass rootEClass = (EClass) nodesEPackage.getEClassifier("Root");
-		EClass nodeEClass = (EClass) nodesEPackage.getEClassifier("Node");
-		EAttribute nameEAttribute = (EAttribute) nodeEClass.getEStructuralFeature("name");
-		EReference nodesEReference = (EReference) nodeEClass.getEStructuralFeature("nodes");
-		EFactory nodesEFactory = nodesEPackage.getEFactoryInstance();
-		//		EObject root = nodesEFactory.create(rootEClass);
-		EObject node1 = nodesEFactory.create(nodeEClass);
-		EObject node2 = nodesEFactory.create(nodeEClass);
-		EObject node3 = nodesEFactory.create(nodeEClass);
-		EObject node4 = nodesEFactory.create(nodeEClass);
-		EObject node5 = nodesEFactory.create(nodeEClass);
-		node1.eSet(nameEAttribute, "node1");
-		node2.eSet(nameEAttribute, "node2");
-		node3.eSet(nameEAttribute, "node3");
-		node4.eSet(nameEAttribute, "node4");
-		node5.eSet(nameEAttribute, "node5");
-		//
-		((List<EObject>)node1.eGet(nodesEReference)).add(node2);
-		//
-		((List<EObject>)node2.eGet(nodesEReference)).add(node1);
-		((List<EObject>)node2.eGet(nodesEReference)).add(node1);			// This repetition terminated recursion erroneously
-		((List<EObject>)node2.eGet(nodesEReference)).add(node2);
-		((List<EObject>)node2.eGet(nodesEReference)).add(node3);
-		((List<EObject>)node2.eGet(nodesEReference)).add(node4);
-		((List<EObject>)node2.eGet(nodesEReference)).add(node5);
-		((List<EObject>)node2.eGet(nodesEReference)).add(node2);
-		((List<EObject>)node2.eGet(nodesEReference)).add(node1);
-		((List<EObject>)node2.eGet(nodesEReference)).add(node1);
-		ocl.assertQueryEquals(node1, 5, "self->breadthClosure(nodes)->size()");
-		ocl.dispose();
-	}*/
 
 	/**
 	 * Tests the closure() iterator.
@@ -319,6 +268,49 @@ public class IteratorsTest4 extends PivotTestSuite
 		//WIP 		ocl.assertQueryNotEquals(ocl.pkg1, metamodelManager.createOrderedSetValue(metamodelManager.getOrderedSetType(elementType)), "self->asSequence()->closure(owningPackage)");
 		ocl.dispose();
 	}
+	
+	/**
+	 * Tests the breadthClosure() iterator.
+	 */
+	// pkg1
+	// pkg1::pkg2
+	// pkg1::pkg2::jim
+	// pkg1::bob
+	// pkg1::pkg3
+	// pkg1::pkg3::pkg4
+	// pkg1::pkg3::pkg5
+	// pkg1::pkg3::pkg5::george
+	@Test public void test_breadthClosure() {
+		MyOCL ocl = createOCL();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
+		IdResolver idResolver = ocl.getIdResolver();
+		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
+		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
+		CollectionValue expected1 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg3, ocl.pkg5, ocl.george); // closure does include sources (george)
+		ocl.assertQueryEquals(ocl.george, expected1, "self.oclAsType(Package)->breadthClosure(owningPackage)");
+
+		CollectionValue expected2 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg2, ocl.jim, ocl.bob, ocl.pkg3, ocl.pkg4, ocl.pkg5, ocl.george);
+		//        CollectionValue expected2a = metamodelManager.createOrderedSetValue(null, pkg2, jim, bob, pkg3, pkg4, pkg5, george);
+		ocl.assertQueryEquals(ocl.pkg1, expected2, "self.oclAsType(Package)->breadthClosure(ownedPackages)");
+		// FIXME not a valid test for UML's unordered nested packages
+		//        ocl.assertQueryEquals(ocl.pkg1, expected2a, "self->asSequence()->closure(ownedPackages)");
+		ocl.assertQueryEquals(ocl.pkg1, expected2, "self.oclAsType(Package)->breadthClosure(ownedPackages->asSequence())");
+		SetValue expected3 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg2, ocl.jim, ocl.bob, ocl.pkg3, ocl.pkg4, ocl.pkg5, ocl.george);
+		ocl.assertQueryEquals(ocl.pkg1, expected3, "self.oclAsType(Package)->asBag()->breadthClosure(ownedPackages)");
+		ocl.assertQueryEquals(ocl.pkg1, expected3, "self.oclAsType(Package)->breadthClosure(ownedPackages->asBag())");
+
+		// empty closure
+		CollectionTypeId collectedId = expected1.getTypeId();
+		//        @SuppressWarnings("unused") DomainType elementType = collectionType.getElementType();
+		ocl.assertQueryEquals(ocl.pkg1, idResolver.createSetOfEach(collectedId, ocl.pkg1), "self.oclAsType(Package)->breadthClosure(owningPackage)");
+		//WIP        ocl.assertQueryNotEquals(ocl.pkg1, getEmptySetValue(), "self->closure(owningPackage)");
+		// empty closure
+		collectedId = TypeId.ORDERED_SET.getSpecializedId(packageType.getTypeId());
+		ocl.assertQueryEquals(ocl.pkg1, idResolver.createOrderedSetOfEach(collectedId, ocl.pkg1), "self.oclAsType(Package)->asSequence()->breadthClosure(owningPackage)");
+		//WIP 		ocl.assertQueryNotEquals(ocl.pkg1, metamodelManager.createOrderedSetValue(metamodelManager.getOrderedSetType(elementType)), "self->asSequence()->closure(owningPackage)");
+		ocl.dispose();
+	}
+	
 
 	/**
 	 * Tests that the closure() iterator handles cycles.
@@ -337,6 +329,26 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(ownedPackages, expected, "self->closure(opposite)");
 		ocl.dispose();
 	}
+	
+	/**
+	 * Tests that the breadthClosure() iterator handles cycles.
+	 */
+	@Test public void test_breadthClosure_cycles() {
+		MyOCL ocl = createOCL();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
+		IdResolver idResolver = ocl.getIdResolver();
+		org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
+		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
+		Object ownedPackages = getAttribute(packageMetaclass, "ownedPackages", packageMetaclass);
+		Object owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
+		assert (owningPackage != null) && (ownedPackages != null);
+		SetValue expected = idResolver.createSetOfEach(typeId, ownedPackages, owningPackage); // cyclic closure *does* include self
+		ocl.assertQueryEquals(owningPackage, expected, "self->breadthClosure(opposite)");
+		ocl.assertQueryEquals(ownedPackages, expected, "self->breadthClosure(opposite)");
+		ocl.dispose();
+	}
+	
+	
 
 	/**
 	 * Tests parsing the closure of operation calls.
@@ -353,6 +365,24 @@ public class IteratorsTest4 extends PivotTestSuite
 		getFakes.setType(ocl.getCompleteEnvironment().getSetType(fake, false, null, null));
 
 		ocl.assertQuery(fake, "self->closure(getFakes())");
+		ocl.dispose();
+	}
+	
+	/**
+	 * Tests parsing the breadthClosure of operation calls.
+	 */
+	@Test public void test_breadthClosure_operations() {
+		MyOCL ocl = createOCL();
+		Resource fakeResource = new XMIResourceFactoryImpl().createResource(URI.createURI("fake"));
+		Model fakeRoot = PivotUtil.createModel(null);
+		org.eclipse.ocl.pivot.Package fakePkg = PivotUtil.createOwnedPackage(fakeRoot, "fake");
+		fakeResource.getContents().add(fakePkg);
+		org.eclipse.ocl.pivot.Class fake = ocl.createOwnedClass(fakePkg, "Fake", false);
+		ocl.createGeneralization(fake, ocl.getStandardLibrary().getOclAnyType());
+		Operation getFakes = ocl.createOwnedOperation(fake, "getFakes", null, null, fake, true);
+		getFakes.setType(ocl.getCompleteEnvironment().getSetType(fake, false, null, null));
+
+		ocl.assertQuery(fake, "self->breadthClosure(getFakes())");
 		ocl.dispose();
 	}
 
@@ -409,6 +439,47 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQuery(fake, "self->closure(getSubFakes())");
 		ocl.dispose();
 	}
+	
+	/**
+	 * Tests the validation of the breadthClosure() iterator for conformance of the
+	 * body type with the iterator variable (source element) type.
+	 */
+	@Test public void test_breadthClosureValidation_typeConformance_154695() {
+		MyOCL ocl = createOCL();
+		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteEnvironment completeEnvironment = ocl.getCompleteEnvironment();
+		Resource fakeResource = new XMIResourceFactoryImpl().createResource(URI.createURI("fake"));
+		Model fakeRoot = PivotUtil.createModel(null);
+		org.eclipse.ocl.pivot.Package fakePkg = PivotUtil.createOwnedPackage(fakeRoot, "fake");
+		fakeResource.getContents().add(fakePkg);
+		org.eclipse.ocl.pivot.Class fake = ocl.createOwnedClass(fakePkg, "Fake", false);
+		@SuppressWarnings("unused")
+		Operation getFakes = ocl.createOwnedOperation(fake, "getFakes", null, null, completeEnvironment.getSetType(fake, false, null, null), true);
+
+		// subclass the Fake class
+		org.eclipse.ocl.pivot.Class subFake = ocl.createOwnedClass(fakePkg, "Subfake", false);
+		ocl.createGeneralization(subFake, fake);
+		ocl.createGeneralization(fake, standardLibrary.getOclAnyType());
+
+		// get sub-fakes from a fake
+		@SuppressWarnings("unused")
+		Operation getSubFakes = ocl.createOwnedOperation(fake, "getSubFakes", null, null, completeEnvironment.getSetType(subFake, false, null, null), true);
+
+		//        helper.setContext(subFake);
+
+		// this should not parse because the result of the closure
+		// expression
+		// is more general than the iterator variable, so cannot be
+		// assigned recursively
+		ocl.assertValidationErrorQuery(subFake, "self->closure(getFakes())",
+			VIOLATED_TEMPLATE, "IteratorExp::ClosureBodyElementTypeIsIteratorType", "self.oclAsSet()->breadthClosure(1_ : fake::Subfake[1] | 1_.getFakes())");
+
+		// this should parse OK because the result of the closure expression
+		// is more specific than the iterator variable, so it can be
+		// assigned recursively
+		ocl.assertQuery(fake, "self->breadthClosure(getSubFakes())");
+		ocl.dispose();
+	}
 
 	/**
 	 * Tests that the closure() body is not necessarily compatible.
@@ -426,6 +497,23 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertValidationErrorQuery(propertyMetaclass, "self->closure(oclContainer())", VIOLATED_TEMPLATE, "IteratorExp::ClosureBodyElementTypeIsIteratorType", "self.oclAsSet()->closure(1_ : Property[1] | 1_.oclContainer())");
 		ocl.dispose();
 	}
+	
+	/**
+	 * Tests that the breadthClosure() body is not necessarily compatible.
+	 */
+	@Test public void test_breadthClosure_body_393509() {
+		MyOCL ocl = createOCL();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
+		IdResolver idResolver = ocl.getIdResolver();
+		org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
+		org.eclipse.ocl.pivot.@NonNull Class propertyMetaclass = ClassUtil.nonNullState(environmentFactory.getASClass("Property"));
+		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
+		Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
+		SetValue expected = idResolver.createSetOfEach(typeId, owningPackage, packageMetaclass, packageMetaclass.eContainer(), packageMetaclass.eContainer().eContainer());
+		ocl.assertQueryEquals(owningPackage, expected, "self->breadthClosure(i : OclElement | i.oclContainer())");
+		ocl.assertValidationErrorQuery(propertyMetaclass, "self->breadthClosure(oclContainer())", VIOLATED_TEMPLATE, "IteratorExp::ClosureBodyElementTypeIsIteratorType", "self.oclAsSet()->breadthClosure(1_ : Property[1] | 1_.oclContainer())");
+		ocl.dispose();
+	}
 
 	/**
 	 * Tests that when the body of an iterator results in invalid, the entire
@@ -440,6 +528,26 @@ public class IteratorsTest4 extends PivotTestSuite
 		// it does not result in invalid
 		ocl.assertQueryResults(null, "Set{5, null}",
 				"let c : Set(Integer) = Set{null} in 5->closure(c)");
+
+		//        Set<Object> expected = Collections.singleton(getNull());
+		//        ocl.assertQueryEquals(EcorePackage.eINSTANCE, expected,
+		//        	"let c : Set(ocl::Type) = Set{null} in ownedType->closure(c)");
+		ocl.dispose();
+	}
+	
+	/**
+	 * Tests that when the body of an iterator results in invalid, the entire
+	 * iterator expression's value is invalid.
+	 */
+	@Test public void test_breadthClosure_invalidBody_142518() {
+		MyOCL ocl = createOCL();
+		ocl.assertQueryInvalid(ocl.getUMLMetamodel(),
+			"let c : ocl::Type = invalid in ownedClasses->breadthClosure(c)", PivotMessages.InvalidLiteral, InvalidValueException.class);
+
+		// in the case of a null value, null is allowed in a collection, so
+		// it does not result in invalid
+		ocl.assertQueryResults(null, "Set{5, null}",
+				"let c : Set(Integer) = Set{null} in 5->breadthClosure(c)");
 
 		//        Set<Object> expected = Collections.singleton(getNull());
 		//        ocl.assertQueryEquals(EcorePackage.eINSTANCE, expected,
@@ -497,6 +605,58 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(node1, 5, "self->closure(nodes)->size()");
 		ocl.dispose();
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Test public void test_closure_breadthClosure_401302() throws IOException {
+		MyOCL ocl = createOCL();
+		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
+			OCLinEcoreStandaloneSetup.doSetup();
+		}
+		String nodeModel =
+				"package nodes : nodes = 'http://nodes'{\n" +
+						//			"    class Root {\n" +
+						//			"    	property nodes : Node[*] {composes};\n" +
+						//			"	 }\n" +
+						"    class Node {\n" +
+						"    	property nodes : Node[*] {ordered,!unique};\n" +
+						"    	property name : String;\n" +
+						"	 }\n" +
+						"}\n";
+		URI uri = createEcoreFile(ocl, "NodeModel", nodeModel);
+		Resource ecoreResource = ocl.getResourceSet().getResource(uri, true);
+		EPackage nodesEPackage = (EPackage) ecoreResource.getContents().get(0);
+		//		EClass rootEClass = (EClass) nodesEPackage.getEClassifier("Root");
+		EClass nodeEClass = (EClass) nodesEPackage.getEClassifier("Node");
+		EAttribute nameEAttribute = (EAttribute) nodeEClass.getEStructuralFeature("name");
+		EReference nodesEReference = (EReference) nodeEClass.getEStructuralFeature("nodes");
+		EFactory nodesEFactory = nodesEPackage.getEFactoryInstance();
+		//		EObject root = nodesEFactory.create(rootEClass);
+		EObject node1 = nodesEFactory.create(nodeEClass);
+		EObject node2 = nodesEFactory.create(nodeEClass);
+		EObject node3 = nodesEFactory.create(nodeEClass);
+		EObject node4 = nodesEFactory.create(nodeEClass);
+		EObject node5 = nodesEFactory.create(nodeEClass);
+		node1.eSet(nameEAttribute, "node1");
+		node2.eSet(nameEAttribute, "node2");
+		node3.eSet(nameEAttribute, "node3");
+		node4.eSet(nameEAttribute, "node4");
+		node5.eSet(nameEAttribute, "node5");
+		//
+		((List<EObject>)node1.eGet(nodesEReference)).add(node2);
+		//
+		((List<EObject>)node2.eGet(nodesEReference)).add(node1);
+		((List<EObject>)node2.eGet(nodesEReference)).add(node1);			// This repetition terminated recursion erroneously
+		((List<EObject>)node2.eGet(nodesEReference)).add(node2);
+		((List<EObject>)node2.eGet(nodesEReference)).add(node3);
+		((List<EObject>)node2.eGet(nodesEReference)).add(node4);
+		((List<EObject>)node2.eGet(nodesEReference)).add(node5);
+		((List<EObject>)node2.eGet(nodesEReference)).add(node2);
+		((List<EObject>)node2.eGet(nodesEReference)).add(node1);
+		((List<EObject>)node2.eGet(nodesEReference)).add(node1);
+		ocl.assertQueryEquals(node1, 5, "self->breadthClosure(nodes)->size()");
+		ocl.dispose();
+	}
+
 
 	/**
 	 * Tests the collect() iterator.
