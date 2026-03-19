@@ -1994,11 +1994,20 @@
       <ownedOperations xmi:id="uljrA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericAtanOperation" name="atan" type="#Nr4QF">
         <ownedComments body="*&#xA;The inverse tangent of oclText[self].&#xA;"/>
       </ownedOperations>
+      <ownedOperations xmi:id="vCurA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericCbrtOperation" name="cbrt" type="#Nr4QF">
+        <ownedComments body="*&#xA;The cube root of oclText[self].&#xA;"/>
+      </ownedOperations>
       <ownedOperations xmi:id="VNegA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericCosOperation" name="cos" type="#Nr4QF">
         <ownedComments body="*&#xA;The cosine of oclText[self].&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="aXIUG" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation" name="floor" type="#tYtCd">
         <ownedComments body="*&#xA;The largest integer that is less than or equal to oclText[self].&#xA;"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="SUggA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericLogOperation" name="log" type="#Nr4QF">
+        <ownedComments body="*&#xA;The log of oclText[self].&#xA;"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="xokpG" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericLog10Operation" name="log10" type="#Nr4QF">
+        <ownedComments body="*&#xA;The log of oclText[self].&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="7detV" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation" name="max" type="#Nr4QF">
         <ownedComments body="*&#xA;The maximum of oclText[self] and r.&#xA;"/>
@@ -2008,11 +2017,18 @@
         <ownedComments body="*&#xA;The minimum of oclText[self] and r.&#xA;"/>
         <ownedParameters xmi:id="it0Fg" name="r" type="#zlfMH"/>
       </ownedOperations>
+      <ownedOperations xmi:id="vRftV" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericPowOperation" name="pow" type="#Nr4QF">
+        <ownedComments body="*&#xA;The result of oclText[self] at power r.&#xA;"/>
+        <ownedParameters xmi:id="Q9zRg" name="r" type="#zlfMH"/>
+      </ownedOperations>
       <ownedOperations xmi:id="cNx+G" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation" name="round" type="#tYtCd">
         <ownedComments body="*&#xA;The integer that is closest to oclText[self]. When there are two such integers, the largest one.&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="m6hgA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericSinOperation" name="sin" type="#Nr4QF">
         <ownedComments body="*&#xA;The sine of oclText[self].&#xA;"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="u7ltA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericSqrtOperation" name="sqrt" type="#Nr4QF">
+        <ownedComments body="*&#xA;The square root of oclText[self].&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="vFigA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericTanOperation" name="tan" type="#Nr4QF">
         <ownedComments body="*&#xA;The tangent of oclText[self].&#xA;"/>
