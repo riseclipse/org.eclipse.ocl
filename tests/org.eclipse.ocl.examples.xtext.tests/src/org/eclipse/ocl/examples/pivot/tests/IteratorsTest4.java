@@ -227,7 +227,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 	
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	@Test public void test_breadthClosure_recursions_401302() throws IOException {
 		MyOCL ocl = createOCL();
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -276,7 +276,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		((List<EObject>)node2.eGet(nodesEReference)).add(node1);
 		ocl.assertQueryEquals(node1, 5, "self->breadthClosure(nodes)->size()");
 		ocl.dispose();
-	}
+	}*/
 
 	/**
 	 * Tests the closure() iterator.

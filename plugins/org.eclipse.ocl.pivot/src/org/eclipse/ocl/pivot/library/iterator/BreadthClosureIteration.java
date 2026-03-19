@@ -94,14 +94,15 @@ public class BreadthClosureIteration extends AbstractIteration
 			while (true) {
 				if (!iterationManager.hasCurrent()) {
 					IterationManager nextIterator = fileAttente.pollFirst();
-					if (nextIterator==null) {
+					if (nextIterator == null) {
 						return resolveTerminalValue(iterationManager);
 					} else {
 						iterationManager = nextIterator;
 					}
+				} else {
+					updateAccumulatorAux(iterationManager, fileAttente);
+					iterationManager.advanceIterators();
 				}
-				updateAccumulatorAux(iterationManager, fileAttente);
-				iterationManager.advanceIterators();
 			}
 		}
 		finally {
@@ -143,6 +144,6 @@ public class BreadthClosureIteration extends AbstractIteration
 	@Override
 	protected @Nullable Object updateAccumulator(
 			@NonNull IterationManager iterationManager) {
-		return null;
+		throw new UnsupportedOperationException("should not happen");
 	}
 }
