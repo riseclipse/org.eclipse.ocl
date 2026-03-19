@@ -1369,4 +1369,122 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 
 		ocl.dispose();
 	}
+	@Test public void testNumberLog() {
+		TestOCL ocl = createOCL();
+		
+		// Integer::log()
+		ocl.assertQueryEquals(null, 0, "1.log()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.log(10), "10.log()", doubleEpsilon);
+		
+		// Real::log()
+		ocl.assertQueryEquals(null, 0, "1.0.log()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.log(10), "10.0.log()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.log(0.1), "0.1.log()", doubleEpsilon);
+
+		// invalid
+		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.log()");
+		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.log()");
+
+		// null
+		ocl.assertQueryInvalid(null, "let i : Integer = null in i.log()");
+		ocl.assertQueryInvalid(null, "let r : Real = null in r.log()");
+
+		ocl.dispose();
+	}
+	
+	@Test public void testNumberLog10() {
+		TestOCL ocl = createOCL();
+		
+		// Integer::log10()
+		ocl.assertQueryEquals(null, 0, "1.log10()", doubleEpsilon);
+		ocl.assertQueryEquals(null, 1, "10.log10()", doubleEpsilon);
+		
+		// Real::log10()
+		ocl.assertQueryEquals(null, 0, "1.0.log10()", doubleEpsilon);
+		ocl.assertQueryEquals(null, 1, "10.0.log10()", doubleEpsilon);
+		ocl.assertQueryEquals(null, -1, "0.1.log10()", doubleEpsilon);
+
+		// invalid
+		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.log10()");
+		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.log10()");
+
+		// null
+		ocl.assertQueryInvalid(null, "let i : Integer = null in i.log10()");
+		ocl.assertQueryInvalid(null, "let r : Real = null in r.log10()");
+
+		ocl.dispose();
+	}
+	
+	@Test public void testNumberPow() {
+		TestOCL ocl = createOCL();
+		
+		// Integer::pow()
+		ocl.assertQueryEquals(null, 1, "1.pow(2)", doubleEpsilon);
+		ocl.assertQueryEquals(null, 100, "10.pow(2)", doubleEpsilon);
+		
+		// Real::pow()
+		ocl.assertQueryEquals(null, 1, "1.0.pow(2)", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.pow(3.1,5.2), "3.1.pow(5.2)", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.pow(2.5,-3.4), "2.5.pow(-3.4)", doubleEpsilon);
+
+		// invalid
+		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.pow(5)");
+		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.pow(-2.4)");
+		ocl.assertQueryInvalid(null, "let i : Integer = invalid in 3.7.pow(i)");
+		ocl.assertQueryInvalid(null, "let r : Real = invalid in 0.pow(r)");
+
+		// null
+		ocl.assertQueryInvalid(null, "let i : Integer = null in i.pow(-6)");
+		ocl.assertQueryInvalid(null, "let r : Real = null in r.pow(3)");
+		ocl.assertQueryInvalid(null, "let i : Integer = null in 111.pow(i)");
+		ocl.assertQueryInvalid(null, "let r : Real = null in (-6.5).pow(r)");
+
+		ocl.dispose();
+	}
+
+	@Test public void testNumberSqrt() {
+		TestOCL ocl = createOCL();
+		
+		// Integer::sqrt()
+		ocl.assertQueryEquals(null, 1, "1.sqrt()", doubleEpsilon);
+		ocl.assertQueryEquals(null, 10, "100.sqrt()", doubleEpsilon);
+		
+		// Real::sqrt()
+		ocl.assertQueryEquals(null, 0, "0.0.sqrt()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.sqrt(10), "10.0.sqrt()", doubleEpsilon);
+		ocl.assertQueryEquals(null, 0.1, "0.01.sqrt()", doubleEpsilon);
+
+		// invalid
+		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.sqrt()");
+		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.sqrt()");
+
+		// null
+		ocl.assertQueryInvalid(null, "let i : Integer = null in i.sqrt()");
+		ocl.assertQueryInvalid(null, "let r : Real = null in r.sqrt()");
+
+		ocl.dispose();
+	}
+	
+	@Test public void testNumberCbrt() {
+		TestOCL ocl = createOCL();
+		
+		// Integer::cbrt()
+		ocl.assertQueryEquals(null, 1, "1.cbrt()", doubleEpsilon);
+		ocl.assertQueryEquals(null, 10, "1000.cbrt()", doubleEpsilon);
+		
+		// Real::cbrt()
+		ocl.assertQueryEquals(null, 0, "0.0.cbrt()", doubleEpsilon);
+		ocl.assertQueryEquals(null, Math.cbrt(10), "10.0.cbrt()", doubleEpsilon);
+		ocl.assertQueryEquals(null, 0.1, "0.001.cbrt()", doubleEpsilon);
+
+		// invalid
+		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.cbrt()");
+		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.cbrt()");
+
+		// null
+		ocl.assertQueryInvalid(null, "let i : Integer = null in i.cbrt()");
+		ocl.assertQueryInvalid(null, "let r : Real = null in r.cbrt()");
+
+		ocl.dispose();
+	}
 }

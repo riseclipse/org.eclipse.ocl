@@ -1475,9 +1475,21 @@ type Real : PrimitiveType conformsTo OclComparable, OclSummable => 'org.eclipse.
 	**/
 	operation abs() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation';
 	/**
+	The cube root of oclText[self].
+	**/
+	operation cbrt() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericCbrtOperation';
+	/**
 	The largest integer that is less than or equal to oclText[self].
 	**/
 	operation floor() : Integer[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation';
+	/**
+	The log of oclText[self].
+	**/
+	operation log() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericLogOperation';
+	/**
+	The log of oclText[self].
+	**/
+	operation log10() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericLog10Operation';
 	/**
 	The maximum of oclText[self] and r.
 	**/
@@ -1487,9 +1499,17 @@ type Real : PrimitiveType conformsTo OclComparable, OclSummable => 'org.eclipse.
 	**/
 	operation min(r : OclSelf[1]) : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericMinOperation';
 	/**
+	The result of oclText[self] at power r.
+	**/
+	operation pow(r : OclSelf[1]) : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericPowOperation';
+	/**
 	The integer that is closest to oclText[self]. When there are two such integers, the largest one.
 	**/
 	operation round() : Integer[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation';
+	/**
+	The square root of oclText[self].
+	**/
+	operation sqrt() : Real[1] => 'org.eclipse.ocl.pivot.library.numeric.NumericSqrtOperation';
 	/**
 	Converts oclText[self] to a string value.
 	**/
