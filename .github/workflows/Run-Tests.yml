@@ -23,6 +23,7 @@ on:
     push:
         branches:
             - '!refs/heads/riseclipse/master'
+    pull_request:
 
 jobs:
   build:
