@@ -456,6 +456,22 @@ public class EvaluateStringOperationsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
+	@Test public void testStringSplit() {
+		TestOCL ocl = createOCL();
+		ocl.assertQueryResults(null, "Sequence{'a','b','c'}", "'a b c'.split(' ')");
+		ocl.assertQueryResults(null, "Sequence{'a b c'}", "'a b c'.split('_')");
+		ocl.assertQueryResults(null, "Sequence{'aaa','b','cc'}", "'aaa b cc'.split(' ')");
+		ocl.assertQueryResults(null, "Sequence{'a','b','','c'}", "'a b  c'.split(' ')");
+		ocl.assertQueryResults(null, "Sequence{'a','b'}", "'a b  '.split(' ')");
+		// invalid
+		ocl.assertQueryInvalid(null, "let s : String = invalid in s.split(' ')");
+		ocl.assertQueryInvalid(null, "let s : String = invalid in ' '.split(s)");
+		// null
+		ocl.assertQueryInvalid(null, "let s : String = null in s.split(' ')");
+		ocl.assertQueryInvalid(null, "let s : String = null in ' '.split(s)");
+		ocl.dispose();
+	}
+	
 	@Test public void testStringStartsWith() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryFalse(null, "'abcdef'.startsWith('abcdefg')");
