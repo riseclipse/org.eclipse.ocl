@@ -10,5 +10,7 @@ This extension has been made pending the completion of additional library suppor
 
 ## Added functions
 
-- Trigonometric functions: sin(), cos(), tan(), asin(), acos(), atan()
-- Other math functions: log(), log10(), sqrt(), cbrt(), pow()
+- Trigonometric functions: Real::sin(), Real::cos(), Real::tan(), Real::asin(), Real::acos(), Real::atan()
+- Other math functions: Real::log(), Real::log10(), Real::sqrt(), Real::cbrt(), Real::pow(power : Real)
+- String::split(regex : String)
+- Collection::average(), Sequence::weightedAverage(weights : Sequence)

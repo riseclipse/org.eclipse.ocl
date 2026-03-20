@@ -3892,6 +3892,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Sequence_selectByType, "*\nThe sequence containing all elements of oclText[self] whose type is oclText[type].");
 			installComment(it_Sequence_sortedBy, "*\nResults in the Sequence containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).");
 			installComment(op_Sequence_subSequence, "*\nThe sub-sequence of oclText[self] starting at number lower, up to and including element number upper.");
+			installComment(op_Sequence_weightedAverage, "*\nThe weighted average of oclText[self], oclText[self] and oclText[weights] must have the same size.");
 			installComment(op_Set__neg_, "*\nThe elements of oclText[self], which are not in s.");
 			installComment(op_Set__lt__gt_, "*\nEvaluates to oclText[true] unless oclText[self] and s contain the same elements.");
 			installComment(op_Set__eq_, "*\nEvaluates to oclText[true] if oclText[self] and s contain the same elements.");
