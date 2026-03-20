@@ -46,4 +46,4 @@ jobs:
     - name: Test with Maven
       run: |
         cd ${{ github.event.repository.name }}
-        xvfb-run mvn -f releng/org.eclipse.ocl.releng.tycho/pom.xml -DGOAL=test -DJAVADOC= -DPDFDOC= -DBUILD_TYPE=nightly --show-version clean test -Pnightly
+        xvfb-run mvn -f releng/org.eclipse.ocl.releng.tycho/pom.xml -DGOAL=verify -DJAVADOC= -DPDFDOC= -DBUILD_TYPE=nightly --show-version clean verify -Pnightly
