@@ -1724,6 +1724,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Collection_asOrderedSet = createOperation("asOrderedSet", _OrderedSet_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_asSequence = createOperation("asSequence", _Sequence_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_asSet = createOperation("asSet", _Set_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation.INSTANCE);
+		private final @NonNull Operation op_Collection_average = createOperation("average", _Real, "org.eclipse.ocl.pivot.library.collection.CollectionAverageOperation", org.eclipse.ocl.pivot.library.collection.CollectionAverageOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_count = createOperation("count", _Integer, "org.eclipse.ocl.pivot.library.collection.CollectionCountOperation", org.eclipse.ocl.pivot.library.collection.CollectionCountOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_excludes = createOperation("excludes", _Boolean, "org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_excludesAll = createOperation("excludesAll", _Boolean, "org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation.INSTANCE, tp_Collection_excludesAll_T2);
@@ -2209,6 +2210,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_Collection_asOrderedSet);
 			ownedOperations.add(operation = op_Collection_asSequence);
 			ownedOperations.add(operation = op_Collection_asSet);
+			ownedOperations.add(operation = op_Collection_average);
 			ownedOperations.add(operation = op_Collection_count);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object", tp_Collection_T, false));
@@ -3680,6 +3682,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Collection_asOrderedSet, "*\nAn OrderedSet that contains all the elements from oclText[self], with duplicates removed,\nin an order dependent on the particular concrete collection type.");
 			installComment(op_Collection_asSequence, "*\nA Sequence that contains all the elements from oclText[self], in an order dependent on the particular concrete collection type.");
 			installComment(op_Collection_asSet, "*\nThe Set containing all the elements from oclText[self], with duplicates removed.");
+			installComment(op_Collection_average, "*\nThe average of the elements in this collection, only for Real and Integer.\nThe \'sum\' part is done with CollectionSumOperation which as of OCL 6.23.0 only works for Real and Integer\nbut according to https://github.com/eclipse-ocl/org.eclipse.ocl/issues/510 should be fixed ?\nIn the code base it is not, please check org.eclipse.ocl.pivot.library.collection.CollectionSumOperation\nThe \'divide by n\' part is done with NumbericDivideOperation which also only works for Real and Integer");
 			installComment(it_Collection_collectBy, "*\nThe Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.\nThe result is not flattened.");
 			installComment(it_Collection_collectNested, "*\nThe Collection of elements which results from applying body to every member of the source collection.");
 			installComment(it_Collection_collect, "*\nThe Collection of elements that results from applying body to every member of the source set.\nThe result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.\ncollectNested is defined individually for each subclass of CollectionType.");

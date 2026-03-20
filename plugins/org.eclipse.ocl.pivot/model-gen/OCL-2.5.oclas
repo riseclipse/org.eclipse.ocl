@@ -564,6 +564,10 @@
           type="#zyYl9">
         <ownedComments body="*&#xA;The Set containing all the elements from oclText[self], with duplicates removed.&#xA;"/>
       </ownedOperations>
+      <ownedOperations xmi:id="6Q,Lx" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionAverageOperation" name="average"
+          type="#Nr4QF">
+        <ownedComments body="*&#xA;The average of the elements in this collection, only for Real and Integer.&#xA;The 'sum' part is done with CollectionSumOperation which as of OCL 6.23.0 only works for Real and Integer&#xA;but according to https://github.com/eclipse-ocl/org.eclipse.ocl/issues/510 should be fixed ?&#xA;In the code base it is not, please check org.eclipse.ocl.pivot.library.collection.CollectionSumOperation&#xA;The 'divide by n' part is done with NumbericDivideOperation which also only works for Real and Integer&#xA;"/>
+      </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="oenaP" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
           name="collect" type="#Be91P">
         <ownedComments body="*&#xA;The Collection of elements that results from applying body to every member of the source set.&#xA;The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.&#xA;collectNested is defined individually for each subclass of CollectionType.&#xA;"/>
