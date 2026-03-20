@@ -35,7 +35,7 @@ jobs:
     - name: Build with Maven
       run: |
         cd ${{ github.event.repository.name }}
-        xvfb-run mvn -f releng/org.eclipse.ocl.releng.tycho/pom.xml -DGOAL=verify -DJAVADOC= -DPDFDOC= -DBUILD_TYPE=nightly -DBRANCH_NAME=origin/riseclipse/master -DBUILD_TYPE=nightly --show-version clean verify -Pnightly
+        xvfb-run mvn -f releng/org.eclipse.ocl.releng.tycho/pom.xml -DGOAL=verify -DJAVADOC= -DPDFDOC= -DBUILD_TYPE=nightly -DBRANCH_NAME=origin/riseclipse/master --show-version clean verify -Pnightly
 
     - name: Upload flat p2 update site
       if: github.ref == 'refs/heads/riseclipse/master'
