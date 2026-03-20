@@ -1654,6 +1654,10 @@ type Sequence(T) : SequenceType conformsTo OrderedCollection(T) => 'java.util.Li
 	The sub-sequence of oclText[self] starting at number lower, up to and including element number upper.
 	**/
 	operation subSequence(lower : Integer[1], upper : Integer[1]) : Sequence(T) invalidating => 'org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation';
+	/**
+	The weighted average of oclText[self], oclText[self] and oclText[weights] must have the same size.
+	**/
+	operation weightedAverage(weights : Sequence(T)) : Real[1] => 'org.eclipse.ocl.pivot.library.collection.SequenceWeightedAverageOperation';
 }
 
 type Set(T) : SetType conformsTo UniqueCollection(T) => 'java.util.Set' {

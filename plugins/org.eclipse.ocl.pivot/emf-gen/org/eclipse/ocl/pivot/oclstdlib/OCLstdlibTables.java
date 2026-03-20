@@ -471,6 +471,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull ParameterTypes _OclStereotype = TypeUtil.createParameterTypes(OCLstdlibTables.Types._OclStereotype);
 		public static final @NonNull ParameterTypes _OclType = TypeUtil.createParameterTypes(OCLstdlibTables.Types._OclType);
 		public static final @NonNull ParameterTypes _OrderedCollection__0_T__ = TypeUtil.createParameterTypes(new ExecutorSpecializedType(TypeId.ORDERED_COLLECTION, TypeParameters._0_T));
+		public static final @NonNull ParameterTypes _Sequence = TypeUtil.createParameterTypes(new ExecutorSpecializedType(TypeId.SEQUENCE, TypeParameters._0_T));
 		public static final @NonNull ParameterTypes _String = TypeUtil.createParameterTypes(OCLstdlibTables.Types._String);
 		public static final @NonNull ParameterTypes _String___Boolean = TypeUtil.createParameterTypes(OCLstdlibTables.Types._String, OCLstdlibTables.Types._Boolean);
 		public static final @NonNull ParameterTypes _String___String = TypeUtil.createParameterTypes(OCLstdlibTables.Types._String, OCLstdlibTables.Types._String);
@@ -1158,6 +1159,8 @@ public class OCLstdlibTables extends AbstractTables
 			20, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Sequence__subSequence = new ExecutorOperation("subSequence", Parameters._Integer___Integer, Types._Sequence,
 			21, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Sequence__weightedAverage = new ExecutorOperation("weightedAverage", Parameters._Sequence, Types._Sequence,
+			22, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SequenceWeightedAverageOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _Set___sub_ = new ExecutorOperation("-", Parameters._UniqueCollection__OclAny__, Types._Set,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
@@ -2571,7 +2574,8 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Sequence__selectByKind /* selectByKind(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Sequence__selectByType /* selectByType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Sequence__sortedBy /* sortedBy(T[?]|Lambda T() : OclAny[?]) */,
-			OCLstdlibTables.Operations._Sequence__subSequence /* subSequence(Integer[1],Integer[1]) */
+			OCLstdlibTables.Operations._Sequence__subSequence /* subSequence(Integer[1],Integer[1]) */,
+			OCLstdlibTables.Operations._Sequence__weightedAverage /* weightedAverage(Sequence(T)) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Sequence__Collection = {
 			OCLstdlibTables.Operations._Sequence___lt__gt_ /* _'<>'(OclSelf[?]) */,

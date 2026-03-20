@@ -1887,6 +1887,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Sequence_selectByKind = createOperation("selectByKind", _Sequence_Sequence_selectByKind_TT_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE, tp_Sequence_selectByKind_TT);
 		private final @NonNull Operation op_Sequence_selectByType = createOperation("selectByType", _Sequence_Sequence_selectByType_TT_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_Sequence_selectByType_TT);
 		private final @NonNull Operation op_Sequence_subSequence = createOperation("subSequence", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation", org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation.INSTANCE);
+		private final @NonNull Operation op_Sequence_weightedAverage = createOperation("weightedAverage", _Real, "org.eclipse.ocl.pivot.library.collection.SequenceWeightedAverageOperation", org.eclipse.ocl.pivot.library.collection.SequenceWeightedAverageOperation.INSTANCE);
 		private final @NonNull Operation op_Set__neg_ = createOperation("-", _Set_Set_T, "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
 		private final @NonNull Operation op_Set__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Set__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -2697,6 +2698,9 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lower", _Integer, true));
 			ownedParameters.add(parameter = createParameter("upper", _Integer, true));
+			ownedOperations.add(operation = op_Sequence_weightedAverage);
+			ownedParameters = operation.getOwnedParameters();
+			ownedParameters.add(parameter = createParameter("weights", _Sequence_Sequence_T, true));
 
 			ownedOperations = _Set_Set_T.getOwnedOperations();
 			ownedOperations.add(operation = op_Set__neg_);
@@ -3888,6 +3892,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Sequence_selectByType, "*\nThe sequence containing all elements of oclText[self] whose type is oclText[type].");
 			installComment(it_Sequence_sortedBy, "*\nResults in the Sequence containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).");
 			installComment(op_Sequence_subSequence, "*\nThe sub-sequence of oclText[self] starting at number lower, up to and including element number upper.");
+			installComment(op_Sequence_weightedAverage, "*\nThe weighted average of oclText[self], oclText[self] and oclText[weights] must have the same size.");
 			installComment(op_Set__neg_, "*\nThe elements of oclText[self], which are not in s.");
 			installComment(op_Set__lt__gt_, "*\nEvaluates to oclText[true] unless oclText[self] and s contain the same elements.");
 			installComment(op_Set__eq_, "*\nEvaluates to oclText[true] if oclText[self] and s contain the same elements.");
