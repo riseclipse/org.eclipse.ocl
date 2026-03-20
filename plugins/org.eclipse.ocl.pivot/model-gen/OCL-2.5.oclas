@@ -2182,6 +2182,7 @@
       </ownedOperations>
       <ownedOperations xmi:id="rSSVd" implementationClass="org.eclipse.ocl.pivot.library.collection.SequenceWeightedAverageOperation"
           name="weightedAverage" type="#Nr4QF">
+        <ownedComments body="*&#xA;The weighted average of oclText[self], oclText[self] and oclText[weights] must have the same size.&#xA;"/>
         <ownedParameters xmi:id="lsagP" name="weights" type="#rk5ZZ"/>
       </ownedOperations>
       <ownedSignature>

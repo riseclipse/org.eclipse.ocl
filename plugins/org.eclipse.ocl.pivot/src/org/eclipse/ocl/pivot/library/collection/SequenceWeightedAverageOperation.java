@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.collection;
 
-import java.util.Iterator;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
