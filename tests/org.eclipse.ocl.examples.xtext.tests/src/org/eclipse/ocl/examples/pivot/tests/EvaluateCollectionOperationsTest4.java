@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2022 Eclipse Modeling Project and others.
+ * Copyright (c) 2010, 2026 Eclipse Modeling Project and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *   L.Goubet, E.D.Willink - Initial API and implementation
+ *   CentraleSupélec (students V. Carrez and Y.-S. Chesnel--Bicep, professor D. Marcadet)
  *******************************************************************************/
 
 package org.eclipse.ocl.examples.pivot.tests;
@@ -1980,6 +1981,37 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, '3'}->oclType().upper");
 		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, 3}->oclAsType(Collection(Real))->oclType().upper");
 		ocl.assertQueryEquals(null, 3, "Set{1, 2.0, 3}->oclAsType(Collection(Real[2..4]))->oclType().upper"); // no change to dynamic bound
+		ocl.dispose();
+	}
+
+	protected double epsilon = 1e-10;
+	
+	@Test public void testCollectionAverage() {
+		TestOCL ocl = createOCL();
+		ocl.assertQueryEquals(null, 3.0, "Sequence{1, 3, 5}->average()", epsilon);
+		ocl.assertQueryEquals(null, 2.5, "Sequence{1, 2, 3, 4}->average()", epsilon);
+		ocl.assertQueryInvalid(null, "Sequence{}->average()");
+		ocl.assertQueryInvalid(null, "Sequence{1, invalid, 5}->average()");
+		ocl.assertQueryInvalid(null, "Sequence{1, 3, null}->average()");
+		
+		ocl.assertQueryEquals(null, 3.5, "Bag{1, 3, 5, 5}->average()", epsilon);
+		ocl.assertQueryEquals(null, 2.5, "Bag{1, 2, 3, 4}->average()", epsilon);
+		ocl.assertQueryInvalid(null, "Bag{}->average()");
+		ocl.assertQueryInvalid(null, "Bag{1, invalid, 5}->average()");
+		ocl.assertQueryInvalid(null, "Bag{1, 3, null}->average()");
+		
+		ocl.assertQueryEquals(null, 3, "Set{1, 3, 5}->average()", epsilon);
+		ocl.assertQueryEquals(null, 2.5, "Set{1, 2, 3, 4}->average()", epsilon);
+		ocl.assertQueryInvalid(null, "Set{}->average()");
+		ocl.assertQueryInvalid(null, "Set{1, invalid, 5}->average()");
+		ocl.assertQueryInvalid(null, "Set{1, 3, null}->average()");
+		
+		ocl.assertQueryEquals(null, 3, "OrderedSet{1, 3, 5}->average()", epsilon);
+		ocl.assertQueryEquals(null, 2.5, "OrderedSet{1, 2, 3, 4}->average()", epsilon);
+		ocl.assertQueryInvalid(null, "OrderedSet{}->average()");
+		ocl.assertQueryInvalid(null, "OrderedSet{1, invalid, 5}->average()");
+		ocl.assertQueryInvalid(null, "OrderedSet{1, 3, null}->average()");
+		
 		ocl.dispose();
 	}
 }
