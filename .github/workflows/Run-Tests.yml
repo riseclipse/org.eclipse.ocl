@@ -1,8 +1,15 @@
 # *************************************************************************
-# **  See https://fbricon.github.io/posts/use-github-releases-as-p2-repo/
-# **
+# **  Copyright (c) 2026 CentraleSupélec & EDF.
+# **  All rights reserved. This program and the accompanying materials
+# **  are made available under the terms of the Eclipse Public License v2.0
+# **  which accompanies this distribution, and is available at
+# **  https://www.eclipse.org/legal/epl-v20.html
+# ** 
 # **  This file is part of the RiseClipse tool
-# **
+# **  
+# **  Contributors:
+# **      Computer Science Department, CentraleSupélec
+# **      EDF R&D
 # **  Contacts:
 # **      dominique.marcadet@centralesupelec.fr
 # **      aurelie.dehouck-neveu@edf.fr
@@ -10,9 +17,13 @@
 # **      https://riseclipse.github.io
 # *************************************************************************
 
-name: Release on GitHub as Eclipse p2 update site
+name: Build and run tests
 
-on: workflow_dispatch
+on:
+    push:
+        branches:
+            - '!refs/heads/riseclipse/master'
+    pull_request:
 
 jobs:
   build:
@@ -32,18 +43,7 @@ jobs:
         java-version: '21'
         cache: 'maven'
 
-    - name: Build with Maven
+    - name: Test with Maven
       run: |
         cd ${{ github.event.repository.name }}
-        xvfb-run mvn -f releng/org.eclipse.ocl.releng.tycho/pom.xml -DGOAL=verify -DJAVADOC= -DPDFDOC= -DBUILD_TYPE=nightly -DBRANCH_NAME=origin/riseclipse/master --show-version clean verify -Pnightly
-
-    - name: Upload flat p2 update site
-      if: github.ref == 'refs/heads/riseclipse/master'
-      uses: crowbarmaster/GH-Automatic-Releases@latest
-      with:
-        repo_token: "${{secrets.GITHUB_TOKEN}}"
-        automatic_release_tag: "nightly"
-        prerelease: true
-        title: "Nightly build"
-        files: |
-          ${{ github.event.repository.name }}/releng/org.eclipse.ocl.releng.build-site/target/flat-repository/*
+        xvfb-run mvn -f releng/org.eclipse.ocl.releng.tycho/pom.xml -DGOAL=verify -DJAVADOC= -DPDFDOC= -DBUILD_TYPE=nightly --show-version clean verify -Pnightly
