@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2022 Willink Transformations and others.
+ * Copyright (c) 2010, 2026 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
+ *   CentraleSupélec (students V. Carrez and Y.-S. Chesnel--Bicep, professor D. Marcadet)
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.iterator;
 
@@ -35,7 +36,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.IterableValue;
 
 /**
- * ClosureIteration realizes the Collection::closure() library iteration.
+ * BreadthClosureIteration realizes the Collection::breadthClosure() library iteration.
  */
 public class BreadthClosureIteration extends AbstractIteration
 {
@@ -48,18 +49,14 @@ public class BreadthClosureIteration extends AbstractIteration
 		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
 
-	/**
-	 * @since 1.1
-	 */
+	
 	@Override
 	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createCollectionAccumulatorValue((CollectionTypeId) accumulatorTypeId);
 	}
 
 	/**
-	 *	Special case processing for closure() that deduces nullFree both source and argument.
-	 *
-	 * @since 1.15
+	 * Special case processing for breadthClosure() that deduces nullFree both source and argument.
 	 */
 	@Override
 	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
@@ -113,7 +110,7 @@ public class BreadthClosureIteration extends AbstractIteration
 	
 	
 	
-	protected void updateAccumulatorAux(@NonNull IterationManager iterationManager, Queue<IterationManagerSupplier> queue) {
+	protected void updateAccumulatorAux(@NonNull IterationManager iterationManager, @NonNull Queue<IterationManagerSupplier> queue) {
 		IterationManager.IterationManagerExtension2 iterationManager2 = (IterationManager.IterationManagerExtension2)iterationManager;
 		// The parent is the iterator
 		Object value = iterationManager.get();
@@ -143,8 +140,7 @@ public class BreadthClosureIteration extends AbstractIteration
 	}
 
 	@Override
-	protected @Nullable Object updateAccumulator(
-			@NonNull IterationManager iterationManager) {
+	protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
 		throw new UnsupportedOperationException("should not happen");
 	}
 	
