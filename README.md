@@ -14,3 +14,4 @@ This extension has been made pending the completion of additional library suppor
 - Other math functions: Real::log(), Real::log10(), Real::sqrt(), Real::cbrt(), Real::pow(power : Real)
 - String::split(regex : String)
 - Collection::average(), Sequence::weightedAverage(weights : Sequence)
+- Collection::breadthClosure(t : T | lambda : Lambda) (like closure, but with a breadth-first traversal)
