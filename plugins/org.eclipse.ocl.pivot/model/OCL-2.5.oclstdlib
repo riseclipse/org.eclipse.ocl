@@ -99,7 +99,7 @@ Bag is itself an instance of the metatype BagType.
 type Bag(T) : BagType conformsTo Collection(T) => 'org.eclipse.ocl.pivot.values.Bag' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
-	The closure of applying body transitively to every distinct element of the source collection.
+	The closure of applying body transitively with a breadth-first traversal to every distinct element of the source collection.
 	**/
 	iteration breadthClosure(i : T[1] | lambda : Lambda T() : Set(T)) : Set(T) => 'org.eclipse.ocl.pivot.library.iterator.BreadthClosureIteration';
 	/**
@@ -1338,7 +1338,7 @@ The common supertype of Sets and OrderedSets is Collection.
 type OrderedSet(T) : OrderedSetType conformsTo OrderedCollection(T),UniqueCollection(T) => 'org.eclipse.ocl.pivot.values.OrderedSet' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
-	The closure of applying body transitively to every distinct element of the source collection.
+	The closure of applying body transitively with a breadth-first traversal to every distinct element of the source collection.
 	**/
 	iteration breadthClosure(i : T[1] | lambda : Lambda T() : OrderedSet(T)) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.BreadthClosureIteration';
 	/**
@@ -1566,7 +1566,7 @@ The common supertype of Sentence and Bags is Collection.
 type Sequence(T) : SequenceType conformsTo OrderedCollection(T) => 'java.util.List' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
-	The closure of applying body transitively to every distinct element of the source collection.
+	The closure of applying body transitively with a breadth-first traversal to every distinct element of the source collection.
 	**/
 	iteration breadthClosure(i : T[1] | lambda : Lambda T() : OrderedSet(T)) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.BreadthClosureIteration';
 	/**
@@ -1675,7 +1675,7 @@ type Sequence(T) : SequenceType conformsTo OrderedCollection(T) => 'java.util.Li
 type Set(T) : SetType conformsTo UniqueCollection(T) => 'java.util.Set' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
-	The closure of applying body transitively to every distinct element of the source collection.
+	The closure of applying body transitively with a breadth-first traversal to every distinct element of the source collection.
 	**/
 	iteration breadthClosure(i : T[1] | lambda : Lambda T() : Set(T)) : Set(T) => 'org.eclipse.ocl.pivot.library.iterator.BreadthClosureIteration';
 	/**
