@@ -90,7 +90,6 @@ public class BreadthClosureIteration extends AbstractIteration
 	
 	@Override
 	public @Nullable Object evaluateIteration(@NonNull IterationManager iterationManager) {
-		System.out.println("-----------------------");
 		Queue<IterationManagerSupplier> queue = new ArrayDeque<>();
 		try {
 			while (true) {
