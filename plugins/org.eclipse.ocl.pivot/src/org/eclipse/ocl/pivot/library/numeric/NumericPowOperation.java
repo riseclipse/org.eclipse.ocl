@@ -14,7 +14,9 @@ package org.eclipse.ocl.pivot.library.numeric;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.RealValue;
 
 /**
@@ -29,6 +31,9 @@ public class NumericPowOperation extends AbstractSimpleBinaryOperation {
 		RealValue leftNumeric = asRealValue(left);
 		RealValue rightNumeric = asRealValue(right);
 		double d = Math.pow(leftNumeric.asDouble(), rightNumeric.asDouble());
+		if (Double.isNaN(d)) {
+			throw new InvalidValueException(PivotMessages.InvalidOperation,"pow",leftNumeric.asDouble() + " power " + rightNumeric.asDouble());
+		}
 		return ValueUtil.realValueOf(d);
 	}
 }
