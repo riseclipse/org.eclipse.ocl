@@ -14,7 +14,9 @@ package org.eclipse.ocl.pivot.library.numeric;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.RealValue;
 
 /**
@@ -27,7 +29,11 @@ public class NumericSqrtOperation extends AbstractSimpleUnaryOperation {
 	@Override
 	public @NonNull RealValue evaluate(@Nullable Object sourceVal) {
 		RealValue numericValue = asRealValue(sourceVal); 
-		double d = Math.sqrt(numericValue.asDouble());
+		double doubleValue = numericValue.asDouble();
+		if (doubleValue<0) {
+			throw new InvalidValueException(PivotMessages.InvalidOperation,"sqrt",doubleValue);
+		}
+		double d = Math.sqrt(doubleValue);
 		return ValueUtil.realValueOf(d);
 	}
 }

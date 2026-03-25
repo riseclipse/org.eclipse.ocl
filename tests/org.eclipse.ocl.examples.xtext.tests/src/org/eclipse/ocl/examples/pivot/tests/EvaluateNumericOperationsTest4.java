@@ -1247,7 +1247,11 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		// Real::asin()
 		ocl.assertQueryEquals(null, 0, "0.0.asin()", doubleEpsilon);
 		ocl.assertQueryEquals(null, Math.asin(0.5), "0.5.asin()", doubleEpsilon);
-
+		
+		// invalid argument
+		ocl.assertQueryInvalid(null, "1.5.asin()");
+		ocl.assertQueryInvalid(null, "(-1.5).asin()");
+		
 		// invalid
 		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.asin()");
 		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.asin()");
@@ -1269,6 +1273,10 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		// Real::acos()
 		ocl.assertQueryEquals(null, Math.acos(0), "0.0.acos()", doubleEpsilon);
 		ocl.assertQueryEquals(null, Math.acos(0.5), "0.5.acos()", doubleEpsilon);
+		
+		// invalid argument
+		ocl.assertQueryInvalid(null, "1.5.acos()");
+		ocl.assertQueryInvalid(null, "(-1.5).acos()");
 
 		// invalid
 		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.acos()");
@@ -1381,6 +1389,10 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, Math.log(10), "10.0.log()", doubleEpsilon);
 		ocl.assertQueryEquals(null, Math.log(0.1), "0.1.log()", doubleEpsilon);
 
+		// invalid argument
+		ocl.assertQueryInvalid(null, "0.log()");
+		ocl.assertQueryInvalid(null, "(-1).log()");
+		
 		// invalid
 		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.log()");
 		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.log()");
@@ -1403,7 +1415,11 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 0, "1.0.log10()", doubleEpsilon);
 		ocl.assertQueryEquals(null, 1, "10.0.log10()", doubleEpsilon);
 		ocl.assertQueryEquals(null, -1, "0.1.log10()", doubleEpsilon);
-
+		
+		// invalid argument
+		ocl.assertQueryInvalid(null, "0.log10()");
+		ocl.assertQueryInvalid(null, "(-1).log10()");
+		
 		// invalid
 		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.log10()");
 		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.log10()");
@@ -1427,6 +1443,10 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, Math.pow(3.1,5.2), "3.1.pow(5.2)", doubleEpsilon);
 		ocl.assertQueryEquals(null, Math.pow(2.5,-3.4), "2.5.pow(-3.4)", doubleEpsilon);
 
+		// invalid argument
+		ocl.assertQueryInvalid(null, "(-1).pow(-2.4)");
+		ocl.assertQueryInvalid(null, "(-1).pow(2.4)");
+		
 		// invalid
 		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.pow(5)");
 		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.pow(-2.4)");
@@ -1454,6 +1474,9 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, Math.sqrt(10), "10.0.sqrt()", doubleEpsilon);
 		ocl.assertQueryEquals(null, 0.1, "0.01.sqrt()", doubleEpsilon);
 
+		// invalid argument
+		ocl.assertQueryInvalid(null, "(-0.1).sqrt()");
+		
 		// invalid
 		ocl.assertQueryInvalid(null, "let i : Integer = invalid in i.sqrt()");
 		ocl.assertQueryInvalid(null, "let r : Real = invalid in r.sqrt()");

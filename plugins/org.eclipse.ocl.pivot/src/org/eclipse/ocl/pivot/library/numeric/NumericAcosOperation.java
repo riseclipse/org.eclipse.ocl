@@ -14,7 +14,9 @@ package org.eclipse.ocl.pivot.library.numeric;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.RealValue;
 
 /**
@@ -26,8 +28,12 @@ public class NumericAcosOperation extends AbstractSimpleUnaryOperation {
 	
 	@Override
 	public @NonNull RealValue evaluate(@Nullable Object sourceVal) {
-		RealValue numericValue = asRealValue(sourceVal); 
-		double d = Math.acos(numericValue.asDouble());
+		RealValue numericValue = asRealValue(sourceVal);
+		double doubleValue = numericValue.asDouble();
+		if (doubleValue>1 || doubleValue<-1) {
+			throw new InvalidValueException(PivotMessages.InvalidOperation,"acos",doubleValue);
+		}
+		double d = Math.acos(doubleValue);
 		return ValueUtil.realValueOf(d);
 	}
 }
