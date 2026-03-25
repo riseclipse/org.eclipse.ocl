@@ -30,6 +30,12 @@
         <ownedComments body="*&#xA;True if oclText[self] and bag contain the same elements, the same number of times.&#xA;"/>
         <ownedParameters xmi:id="P+hem" isRequired="false" name="object2" type="#zlfMH"/>
       </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="voT1w" implementationClass="org.eclipse.ocl.pivot.library.iterator.BreadthClosureIteration"
+          name="breadthClosure" type="#dkz0o">
+        <ownedComments body="*&#xA;The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
+        <ownedIterators xmi:id="8z9Vp" name="i" type="#k2OA6"/>
+        <ownedParameters xmi:id="lFc1J" isRequired="false" name="lambda" type="#xv1ql"/>
+      </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="70dcd" implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
           name="closure" type="#dkz0o">
         <ownedComments body="*&#xA;The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
@@ -1765,6 +1771,12 @@
         <ownedComments body="*&#xA;The set of elements, consisting of all elements of oclText[self], followed by objects.&#xA;"/>
         <ownedParameters xmi:id="wakcI" name="objects" type="#zE,BO"/>
       </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="otd,S" implementationClass="org.eclipse.ocl.pivot.library.iterator.BreadthClosureIteration"
+          name="breadthClosure" type="#fIXUp">
+        <ownedComments body="*&#xA;The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
+        <ownedIterators xmi:id="R1tYl" name="i" type="#53+C2"/>
+        <ownedParameters xmi:id="6GM4F" isRequired="false" name="lambda" type="#e5sKD"/>
+      </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="05nm," implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
           name="closure" type="#fIXUp">
         <ownedComments body="*&#xA;The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
@@ -2069,6 +2081,12 @@
         <ownedComments body="*&#xA;The sequence of elements, consisting of all elements of oclText[self], followed by objects.&#xA;"/>
         <ownedParameters xmi:id="cYIUW" name="objects" type="#,2,Sg"/>
       </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="EZ5Vb" implementationClass="org.eclipse.ocl.pivot.library.iterator.BreadthClosureIteration"
+          name="breadthClosure" type="#JPdH,">
+        <ownedComments body="*&#xA;The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
+        <ownedIterators xmi:id="9yRQz" name="i" type="#l1i6D"/>
+        <ownedParameters xmi:id="mEwvT" isRequired="false" name="lambda" type="#Vf8OR"/>
+      </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="QlD9H" implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
           name="closure" type="#JPdH,">
         <ownedComments body="*&#xA;The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
@@ -2209,6 +2227,12 @@
           type="#XEMMs">
         <ownedComments body="*&#xA;Evaluates to oclText[true] if oclText[self] and s contain the same elements.&#xA;"/>
         <ownedParameters xmi:id="5K,Em" isRequired="false" name="object2" type="#zlfMH"/>
+      </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="hEe1x" implementationClass="org.eclipse.ocl.pivot.library.iterator.BreadthClosureIteration"
+          name="breadthClosure" type="#MGgHF">
+        <ownedComments body="*&#xA;The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
+        <ownedIterators xmi:id="mAb8o" name="i" type="#ODsm5"/>
+        <ownedParameters xmi:id="PS5bJ" isRequired="false" name="lambda" type="#Uo45T"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="tQoce" implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
           name="closure" type="#MGgHF">
