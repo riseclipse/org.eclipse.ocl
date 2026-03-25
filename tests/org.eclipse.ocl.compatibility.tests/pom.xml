@@ -37,7 +37,8 @@
     <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
     <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
     <buildId>${buildType}${buildTimestamp}</buildId>
-    <executionEnvironment>unspecified</executionEnvironment>
+    <!-- Default for use till overridden for execution-->
+    <executionEnvironment>JavaSE-11</executionEnvironment>
     <targetRelease>unspecified</targetRelease>
     <targetPlatform>targetPlatforms/unspecified</targetPlatform>
 
@@ -60,7 +61,6 @@
     <jacoco-maven-version>0.8.17</jacoco-maven-version>
     <maven-antrun-version>3.1.0</maven-antrun-version>
     <maven-assembly-version>3.7.1</maven-assembly-version>
-    <maven-checkstyle-version>3.6.0</maven-checkstyle-version>
     <maven-clean-version>3.4.0</maven-clean-version>
     <maven-compiler-version>3.13.0</maven-compiler-version>
     <maven-deploy-version>3.1.3</maven-deploy-version>
@@ -69,13 +69,13 @@
     <maven-jar-version>3.4.2</maven-jar-version>
     <maven-javadoc-version>3.11.2</maven-javadoc-version>
     <maven-jxr-version>3.6.0</maven-jxr-version>
-    <maven-pmd-version>3.26.0</maven-pmd-version>
     <maven-resources-version>3.3.1</maven-resources-version>
     <maven-site-version>4.0.0-M16</maven-site-version>
     <maven-surefire-version>3.5.2</maven-surefire-version>
     <maven-toolchains-version>3.2.0</maven-toolchains-version>
     <!-- see ocl#2354 for problems progressing to Tycho 4.0.4 -->
-    <tycho-version>unspecified</tycho-version>
+    <!-- Default to placate editor - overridden applied for execution-->
+    <tycho-version>3.0.5</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     
     <BUILD_ALIAS></BUILD_ALIAS>
@@ -92,9 +92,6 @@
   </modules-->
 
   <build>
-    <!-- This is for checkstyle and PMD -->
-    <sourceDirectory>src</sourceDirectory>
-    
     <!-- See Bug 526404 This enables maven-surefire-plugin to do standalone tests AND tycho-surefire-plugin to do plugin tests -->
     <testOutputDirectory>${project.build.directory}/classes</testOutputDirectory>
 
@@ -152,7 +149,7 @@
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
         <configuration>
-          <resolver>p2</resolver>
+          <!--resolver>p2</resolver-->
           <executionEnvironment>${executionEnvironment}</executionEnvironment>
           <target>
             <artifact>
@@ -178,11 +175,6 @@
                 <type>eclipse-plugin</type>
                 <id>org.eclipse.jdt.annotation</id>
                 <versionRange>[2.0.0,3.0.0)</versionRange>
-              </requirement>
-              <requirement>
-                <type>eclipse-plugin</type>
-                <id>javax.annotation</id>
-                <versionRange>[1.0.0,2.0.0)</versionRange>
               </requirement>
               <requirement>
                 <type>eclipse-plugin</type>
@@ -225,7 +217,7 @@
               <includes>
                 <include>**/CompatibilityEcoreTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
+              <argLine>-DtestNameSuffix="maven ${targetRelease}" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
             </configuration>
           </execution>
@@ -239,7 +231,7 @@
               <includes>
                 <include>**/CompatibilityEcoreBacktrackingTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven-backtracking" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
+              <argLine>-DtestNameSuffix="maven-backtracking ${targetRelease}" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
             </configuration>
           </execution>
@@ -253,7 +245,7 @@
               <includes>
                 <include>**/CompatibilityUMLTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
+              <argLine>-DtestNameSuffix="maven ${targetRelease}" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
             </configuration>
           </execution>
@@ -267,7 +259,7 @@
               <includes>
                 <include>**/CompatibilityUMLBacktrackingTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven-backtracking" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
+              <argLine>-DtestNameSuffix="maven-backtracking ${targetRelease}" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
             </configuration>
           </execution>
@@ -281,7 +273,7 @@
               <includes>
                 <include>**/CompatibilityPivotTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
+              <argLine>-DtestNameSuffix="maven ${targetRelease}" -DtargetRelease=${targetRelease} -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
               <workingDirectory>${project.build.directory}/test-reports</workingDirectory>
             </configuration>
@@ -302,7 +294,7 @@
               <testClass>org.eclipse.ocl.compatibility.tests.CompatibilityEcoreTests</testClass>
               <useUIHarness>true</useUIHarness>
               <useUIThread>true</useUIThread>
-              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
+              <argLine>-DtestNameSuffix="tycho ${targetRelease}" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/plugin</reportsDirectory>
             </configuration>
           </execution>
@@ -316,7 +308,7 @@
               <testClass>org.eclipse.ocl.compatibility.tests.CompatibilityEcoreBacktrackingTests</testClass>
               <useUIHarness>true</useUIHarness>
               <useUIThread>true</useUIThread>
-              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
+              <argLine>-DtestNameSuffix="tycho ${targetRelease}" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/plugin-backtracking</reportsDirectory>
             </configuration>
           </execution>
@@ -330,7 +322,7 @@
               <testClass>org.eclipse.ocl.compatibility.tests.CompatibilityUMLTests</testClass>
               <useUIHarness>true</useUIHarness>
               <useUIThread>true</useUIThread>
-              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true -ea -Xmx256M</argLine>
+              <argLine>-DtestNameSuffix="tycho ${targetRelease}" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true -ea -Xmx256M</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/plugin</reportsDirectory>
             </configuration>
           </execution>
@@ -345,7 +337,7 @@
               <testClass>org.eclipse.ocl.compatibility.tests.CompatibilityPivotTests</testClass>
               <useUIHarness>true</useUIHarness>
               <useUIThread>true</useUIThread>
-              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -ea -Dorg.eclipse.emf.common.CommonPlugin.doNotUsePDE=true -Declipse.e4.inject.javax.disabled=true</argLine>
+              <argLine>-DtestNameSuffix="tycho ${targetRelease}" -DtargetRelease=${targetRelease} -ea -Dorg.eclipse.emf.common.CommonPlugin.doNotUsePDE=true -Declipse.e4.inject.javax.disabled=true</argLine>
               <systemProperties>
                 <TYCHO_TEST>true</TYCHO_TEST>
               </systemProperties>
@@ -431,23 +423,6 @@
           <version>${findbugs-maven-version}</version>
         </plugin-->
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-pmd-plugin</artifactId>
-          <version>${maven-pmd-version}</version>
-          <configuration>
-            <sourceEncoding>${java-source-encoding}</sourceEncoding>
-            <targetJdk>${target-java-version}</targetJdk>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>${maven-checkstyle-version}</version>
-          <configuration>
-            <encoding>${java-source-encoding}</encoding>
-          </configuration>
-        </plugin>
-        <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
           <version>${exec-maven-version}</version>
@@ -513,110 +488,6 @@
     </pluginManagement>
   </build>
   <profiles>
-    <profile>
-      <id>luna</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.6</executionEnvironment>
-        <runtime-jdk-version>1.6</runtime-jdk-version>
-        <targetRelease>luna</targetRelease>
-        <tycho-version>3.0.5</tycho-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>mars</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.7</executionEnvironment>
-        <runtime-jdk-version>1.7</runtime-jdk-version>
-        <targetRelease>mars</targetRelease>
-        <tycho-version>2.7.5</tycho-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>neon</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.8</executionEnvironment>
-        <runtime-jdk-version>1.8</runtime-jdk-version>
-        <targetRelease>neon</targetRelease>
-        <tycho-version>2.7.5</tycho-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>oxygen</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.8</executionEnvironment>
-        <runtime-jdk-version>1.8</runtime-jdk-version>
-        <targetRelease>oxygen</targetRelease>
-        <tycho-version>2.7.5</tycho-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>photon</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.8</executionEnvironment>
-        <runtime-jdk-version>1.8</runtime-jdk-version>
-        <targetRelease>photon</targetRelease>
-        <tycho-version>2.7.5</tycho-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>2018-09</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.8</executionEnvironment>
-        <runtime-jdk-version>1.8</runtime-jdk-version>
-        <targetRelease>2018-09</targetRelease>
-        <tycho-version>2.7.5</tycho-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>2018-12</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.8</executionEnvironment>
-        <runtime-jdk-version>1.8</runtime-jdk-version>
-        <targetRelease>2018-12</targetRelease>
-        <tycho-version>2.7.5</tycho-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>2019-03</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.8</executionEnvironment>
-        <runtime-jdk-version>1.8</runtime-jdk-version>
-        <targetRelease>2019-03</targetRelease>
-        <tycho-version>2.7.5</tycho-version>
-      </properties>
-    </profile>
     <profile>
       <id>2019-06</id>
       <activation>
@@ -965,6 +836,32 @@
         <executionEnvironment>JavaSE-21</executionEnvironment>
         <runtime-jdk-version>21.0</runtime-jdk-version>
         <targetRelease>2025-12</targetRelease>
+        <tycho-version>3.0.5</tycho-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>2026-03</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-21</executionEnvironment>
+        <runtime-jdk-version>21.0</runtime-jdk-version>
+        <targetRelease>2026-03</targetRelease>
+        <tycho-version>3.0.5</tycho-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>2026-06</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-21</executionEnvironment>
+        <runtime-jdk-version>21.0</runtime-jdk-version>
+        <targetRelease>2026-06</targetRelease>
         <tycho-version>3.0.5</tycho-version>
       </properties>
     </profile>
