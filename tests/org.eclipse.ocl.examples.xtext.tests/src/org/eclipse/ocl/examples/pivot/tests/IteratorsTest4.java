@@ -601,6 +601,10 @@ public class IteratorsTest4 extends PivotTestSuite
 	}
 
 
+	/**
+	 * Tests that Collection::breadthClosure returns elements in the correct order
+	 * i.e. ordered by the distance to the root.
+	 */
 	@SuppressWarnings("unchecked")
 	@Test public void test_breadthClosure_order() throws IOException {
 		MyOCL ocl = createOCL();
