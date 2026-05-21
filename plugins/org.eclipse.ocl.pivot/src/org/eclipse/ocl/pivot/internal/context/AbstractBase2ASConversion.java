@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2021 Willink Transformations and others.
+ * Copyright (c) 2012, 2026 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -167,7 +167,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 			specificationVariable.setRepresentedParameter(operationParameterVariable);
 			newSpecificationVariables.add(specificationVariable);
 		}
-		refreshList(oldSpecificationVariables, newSpecificationVariables);
+		PivotUtil.refreshList(oldSpecificationVariables, true, newSpecificationVariables);
 	}
 
 	@Override
@@ -192,7 +192,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 			//		    param.setRepresentedParameter(parameter);
 			newSpecificationVariables.add(specificationVariable);
 		}
-		refreshList(oldSpecificationVariables, newSpecificationVariables);
+		PivotUtil.refreshList(oldSpecificationVariables, true, newSpecificationVariables);
 	}
 
 	public void setPropertyContext(@NonNull ExpressionInOCL pivotSpecification, @NonNull Property contextProperty) {

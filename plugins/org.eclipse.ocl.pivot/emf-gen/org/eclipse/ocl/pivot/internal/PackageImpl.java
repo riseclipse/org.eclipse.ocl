@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2021 Willink Transformations and others.
+ * Copyright (c) 2010, 2026 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -646,13 +646,30 @@ implements org.eclipse.ocl.pivot.Package {
 	}
 
 	@Override
+	public void eraseContents() {
+		List<org.eclipse.ocl.pivot.Package> ownedPackages2 = ownedPackages;
+		if (ownedPackages2 != null) {
+			for (org.eclipse.ocl.pivot.Package asPackage : ownedPackages2) {
+				asPackage.eraseContents();
+			}
+			ownedPackages2.clear();
+		}
+		List<org.eclipse.ocl.pivot.Class> ownedClasses2 = ownedClasses;
+		if (ownedClasses2 != null) {
+			for (org.eclipse.ocl.pivot.Class asClass : ownedClasses2) {
+				asClass.eraseContents();
+			}
+			ownedClasses2.clear();
+		}
+	}
+
+	@Override
 	public @Nullable EPackage getEPackage() {
 		EObject eTarget = getESObject();
 		return eTarget instanceof EPackage ? (EPackage) eTarget : null;
 	}
 
 	@Override
-
 	public org.eclipse.ocl.pivot.@Nullable Class getOwnedClass(String className) {
 		return NameUtil.getNameable(getOwnedClasses(), className);
 	}
@@ -808,5 +825,13 @@ implements org.eclipse.ocl.pivot.Package {
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+
+	@Override
+	protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
+		if ("ocl".equals(name)) {
+			getClass();		// XXX
+		}
+		super.eBasicSetContainer(newContainer, newContainerFeatureID);
 	}
 } //PackageImpl

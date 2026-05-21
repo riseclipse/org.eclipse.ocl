@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2022 Willink Transformations and others.
+ * Copyright (c) 2010, 2026 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -1334,6 +1334,22 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
 		return ClassifierAllInstancesOperation.allInstances(executor, returnTypeId, this);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public void eraseContents() {
+		List<Operation> ownedOperations2 = ownedOperations;
+		if (ownedOperations2 != null) {
+			for (Operation asOperation : ownedOperations2) {
+				asOperation.eraseContents();
+			}
+			ownedOperations2.clear();
+		}
+	//	Namespace thisNamespace = this;
+	//	thisNamespace.eraseContents();
 	}
 
 	/**

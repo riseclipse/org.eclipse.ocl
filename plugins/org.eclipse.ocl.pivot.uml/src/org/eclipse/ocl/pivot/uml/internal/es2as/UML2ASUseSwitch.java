@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2021 Willink Transformations and others.
+ * Copyright (c) 2011, 2026 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -52,7 +52,6 @@ import org.eclipse.ocl.pivot.Vertex;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -201,7 +200,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 				org.eclipse.ocl.pivot.Class oclElementType = standardLibrary.getOclElementType();
 				newSuperTypes.add(oclElementType);
 			}
-			PivotUtilInternal.refreshList(pivotElement.getSuperClasses(), newSuperTypes);
+			PivotUtil.refreshList(pivotElement.getSuperClasses(), false, newSuperTypes);
 		}
 		return pivotElement;
 	}

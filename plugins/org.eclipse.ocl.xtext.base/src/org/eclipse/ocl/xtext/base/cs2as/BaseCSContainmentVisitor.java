@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2021 Willink Transformations and others.
+ * Copyright (c) 2012, 2026 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -47,7 +47,6 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -343,7 +342,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		}
 		pivotElement.setBehavioralClass(behavioralClass);
 		org.eclipse.ocl.pivot.Class asSuperClass = behavioralClass != null ? behavioralClass : context.getStandardLibrary().getOclElementType();
-		helper.refreshList(pivotElement.getSuperClasses(), Collections.singletonList(asSuperClass));
+		PivotUtil.refreshList(pivotElement.getSuperClasses(), false, Collections.singletonList(asSuperClass));
 		return null;
 	}
 
@@ -503,7 +502,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 				}
 				newImports.add(pivotElement);
 			}
-			helper.refreshList(root.getOwnedImports(), newImports);
+			PivotUtil.refreshList(root.getOwnedImports(), true, newImports);
 		}
 		else {
 			root.getOwnedImports().clear();
@@ -577,7 +576,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 				newPivotTemplateParameters.add(pivotTemplateParameter);
 			}
 		}
-		PivotUtilInternal.refreshList(pivotElement.getOwnedParameters(), newPivotTemplateParameters);
+		PivotUtil.refreshList(pivotElement.getOwnedParameters(), true, newPivotTemplateParameters);
 		return null;
 	}
 

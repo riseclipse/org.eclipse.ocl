@@ -87,11 +87,11 @@ This may be redirected to a file by the @-output@ option, or formatted more dete
 
 NB. The @execute@ command has not been optimized to support performance testing. Consequently any attempts to instrument it will find that the measured time is dominated by JVM warm up time, classpath analysis and OCL environment initialization. The JVM costs can be reduced by specifying multiple queries per execute. The classpath costs can be reduced by pruning all unnecessary JARs from the classpath and avoiding all usage of files.
 
-h5. -query ocl-query
+h4. -query ocl-query
 
 The required and optionally repeatable @-query@ token specifies one or more OCL queries to be evaluated.
 
-h5. -self self-uri
+h4. -self self-uri
 
 The optional @-self@ token specifies a model element to be used as the context for the OCL queries. The model element may be identified using a fragment URI with an absolute, relative or Eclipse platform resource.
 
@@ -103,11 +103,11 @@ bc..
 p. 
 If @-self@ is omitted, self evaluates to null.
 
-h5. -output file-name
+h4. -output file-name
 
 The optional @-output@ token redirects the command output to the specified file name. If omitted the output is directed to the console.
 
-h5. -exporter none|text|model
+h4. -exporter none|text|model
 
 The optional @-exporter@ token specifies whether there should be no, or textual or XML output. The textual output is suitable for simple values, but can be confusing for complex output such as collections of maps. The XML model output is appropriate for a precise intelligible but verbose output; it is an extension of the Pivot OCL Abstract Syntax comprising a literal expression that evaluates to the result value. An additional ElementLiteralExp with a referredElement property supports the representation of a value such as self. The verbosity of the output can be tamed by the @-hide@ tokens.
 
@@ -160,27 +160,47 @@ bc..
 p. 
 Additional @value/errors@ explain parsing or execution failures.
 
-h5. -hideASQuery
+h4. -hideASQuery
 
 The @-hideASQuery@ token suppresses all @results/expression@ elements from the XML output.
 
-h5. -hideASResult
+h4. -hideASResult
 
 The @-hideASResult@ token suppresses all @results/value@ elements from the XML output.
 
-h5. -hideASTypes
+h4. -hideASTypes
 
 The @-hideASTypes@ token suppresses all @type@ elements from the XML output, which may give an over 50% saving in file size.
 
-h5. -hideQuery
+h4. -hideQuery
 
 The @-hideQuery@ token suppresses all @results/query@ attributes from the XML output, or the @Query@ line and @Result:@ prefix from the textual output.
 
-h5. -hideResult
+h4. -hideResult
 
 The @-hideResult@ token suppresses all @results/result@ elements from the XML output.
 
 If both @-hideASResult@ and @-hideResult@ are specified, the evaluation is suppressed so the results indicate just the success or failure of query parsing.
+
+h3. Exists command
+
+The @exists@ command tests whether a given file name exists.
+This can be helpful to debug the compatibility of the current directory and/or workspace that are used for non-absolute names.
+
+A default execution such as
+
+bc.. 
+ocl exists -file "NoSuchFile.xml"
+p. 
+just returns a textual serialization of the result to the console.
+
+bc.. 
+"NoSuchFile.xml" does not exist
+p. 
+
+h4. -file file-name
+
+The required @-file@ token specifies a file name whose existence is to be tested.
 
 h3. Validate command
 
@@ -194,22 +214,22 @@ p.
 
 The validation results are sent to the console but may be redirected by the @-output@ token using a raw text, HTML or XML formatting according to the @-exporter@ selection.
 
-h5. -model file-name
+h4. -model file-name
 
 The required @-model@ token specifies the file name in which the model to be validate is stored.
 
-h5. -rules file-name
+h4. -rules file-name
 
-The required @-rules@ token specifies one or more OCL documents that define constraints to be validated. A text file enumerating many OCL document files may also be specified.
+The optional @-rules@ token specifies zero or more OCL documents that define additional constraints to be validated. A text file enumerating many OCL document files may also be specified.  When @-rules@ is omitted only the standard EMF validation rules are used.
 
-h5. -output file-name
+h4. -output file-name
 
 The optional @-output@ token redirects the command output to the specified file name. If omitted the output is directed to the console.
 
-h5. -exporter html|model|text
+h4. -exporter csv|html|model|text
 
-The optional @-exporter@ token specifies whether there should be textual or HTML or XML output. The textual output is used as the default.
+The optional @-exporter@ token specifies the form of output. The default textual or HTML output provide an overview identifying the models and validation verdict counts. The CSV and model output provide a detailed output identifying every validation attempt. The CSV output is bloated but verbose in the expectation that a user will hide/sort/count columns to suit their requirements. THe model output may be viewed using the Samp,e Reflective Ecore Editor or consumed by a custom tool.
 
-h5. -using all|java|ocl|uml
+h4. -using all|java|ocl|uml
 
 A sub-selection of the validation may be specified  by choosing just one or more of the embedded Java, OCL or UML constraints.

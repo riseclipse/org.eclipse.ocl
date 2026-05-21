@@ -67,4 +67,12 @@ The actual constraints are lazily loaded by the first validation run that uses t
       </document>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Dummy -->
+      <package
+            uri="http://www.eclipse.org/ocl/test/Pivot/Dummy.ecore"
+            class="org.eclipse.ocl.examples.xtext.tests.dummy.DummyPackage"
+            genModel="models/genmodel/Dummy.genmodel"/>
+   </extension>
+
 </plugin>

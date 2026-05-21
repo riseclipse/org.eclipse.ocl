@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2018 Willink Transformations and others.
+ * Copyright (c) 2011, 2026 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -19,6 +19,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Property;
 
+/**
+ * An AmbiguitiesAdapter annotates a CSResource element with a list of amiguities that arose while
+ * processing the CSResource element. These 'annotations' are eventually
+ * realized as CSRsource.errors diagnostics.
+ */
 public class AmbiguitiesAdapter extends ExceptionAdapter
 {
 	/**
@@ -53,6 +58,11 @@ public class AmbiguitiesAdapter extends ExceptionAdapter
 	@Override
 	public String getErrorMessage() {
 		return toString();
+	}
+
+	@Override
+	public boolean isAdapterForType(Object type) {
+		return (type instanceof Class<?>) && ((Class<?>)type).isAssignableFrom(AmbiguitiesAdapter.class);
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Willink Transformations and others.
+ * Copyright (c) 2021, 2026 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -12,8 +12,11 @@ package org.eclipse.ocl.xtext.base.ui.utilities;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.WeakHashMap;
 
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -23,9 +26,11 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
@@ -44,6 +49,23 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 	 * The null part thread for use when no part has been opened.
 	 */
 	private static final @Nullable ThreadLocalExecutor NOT_A_PART_THREAD = null;
+
+	/**
+	 * Return the IWorkbenchPart for the activePartThread. Returns null if on a worker thread or if
+	 * no IWorkbenchPart is active.
+	 */
+	public static @Nullable IWorkbenchPart basicGetPart() {
+		ThreadLocalExecutor threadLocalExecutor = get();
+		if (threadLocalExecutor instanceof ThreadLocalExecutorUI) {
+			ThreadLocalExecutorUI threadLocalExecutorUI = (ThreadLocalExecutorUI)threadLocalExecutor;
+			for (Entry<@NonNull IWorkbenchPart, @NonNull ThreadLocalExecutor> entry : threadLocalExecutorUI.part2partThread.entrySet()) {
+				if (entry.getValue() == threadLocalExecutorUI.activePartThread) {
+					return entry.getKey();
+				}
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Return the ThreadLocalExecutor for the activePart. Returns null if on a worker thread or if
@@ -242,9 +264,28 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 		}
 	}
 
+	@Override
+	public void localInit(@NonNull EditingDomain editingDomain, @NonNull InitWrapperCallBack<?, ?> callBack) {
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
+		if (activeWorkbenchWindow != null) {
+			IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
+			for (IEditorReference editorReference : activePage.getEditorReferences()) {
+				IEditorPart editor = editorReference.getEditor(false);
+				if (editor instanceof IEditingDomainProvider) {
+					EditingDomain pageEditingDomain = ((IEditingDomainProvider)editor).getEditingDomain();
+					if (pageEditingDomain == editingDomain) {
+						ThreadLocalExecutor initPartThread = getPartThread(editor);
+						localInit(initPartThread, callBack, NeedsInit.WRAP_WITH_PART_THREAD);
+					}
+				}
+			}
+		}
+	}
+
 	/**
 	 * Initialize the initPart after ensuring that an EnvironmentFactory created by the callBack is attached
-	 * to the initPart rather than the activePart. THis is typically invoked by an OCL-aware part such as the
+	 * to the initPart rather than the activePart. This is typically invoked by an OCL-aware part such as the
 	 * BaseEditor to configure its EnvironmentFactory while executing on behalf of whichever part provides
 	 * the trigger such as an Open OCL Editor menu action.
 	 * @throws PartInitException

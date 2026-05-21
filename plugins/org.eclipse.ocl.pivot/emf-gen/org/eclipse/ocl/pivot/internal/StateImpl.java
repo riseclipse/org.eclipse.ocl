@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2019 Willink Transformations and others.
+ * Copyright (c) 2010, 2026 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -1164,5 +1164,16 @@ public class StateImpl
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitState(this);
+	}
+
+	@Override
+	public void eraseContents() {
+		List<Region> ownedRegions2 = ownedRegions;
+		if (ownedRegions2 != null) {
+			for (Region asRegion : ownedRegions2) {
+				asRegion.eraseContents();
+			}
+			ownedRegions2.clear();
+		}
 	}
 } //StateImpl

@@ -101,6 +101,7 @@ import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.XtextResource;
 import org.junit.Rule;
 import org.junit.rules.TestName;
+import org.osgi.framework.Bundle;
 
 import junit.framework.TestCase;
 
@@ -226,6 +227,16 @@ public class PivotTestCase extends TestCase
 			assertValidationDiagnostics("AS2Ecore invalid", ecoreResource, asValidationMessages);
 		}
 		return ecoreResource;
+	}
+
+	protected static void assertBadBundlesAreNotOnClasspath(@NonNull String @NonNull [] badBundles) {
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			// Diagnose auto-generated test projects that contribute conflicting registrations causing confusing failures.
+			for (String badBundle : badBundles) {
+				Bundle bundle = Platform.getBundle(badBundle);
+				assertNull("Auto-generated " + badBundle + " bundle is on classpath; close it.", bundle);
+			}
+		}
 	}
 
 	@Deprecated /* @deprecated provide resource argument */
@@ -498,6 +509,37 @@ public class PivotTestCase extends TestCase
 		return globalEnvironmentFactory != null ? (StandaloneProjectMap)globalEnvironmentFactory.getProjectManager() : null; //projectMap;
 	}
 
+	/**
+	 * Adjust the nsURI spelling so that the conflicting nsURI detection by AbstractProjectManager.assessResource is not triggered.
+	 */
+	public static void bowdlerize(@NonNull Resource ecoreResource) {
+		URI uri = ecoreResource.getURI();
+	//	uri.appendFileExtension("$$$");
+	//	ecoreResource.setURI(uri);
+		int anonEPackageCount = 0;
+		for (EObject eObject : ecoreResource.getContents()) {
+			if (eObject instanceof EPackage) {
+				anonEPackageCount = bowdlerize((EPackage)eObject, anonEPackageCount);
+			}
+		}
+	}
+
+	private static int bowdlerize(@NonNull EPackage ePackage, int anonEPackageCount) {
+		String nsURI = ePackage.getNsURI();
+		if (nsURI == null) {
+			nsURI = "$$$" + anonEPackageCount++;
+		}
+		else {
+			nsURI = "$$$" + nsURI;
+		}
+		ePackage.setNsURI(nsURI);
+		for (EPackage eSubPackage : ePackage.getESubpackages()) {
+			assert eSubPackage != null;
+			anonEPackageCount = bowdlerize(eSubPackage, anonEPackageCount);
+		}
+		return anonEPackageCount;
+	}
+
 	public static void closeTestLog() {
 		if (testLog != null) {
 			try {
@@ -763,7 +805,7 @@ public class PivotTestCase extends TestCase
 
 	/**
 	 * Execute the test as a Runnable on its own thread so that the thread terminates and the
-	 * release of resources by the finalizr is demonstrated.
+	 * release of resources by the finalizer is demonstrated.
 	 * @throws Throwable
 	 */
 	protected void doTestRunnable(@NonNull TestRunnable testRunnable) throws Throwable {
@@ -796,10 +838,10 @@ public class PivotTestCase extends TestCase
 					System.gc();
 					System.runFinalization();
 				}
-				if (testRunnable.throwable != null) {
-					throw testRunnable.throwable;
-				}
 			}
+		}
+		if (testRunnable.throwable != null) {
+			throw testRunnable.throwable;
 		}
 	}
 

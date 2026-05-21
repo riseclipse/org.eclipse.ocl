@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2021 Willink Transformations and others.
+ * Copyright (c) 2010, 2026 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -51,7 +51,7 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 		private Element importedElement = null;
 		private Throwable throwable = null;
 
-		public ScopeView computeLookup(ImportCS targetElement, EnvironmentView environmentView, ScopeView scopeView) {
+		public ScopeView computeLookup(@NonNull ImportCS targetElement, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
 			String name = environmentView.getName();
 			if (name != null) {				// Looking for a specific name
 				importModel(targetElement, environmentView);

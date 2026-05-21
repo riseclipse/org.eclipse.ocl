@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2020 Willink Transformations and others.
+ * Copyright (c) 2011, 2026 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -18,18 +18,19 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
  */
 public class ExceptionAdapter extends AdapterImpl
 {
-	private final Exception exception;
+	@Deprecated /* redundant wrt subclasses */
+	private final Throwable throwable;
 
-	public ExceptionAdapter(Exception exception) {
-		this.exception = exception;
+	public ExceptionAdapter(Throwable throwable) {
+		this.throwable = throwable;
 	}
 
 	@Override
 	public boolean isAdapterForType(Object type) {
-		return type == ExceptionAdapter.class;
+		return (type instanceof Class<?>) && ((Class<?>)type).isAssignableFrom(ExceptionAdapter.class);
 	}
 
 	public String getErrorMessage() {
-		return exception.getLocalizedMessage();
+		return throwable.getLocalizedMessage();
 	}
 }

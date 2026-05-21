@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2018 CEA LIST and others.
+ * Copyright (c) 2014, 2026 CEA LIST and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * The ModelAnalysis captures the overall analysis of the UML M1 ProfileApplication and ElementExtensions.
@@ -323,7 +324,7 @@ public class ModelAnalysis
 			assert stereotype2extension != null;
 			List<ElementExtension> newElementExtensions = new ArrayList<ElementExtension>(stereotype2extension.values());
 			List<ElementExtension> oldElementExtensions = asElement.getOwnedExtensions();
-			converter.refreshList(oldElementExtensions, newElementExtensions);
+			PivotUtil.refreshList(oldElementExtensions, true, newElementExtensions);
 		}
 		/*		if (UML2AS.ADD_ELEMENT_EXTENSION.isActive()) {
 			StringBuffer s = new StringBuffer();

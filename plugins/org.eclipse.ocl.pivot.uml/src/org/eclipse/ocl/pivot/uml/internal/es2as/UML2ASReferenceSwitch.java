@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2021 Willink Transformations and others.
+ * Copyright (c) 2011, 2026 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -130,7 +130,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 			org.eclipse.ocl.pivot.Class oclElementType = standardLibrary.getOclElementType();
 			asSuperClasses.add(oclElementType);
 		}
-		converter.refreshList(asClass.getSuperClasses(), asSuperClasses);
+		PivotUtil.refreshList(asClass.getSuperClasses(), false, asSuperClasses);
 		return asClass;
 	}
 

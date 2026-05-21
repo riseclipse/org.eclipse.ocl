@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2022 Obeo and others.
+ * Copyright (c) 2014, 2026 Obeo and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -21,6 +21,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
@@ -38,7 +43,7 @@ public abstract class StandaloneCommand
 	 * Redirect the default stdout clutter for test purposes.
 	 */
 	public static @NonNull Appendable setDefaultOutputStream(@NonNull Appendable defaultOutputStream) {
-		Appendable savedDefaultOutputStream = defaultOutputStream;
+		Appendable savedDefaultOutputStream = DEFAULT_OUTPUT_STREAM;
 		DEFAULT_OUTPUT_STREAM = defaultOutputStream;
 		return savedDefaultOutputStream;
 	}
@@ -208,6 +213,11 @@ public abstract class StandaloneCommand
 		public File getOutputFile() {
 			return outputFile;
 		}
+
+		@Override
+		public String toString() {
+			return super.toString() + "=" + outputFile;
+		}
 	}
 
 	public static class BooleanToken extends CommandToken
@@ -232,6 +242,11 @@ public abstract class StandaloneCommand
 		public boolean isPresent() {
 			return isPresent;
 		}
+
+		@Override
+		public String toString() {
+			return super.toString() + "=" + isPresent;
+		}
 	}
 
 	public static class StringToken extends CommandToken
@@ -253,6 +268,59 @@ public abstract class StandaloneCommand
 		@Override
 		public boolean isSingleton() {
 			return true;
+		}
+	}
+
+	/**
+	 * Return a URI suitable for creaing a Resource from a file Path.
+	 *
+	 * @param filePath
+	 *            the file path.
+	 * @return an URI from the path.
+	 */
+	protected static URI getModelUri(@NonNull String fileName) {
+		URI fileUri;
+		try {
+			fileUri = URI.createURI(fileName, true);
+			if (!fileUri.isPlatform() && !fileUri.isFile() && !fileUri.isArchive()) {
+				File file = new File(fileName).getCanonicalFile();		// FIXME is this necessary
+				IPath filePath = new Path(file.getAbsolutePath());
+				if (isRelativePath(filePath)) {
+					fileUri = URI.createPlatformResourceURI(filePath.toString(), true);
+				} else {
+					fileUri = URI.createFileURI(filePath.toString());
+				}
+			}
+		//	System.out.println("getModelUri '" + fileName + "' => '" + fileUri + "'");
+			return fileUri;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/*
+	getModelUri
+	'archive:file:/home/jenkins/.m2/repository/p2/osgi/bundle/org.eclipse.ocl.examples.xtext.tests/3.24.0.v20260519-0614/org.eclipse.ocl.examples.xtext.tests-3.24.0.v20260519-0614.jar!/models/standalone/BadEcore.ecore'
+	=>
+	'file:/home/jenkins/agent/workspace/ocl-compatibility-21/tests/org.eclipse.ocl.compatibility.tests/target/test-reports/archive:file:/home/jenkins/.m2/repository/p2/osgi/bundle/org.eclipse.ocl.examples.xtext.tests/3.24.0.v20260519-0614/org.eclipse.ocl.examples.xtext.tests-3.24.0.v20260519-0614.jar!/models/standalone/BadEcore.ecore'
+	*/
+	
+	/**
+	 * Checks if the path is relative or absolute.
+	 *
+	 * @param path
+	 *            a file path.
+	 * @return true if the path is relative, false otherwise.
+	 */
+	private static boolean isRelativePath(IPath path) {
+		if (ResourcesPlugin.getPlugin() != null) {
+			IResource resource = ResourcesPlugin.getWorkspace().getRoot().findMember(path);
+			return resource != null && resource.exists();
+		}
+		else {
+			return false;
 		}
 	}
 
