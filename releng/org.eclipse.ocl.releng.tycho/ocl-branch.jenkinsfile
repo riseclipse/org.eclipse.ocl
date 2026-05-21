@@ -45,8 +45,8 @@ pipeline {
 			steps {
 				script {
 					env.BUILD_TYPE = params.BUILD_TYPE
-					echo "${params.BUILD_TYPE} ${params.JAVADOC} ${params.SIGNING}"
-					currentBuild.description = "${params.BUILD_TYPE} ${params.JAVADOC} ${params.SIGNING}"
+					echo "${params.BUILD_TYPE}"
+					currentBuild.description = "${params.BUILD_TYPE}"
 				}
 			}
 		}
@@ -64,14 +64,36 @@ pipeline {
 							-f releng/org.eclipse.ocl.releng.tycho/pom.xml \
 							--no-transfer-progress \
 							--show-version \
+							-Dorg.eclipse.equinox.p2.transport.ecf.retry=100 \
 							clean \
 							verify \
 							-P${BUILD_TYPE} \
 							 --global-toolchains toolchains.xml
+						cd releng/org.eclipse.ocl.releng.build-site/target/repository
+						zip -r ../../../../p2repo.zip .
 						"""
 				}
-				archiveArtifacts allowEmptyArchive: true, artifacts: 'releng/org.eclipse.ocl.releng.build-site/target/repository/**/*'
 				archiveArtifacts allowEmptyArchive: true, artifacts: 'tests/*/target/**/surefire-reports/**/TEST-*.xml'
+				archiveArtifacts allowEmptyArchive: true, artifacts: 'p2repo.zip'
+			}
+		}
+		stage('Publish') {
+			when {
+				expression { return params.BUILD_TYPE != 'reload' && currentBuild.getPreviousBuild() != null }
+			}
+			steps {
+				sshagent(['projects-storage.eclipse.org-bot-ssh']) {
+					sh '''
+						set -e
+						set -x
+						LOGIN="genie.ocl@projects-storage.eclipse.org"
+						BUILDS="/home/data/httpd/download.eclipse.org/modeling/mdt/ocl/builds"
+						ssh $LOGIN "cd $BUILDS; rm -rf archive/ocl-branch/next; mkdir -p archive/ocl-branch/next"
+						scp -r p2repo.zip $LOGIN:$BUILDS/archive/ocl-branch/next/
+						ssh $LOGIN "cd $BUILDS/archive/ocl-branch/next; unzip -ou p2repo.zip -d ."
+						ssh $LOGIN "cd $BUILDS/archive/ocl-branch; mv latest prev; mv next latest; rm -rf prev latest/p2repo.zip"
+					'''
+				}
 			}
 		}
 	}
@@ -83,7 +105,7 @@ body: "Project: ${env.JOB_NAME}\n\
 Build Number: ${env.BUILD_NUMBER}\n\
 Build URL: <${env.BUILD_URL}>\n\
 Console: <${env.BUILD_URL}console>"
-			archiveArtifacts allowEmptyArchive: true, artifacts: '**'
+			archiveArtifacts allowEmptyArchive: true, artifacts: '**/*'
 		}
 
 		fixed {

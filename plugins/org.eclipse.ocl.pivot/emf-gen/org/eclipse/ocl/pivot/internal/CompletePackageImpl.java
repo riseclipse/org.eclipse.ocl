@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010, 2019 Willink Transformations and others.
+ * Copyright (c) 2010, 2026 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
-import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -22,8 +21,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -537,7 +534,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 				return (CompleteModelInternal) eContainer;
 			}
 		}
-		throw new IllegalStateException();
+		throw new IllegalStateException("Missing CompleteModel for CompletePackage " + nsURI);
 	}
 
 	@Override

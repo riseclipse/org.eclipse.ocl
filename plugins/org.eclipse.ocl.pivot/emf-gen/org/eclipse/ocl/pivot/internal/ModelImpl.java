@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2019 Willink Transformations and others.
+ * Copyright (c) 2012, 2026 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -440,6 +440,20 @@ public class ModelImpl extends NamespaceImpl implements Model
 	protected void didRemovePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
 		if (rootListeners != null) {
 			rootListeners.didRemovePackage(partialPackage);
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public void eraseContents() {
+		List<org.eclipse.ocl.pivot.Package> ownedPackages2 = ownedPackages;
+		if (ownedPackages2 != null) {
+			for (org.eclipse.ocl.pivot.Package asPackage : ownedPackages2) {
+				asPackage.eraseContents();
+			}
+			ownedPackages2.clear();
 		}
 	}
 

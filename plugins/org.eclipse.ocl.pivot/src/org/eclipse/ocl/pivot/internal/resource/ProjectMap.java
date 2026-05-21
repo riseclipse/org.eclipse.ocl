@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2021 Willink Transformations and others.
+ * Copyright (c) 2011, 2026 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -235,7 +235,7 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 					event.getDelta().accept(visitor);
 					if (pluginXMLdeltas != null) {
 						for (IResourceDelta delta : pluginXMLdeltas) {
-							int kind = delta.getKind();
+							@SuppressWarnings("unused") int kind = delta.getKind();
 						//	System.out.println("Delta " + kind + " for " + delta + ((kind & IResourceDelta.ADDED) != 0 ? " ADDED" : "") + ((kind & IResourceDelta.CHANGED) != 0 ? " CHANGED" : "") + ((kind & IResourceDelta.REMOVED) != 0 ? " REMOVED" : ""));
 							// FIXME Could process target platform project chnage here
 						}

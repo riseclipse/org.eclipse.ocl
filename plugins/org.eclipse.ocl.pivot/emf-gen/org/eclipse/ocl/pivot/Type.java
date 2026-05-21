@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2022 Willink Transformations and others.
+ * Copyright (c) 2010, 2026 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -35,8 +35,10 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
+	 * *
 	 * Return the type to be used as the element type when this is flattened. For most types this is self.
 	 * For a CollectionType, it is the transitive element type.
+	 *
 	 * <!-- end-model-doc -->
 	 * @generated
 	 */

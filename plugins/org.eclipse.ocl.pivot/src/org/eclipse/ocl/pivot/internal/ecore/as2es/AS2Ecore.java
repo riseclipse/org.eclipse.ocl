@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2021 Willink Transformations and others.
+ * Copyright (c) 2010, 2026 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -121,7 +121,7 @@ public class AS2Ecore extends AbstractConversion
 		}
 
 		@Override
-		public @Nullable Resource getResource() {
+		public @NonNull Resource getResource() {
 			return ecoreResource;
 		}
 
@@ -431,13 +431,17 @@ public class AS2Ecore extends AbstractConversion
 			if (Boolean.valueOf(String.valueOf(options.get(OPTION_GENERATE_STRUCTURAL_XMI_IDS)))) {
 				XMIUtil.assignIds(ecoreResource, new XMIUtil.StructuralENamedElementIdCreator(), null);
 			}
-			ecore2as = new InverseConversion(ecoreResource);
+			ecore2as = createInverseConversion(ecoreResource);
 			environmentFactory.addExternal2AS(ecore2as);
 			return ecoreResource;
 		}
 		finally {
 			setGenerationInProgress(asResource, false);
 		}
+	}
+
+	protected @NonNull InverseConversion createInverseConversion(@NonNull XMLResource ecoreResource) {
+		return new InverseConversion(ecoreResource);
 	}
 
 	public void defer(@NonNull Element pivotElement) {

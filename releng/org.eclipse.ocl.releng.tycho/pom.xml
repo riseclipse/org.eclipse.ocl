@@ -12,7 +12,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.eclipse.ocl</groupId>
   <artifactId>org.eclipse.ocl.releng.tycho</artifactId>
-  <version>6.23.1-SNAPSHOT</version>
+  <version>6.24.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <licenses>
     <license>
@@ -155,7 +155,7 @@
             <artifact>
               <groupId>org.eclipse.ocl</groupId>
               <artifactId>org.eclipse.ocl.releng.tycho</artifactId>
-              <version>6.23.1-SNAPSHOT</version>
+              <version>6.24.0-SNAPSHOT</version>
               <classifier>${targetPlatform}</classifier>
             </artifact>
           </target>
@@ -311,7 +311,12 @@
               <artifactId>org.eclipse.jdt.compiler.apt</artifactId>
               <version>${cbi-jdt-apt-version}</version>
             </dependency-->
-          </dependencies>
+		<dependency>
+          <groupId>commons-codec</groupId>
+          <artifactId>commons-codec</artifactId>
+          <version>1.22.0</version>
+          <type>jar</type>
+        </dependency>          </dependencies>
           <!--configuration>
             <encoding>${java-source-encoding}</encoding>
             <source>${source-java-version}</source>

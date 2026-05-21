@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2022 Willink Transformations and others.
+ * Copyright (c) 2010, 2026 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -472,7 +472,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	@Override
-	public @Nullable Resource getResource() {
+	public @NonNull Resource getResource() {
 		return ecoreResource;
 	}
 
@@ -897,7 +897,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	 */
 	protected void resolveDeclarations(@NonNull Resource asResource, @NonNull Iterable<@NonNull EObject> ecoreContents) {
 		Ecore2ASDeclarationSwitch declarationPass = new Ecore2ASDeclarationSwitch(this);
-		PivotUtilInternal.refreshList(asResource.getContents(), Collections.singletonList(ClassUtil.nonNull(pivotModel)));
+		PivotUtil.refreshList(asResource.getContents(), true, Collections.singletonList(ClassUtil.nonNull(pivotModel)));
 		List<org.eclipse.ocl.pivot.Package> newPackages = new ArrayList<>();
 		for (EObject eObject : ecoreContents) {
 			EClass eClass = eObject.eClass();
@@ -914,7 +914,7 @@ public class Ecore2AS extends AbstractExternal2AS
 				}
 			}
 		}
-		PivotUtilInternal.refreshList(pivotModel.getOwnedPackages(), newPackages);
+		PivotUtil.refreshList(pivotModel.getOwnedPackages(), true, newPackages);
 	}
 
 	/**
@@ -1063,7 +1063,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			if (superClass == null) {
 				superClass = eDataType instanceof EEnum ? oclEnumerationType : oclAnyType;
 			}
-			refreshList(pivotElement.getSuperClasses(), Collections.singletonList(superClass));
+			PivotUtil.refreshList(pivotElement.getSuperClasses(), false, Collections.singletonList(superClass));
 		}
 	}
 
@@ -1155,6 +1155,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public void update(@NonNull Resource resource, @NonNull Collection<@NonNull EObject> ecoreContents) {
+	//	System.out.println("\nUpdate " + NameUtil.debugSimpleName(resource) + " " + resource.getURI());
 		ASResource asResource = (ASResource)resource;		// FIXME change signature
 		asResource.resetLUSSIDs();			// Hopefully reset already, not wanted till save. See Bug 579052.
 		allConverters.clear();

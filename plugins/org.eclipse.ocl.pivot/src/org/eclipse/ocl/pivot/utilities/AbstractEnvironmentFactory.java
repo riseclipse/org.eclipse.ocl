@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2024 Willink Transformations and others.
+ * Copyright (c) 2010, 2026 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
@@ -107,6 +108,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * @since 1.4
 	 */
 	public static final @NonNull TracingOption ENVIRONMENT_FACTORY_ATTACH = new TracingOption(PivotPlugin.PLUGIN_ID, "environmentFactory/attach");
+
+	private static final Logger logger = Logger.getLogger(AbstractEnvironmentFactory.class);
 
 	private boolean traceEvaluation;
 	protected final @NonNull ProjectManager projectManager;
@@ -223,7 +226,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public void addExternal2AS(@NonNull External2AS external2as) {
 		Resource resource = external2as.getResource();
-		if ((resource != null) && ClassUtil.isRegistered(resource)) {
+		String assessmentConflict = projectManager.assessResource(resource);
+		if (assessmentConflict != null) {
+			logger.error(assessmentConflict);
+		}
+		if (ClassUtil.isRegistered(resource)) {					// XXX Issue 2404 Diagnose EPackage.nsURI clash wrt ProjectMap.nsURI2package
 			ResourceSet externalResourceSet2 = getResourceSet();
 			projectManager.useGeneratedResource(resource, externalResourceSet2);
 		}

@@ -18,17 +18,23 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Appender;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.emf.validation.validity.RootNode;
+import org.eclipse.ocl.examples.emf.validation.validity.Severity;
+import org.eclipse.ocl.examples.emf.validation.validity.export.CSVExporter;
 import org.eclipse.ocl.examples.emf.validation.validity.export.HTMLExporter;
 import org.eclipse.ocl.examples.emf.validation.validity.export.ModelExporter;
 import org.eclipse.ocl.examples.emf.validation.validity.export.TextExporter;
@@ -42,8 +48,12 @@ import org.eclipse.ocl.examples.xtext.tests.TestCaseLogger;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestProject;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
+import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
+import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor;
 import org.junit.Test;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 public class StandaloneExecutionTests extends StandaloneTestCase
 {
@@ -76,7 +86,9 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		}
 	}
 
-	protected static int EXTRA_EAnnotationValidator_SUCCESSES = PivotEAnnotationValidator.getEAnnotationValidatorRegistry()  != null? 3 : 0;
+	protected static final int EModelElement_CONSTRAINTS = 8;
+
+	protected static final int EXTRA_EAnnotationValidator_SUCCESSES = PivotEAnnotationValidator.getEAnnotationValidatorRegistry()  != null ? 3 : 0;
 
 	protected static void assertNoLogFile(@NonNull String logFileName) {
 		File file = new File(logFileName);
@@ -112,6 +124,116 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		return contents;
 	}
 
+	private @Nullable String csvReadCell(BufferedReader r) throws IOException {
+		r.mark(2);
+		int c = r.read();
+		if (c == ',') {
+			r.reset();
+			return "";
+		}
+		else if (c == '\n') {
+			return "";
+		}
+		else if (c == -1) {
+			return null;
+		}
+		StringBuilder s = new StringBuilder();
+		boolean isEscapeOrClose = false;
+		while (true) {
+			c = r.read();
+			if (isEscapeOrClose) {					// Escaped "
+				if ((c == ',') || (c == '\n') || (c == -1)) {
+					break;
+				}
+				assert c == '"';
+				s.append((char)c);
+				isEscapeOrClose = false;
+			}
+			else if (c == '"') {
+				isEscapeOrClose = true;
+				r.mark(2);
+			}
+			else {
+				s.append((char)c);
+			}
+		}
+		assert isEscapeOrClose;
+		r.reset();
+		return s.toString();
+	}
+
+	private @Nullable List<@NonNull String> csvReadRow(BufferedReader r) throws IOException {
+		List<@NonNull String> row = null;
+		String cell;
+		while ((cell = csvReadCell(r)) != null) {
+			if (row == null) {
+				row = new ArrayList<>();
+			}
+			row.add(cell);
+			int c = r.read();
+			if (c == -1) {
+				break;
+			}
+			if (c == '\n') {
+				break;
+			}
+			assert c == ',';
+		}
+		return row;
+	}
+
+	private @Nullable List<@NonNull List<@NonNull String>> csvReadTable(BufferedReader r) throws IOException {
+		List<@NonNull List<@NonNull String>> table = null;
+		List<@NonNull String> row;
+		while ((row = csvReadRow(r)) != null) {
+			if (table == null) {
+				table = new ArrayList<>();
+			}
+			table.add(row);
+		}
+		return table;
+	}
+
+
+	private @NonNull List<@NonNull List<@NonNull String>> checkValidateCSVFile(@NonNull String logFileName, int oks, int infos, int warnings, int errors, int fails) throws IOException {
+		File file = new File(logFileName);
+		assertTrue(file.exists());
+		BufferedReader r = new BufferedReader(new FileReader(file));
+		List<@NonNull List<@NonNull String>> table = csvReadTable(r);
+		assert table != null;
+		r.close();
+		int oksMetric = 0;
+		int infosMetric = 0;
+		int warningsMetric = 0;
+		int errorsMetric = 0;
+		int failsMetric = 0;
+		for (int j = 1; j < table.size(); j++) {
+			List<@NonNull String> row = table.get(j);
+			String severity = row.get(2);
+			if (Severity.OK.getName().equals(severity)) {
+				oksMetric++;
+			}
+			else if (Severity.INFO.getName().equals(severity)) {
+				infosMetric++;
+			}
+			else if (Severity.WARNING.getName().equals(severity)) {
+				warningsMetric++;
+			}
+			else if (Severity.ERROR.getName().equals(severity)) {
+				errorsMetric++;
+			}
+			else if (Severity.FATAL.getName().equals(severity)) {
+				failsMetric++;
+			}
+		}
+		assertEquals(oks, oksMetric);
+		assertEquals(infos, infosMetric);
+		assertEquals(warnings, warningsMetric);
+		assertEquals(errors, errorsMetric);
+		assertEquals(fails, failsMetric);
+		return table;
+	}
+
 	private @NonNull List<@NonNull String> checkValidateLogFile(@NonNull String logFileName, int oks, int infos, int warnings, int errors, int fails) throws IOException {
 		File file = new File(logFileName);
 		assertTrue(file.exists());
@@ -131,6 +253,37 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		assertEquals("- Number of Errors: " + errors, lines.get(metricsLine + 5));
 		assertEquals("- Number of Failures: " + fails, lines.get(metricsLine + 6));
 		return lines;
+	}
+
+	private @NonNull StandaloneResponse doExists(@NonNull StandaloneApplication standaloneApplication, String fileString, @NonNull StandaloneResponse expectedResponse) throws IOException {
+		StringWriter outputStream = new StringWriter();
+		Appendable savedDefaultOutputStream = StandaloneCommand.setDefaultOutputStream(outputStream);
+		assert fileString != null;
+		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"exists",
+			"-file", fileString};
+		StandaloneResponse actualResponse = standaloneApplication.execute(arguments);
+		assertEquals(expectedResponse, actualResponse);
+		String logMessage = outputStream.toString();
+		assertTrue(logMessage.contains(expectedResponse == StandaloneResponse.OK ? "exists" : "does not exist"));
+		StandaloneCommand.setDefaultOutputStream(savedDefaultOutputStream);
+		return actualResponse;
+	}
+
+	private void doValidate_BadEcore(@NonNull StandaloneApplication standaloneApplication, String fileString) throws IOException {
+		assert fileString != null;
+		String textLogFileName = getTextLogFileName();
+		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
+			"-model", fileString,
+			"-using", "all",
+			"-output", textLogFileName,
+			"-exporter", "text"};
+		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
+		assertEquals(StandaloneResponse.OK, applicationResponse);
+		checkValidateLogFile(textLogFileName, 19+20*EModelElement_CONSTRAINTS, 0, 0, 4, 0);
+				// Bad ids
+				// Bad proxy
+				// Bad opposite
+				// Bad name
 	}
 
 	@Override
@@ -523,6 +676,106 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
+	public void testStandaloneExecution_exists_FilePath() throws Exception {
+		String relativeFileName = "models/standalone/BadEcore.ecore";
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		String fileString;
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/" + relativeFileName, true);
+		//	System.out.println("testStandaloneExecution_exists_FilePath inputURI = '" + inputURI + "'");
+			URIConverter uriConverter = standaloneApplication.getURIConverter();
+			URI fileURI = uriConverter.normalize(inputURI);
+			if (fileURI.isArchive()) {
+				fileString = fileURI.toString();
+			//	System.out.println("testStandaloneExecution_exists_FilePath isArchive '" + fileURI + "' => '" + fileString + "'");
+			}
+			else if (fileURI.isFile()) {			// XXX
+				fileString = "file:/" + fileURI.toFileString();
+			//	System.out.println("testStandaloneExecution_exists_FilePath isFile '" + fileURI + "' => '" + fileString + "'");
+			}
+			else {				// isArchive for compatibility tests
+				fileString = fileURI.toString();
+			//	System.out.println("testStandaloneExecution_exists_FilePath else '" + fileURI + "' => '" + fileString + "'");
+			}
+		}
+		else {
+			ProjectMap projectMap = (ProjectMap)standaloneApplication.getEnvironmentFactory().getProjectManager();
+			IProjectDescriptor projectDescriptor = projectMap.getProjectDescriptor(PivotTestCase.PLUGIN_ID);
+			assert projectDescriptor != null;
+			Bundle bundle = FrameworkUtil.getBundle(getClass());
+			String projectPath = bundle.getLocation();
+			if (!CGUtil.isTychoSurefire()) {														// FIXME Move to utility function
+				String expectedPrefix = "reference:";
+				assert projectPath.startsWith(expectedPrefix);
+				projectPath = projectPath.substring(expectedPrefix.length()) + relativeFileName;
+				URI uri = URI.createURI(projectPath);
+			//	System.out.println("testStandaloneExecution_exists_FilePath !tycho '" + projectPath + "' => '" + uri + "'");
+				assert uri.isFile();
+				fileString = uri.toString();
+				assert fileString != null;
+			}
+			else {
+				String expectedPrefix = "initial@reference:file:";
+				assert projectPath.startsWith(expectedPrefix);
+			//	System.out.println("testStandaloneExecution_exists_FilePath projectPath '" + projectPath + "'");
+				if (projectPath.endsWith(".jar")) {				// compatibility test wrt built jars
+					String bundlePath = new File("." + projectPath.substring(expectedPrefix.length())).getCanonicalPath();
+				//	System.out.println("testStandaloneExecution_exists_FilePath bundlePath '" + bundlePath + "'");
+					fileString = "archive:file:" + bundlePath.toString() + "!/" + relativeFileName;
+				}
+				else {											// build test wrt projects
+					String bundlePath = new File(projectPath.substring(expectedPrefix.length())).getCanonicalPath().replace("\\", "/");
+				//	System.out.println("testStandaloneExecution_exists_FilePath bundlePath '" + bundlePath + "'");
+					fileString = (bundlePath.startsWith("/") ? "file:"  : "file:/") + bundlePath + "/tests/" + PivotTestCase.PLUGIN_ID + "/" + relativeFileName;
+				}
+			//	System.out.println("testStandaloneExecution_exists_FilePath tycho '" + projectPath + "' => '" + fileString + "'");
+			}
+		}
+		assert fileString != null;
+		doExists(standaloneApplication, fileString, StandaloneResponse.OK);
+		standaloneApplication.stop();
+	}
+
+	@Test
+	public void testStandaloneExecution_exists_NoSuchFile() throws Exception {
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		String fileString = "NoSuchFile.xml";
+		doExists(standaloneApplication, fileString, StandaloneResponse.FAIL);
+		standaloneApplication.stop();
+	}
+
+	@Test
+	public void testStandaloneExecution_exists_OSPath() throws Exception {
+		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/BadEcore.ecore", true);
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		URI fileURI = standaloneApplication.getURIConverter().normalize(inputURI);
+		String fileString = fileURI.isFile() ? fileURI.toFileString() : fileURI.toString();
+		doExists(standaloneApplication, fileString, StandaloneResponse.OK);
+		standaloneApplication.stop();
+	}
+
+	@Test
+	public void testStandaloneExecution_exists_PlatformPath() throws Exception {
+		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/BadEcore.ecore", true);
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		String fileString = inputURI.toString();
+		doExists(standaloneApplication, fileString, StandaloneResponse.OK);
+		standaloneApplication.stop();
+	}
+
+	@Test
+	public void testStandaloneExecution_exists_RelativePath() throws Exception {
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		TestProject testProject = getTestProject();
+		String fileString = testProject.getName() + "/.project";
+		if (CGUtil.isTychoSurefire()) {
+			fileString = "target/work/data/" + fileString;
+		}
+		doExists(standaloneApplication, fileString, StandaloneResponse.OK);
+		doExists(standaloneApplication, fileString + "2", StandaloneResponse.FAIL);
+	}
+
+	@Test
 	public void testStandaloneExecution_help() throws Exception {
 		StringWriter outputStream = new StringWriter();
 		Appendable savedDefaultOutputStream = StandaloneCommand.setDefaultOutputStream(outputStream);
@@ -535,6 +788,40 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		assert s.contains(StandaloneMessages.HelpCommand_Help);
 		assert s.contains(StandaloneMessages.ValidateCommand_Help);
 		StandaloneCommand.setDefaultOutputStream(savedDefaultOutputStream);
+		standaloneApplication.stop();
+	}
+
+	@Test
+	public void testStandaloneExecution_validate_BadEcore_OSpath() throws Exception {
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		URIConverter uriConverter = standaloneApplication.getURIConverter();
+		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/BadEcore.ecore", true);
+		TestProject testProject = getTestProject();
+		TestFile testFile = testProject.copyFile(uriConverter, null, inputURI);
+		String fileString = testFile.getFile().toString();
+		doValidate_BadEcore(standaloneApplication, fileString);		// e.g. E:/...
+		standaloneApplication.stop();
+	}
+
+	@Test
+	public void testStandaloneExecution_validate_BadEcore_filePath() throws Exception {
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		URIConverter uriConverter = standaloneApplication.getURIConverter();
+		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/BadEcore.ecore", true);
+		TestProject testProject = getTestProject();
+		TestFile testFile = testProject.copyFile(uriConverter, null, inputURI);
+		String testFileString = testFile.getFile().toString().replace("\\", "/");
+		String fileString = (testFileString.startsWith("/") ? "file:"  : "file:/") + testFileString;
+		doValidate_BadEcore(standaloneApplication, fileString);		// e.g. file:/E:/...
+		standaloneApplication.stop();
+	}
+
+	@Test
+	public void testStandaloneExecution_validate_BadEcore_PlatformPath() throws Exception {
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/BadEcore.ecore", true);
+		String fileString = inputURI.toString();
+		doValidate_BadEcore(standaloneApplication, fileString);		// e.g. platform:/plugin/...
 		standaloneApplication.stop();
 	}
 
@@ -617,6 +904,21 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
+	public void testStandaloneExecution_validate_csvExportedFile() throws Exception {
+		String csvLogFileName = getCSVLogFileName();
+		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(inputOCLURI),
+			"-output", csvLogFileName,
+			"-exporter", CSVExporter.EXPORTER_TYPE};
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
+		assertEquals(StandaloneResponse.OK, applicationResponse);
+		checkValidateCSVFile(csvLogFileName, 36+EXTRA_EAnnotationValidator_SUCCESSES+6*EModelElement_CONSTRAINTS, 1, 1, 1, 0);
+		standaloneApplication.stop();
+	}
+
+	@Test
 	public void testStandaloneExecution_validate_textExportedFile() throws Exception {
 		String textLogFileName = getTextLogFileName();
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
@@ -627,7 +929,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		StandaloneApplication standaloneApplication = new StandaloneApplication();
 		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
 		assertEquals(StandaloneResponse.OK, applicationResponse);
-		checkValidateLogFile(textLogFileName, 36+EXTRA_EAnnotationValidator_SUCCESSES, 1, 1, 1, 0);
+		checkValidateLogFile(textLogFileName, 36+EXTRA_EAnnotationValidator_SUCCESSES+6*EModelElement_CONSTRAINTS, 1, 1, 1, 0);
 		standaloneApplication.stop();
 	}
 
@@ -649,7 +951,9 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		Resource newResource = resourceSet.getResource(newFileURI, true);
 		EObject eObject = newResource.getContents().get(0);
 		assertTrue(eObject instanceof RootNode);
-		String referenceName = newFileURI.trimFileExtension().appendFileExtension(PivotEAnnotationValidator.getEAnnotationValidatorRegistry() != null ? "referenceWithEAnnotationValidators" : "reference").appendFileExtension("validity").lastSegment();
+		Map<String, Object> eAnnotationValidatorRegistry = PivotEAnnotationValidator.getEAnnotationValidatorRegistry();
+		final String refFileExtension = eAnnotationValidatorRegistry != null ? "referenceWithEAnnotationValidators" : "reference";
+		String referenceName = newFileURI.trimFileExtension().appendFileExtension(refFileExtension).appendFileExtension("validity").lastSegment();
 		Resource refResource = resourceSet.getResource(getTestModelURI("models/standalone/" + referenceName), true);
 		refResource.setURI(newFileURI);
 		TestUtil.assertSameModel(refResource, newResource);
@@ -673,16 +977,23 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 
 	@Test
 	public void testStandaloneExecution_validate_unknownExporter() throws Exception {
-		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", String.valueOf(inputModelURI),
-			"-rules", String.valueOf(inputOCLURI),
-			"-output", getTextLogFileName(),
-			"-exporter", "anotherExporterAttribute"};
-		StandaloneApplication standaloneApplication = new StandaloneApplication();
-		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
-		assertEquals(StandaloneResponse.FAIL, applicationResponse);
-		assertNoLogFile(getTextLogFileName());
-		standaloneApplication.stop();
+		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
+		try {
+			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
+				"-model", String.valueOf(inputModelURI),
+				"-rules", String.valueOf(inputOCLURI),
+				"-output", getTextLogFileName(),
+				"-exporter", "anotherExporterAttribute"};
+			StandaloneApplication standaloneApplication = new StandaloneApplication();
+			StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
+			assertEquals(StandaloneResponse.FAIL, applicationResponse);
+			assertNoLogFile(getTextLogFileName());
+			String logMessage = TestCaseLogger.INSTANCE.get();
+			assertTrue(logMessage.contains("Unrecognized 'exporter' anotherExporterAttribute"));
+			standaloneApplication.stop();
+		} finally {
+			TestCaseLogger.INSTANCE.uninstall(savedAppenders);
+		}
 	}
 
 	@Test
@@ -720,7 +1031,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 				"-exporter", TextExporter.EXPORTER_TYPE};
 			StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
 			assertEquals(StandaloneResponse.OK, applicationResponse);
-			checkValidateLogFile(textLogFileName, 30+EXTRA_EAnnotationValidator_SUCCESSES, 0, 0, 0, 0);
+			checkValidateLogFile(textLogFileName, 30+EXTRA_EAnnotationValidator_SUCCESSES+6*EModelElement_CONSTRAINTS, 0, 0, 0, 0);
 			String logMessage = TestCaseLogger.INSTANCE.get();
 			assertTrue(logMessage.contains("does not exist"));
 			assertTrue(logMessage.contains("ignored"));
@@ -780,7 +1091,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		StandaloneApplication standaloneApplication = new StandaloneApplication();
 		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
 		assertEquals(StandaloneResponse.OK, applicationResponse);
-		checkValidateLogFile(textLogFileName, 42+EXTRA_EAnnotationValidator_SUCCESSES, 2, 2, 2, 0);
+		checkValidateLogFile(textLogFileName, 42+EXTRA_EAnnotationValidator_SUCCESSES+6*EModelElement_CONSTRAINTS, 2, 2, 2, 0);
 		standaloneApplication.stop();
 	}
 
