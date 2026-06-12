@@ -54,6 +54,7 @@ import org.eclipse.ocl.examples.emf.validation.validity.ValidatableNode;
 import org.eclipse.ocl.examples.emf.validation.validity.locator.ConstraintLocator;
 import org.eclipse.ocl.examples.emf.validation.validity.plugin.ValidityPlugin;
 import org.eclipse.ocl.examples.emf.validation.validity.utilities.IVisibilityFilter;
+import org.eclipse.ocl.examples.emf.validation.validity.utilities.SeveritiesVisibilityFilter;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -163,6 +164,21 @@ public class ValidityManager
 	private boolean forceRefresh = false;
 	private @Nullable Object lastInput = null;
 
+	/**
+	 * The severities to be hidden in validatables / constraints panes.
+	 */
+	private final @NonNull SeveritiesVisibilityFilter severitiesVisibilityFilter = new SeveritiesVisibilityFilter();
+
+	/**
+	 * Whether metamodels of models should be deselected.
+	 */
+	private boolean deselectMetamodels = true;
+
+	/**
+	 * Whether multiple samed-named constraints (typically OCLinECore EAnnotation and CGed) should be pruned to the best (typically CGed).
+	 */
+	private boolean deselectMultipleConstraints = true;
+
 	public ValidityManager() {
 		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
@@ -178,9 +194,11 @@ public class ValidityManager
 	}
 
 	public void addFilteredSeverity(@NonNull Severity severity) {
+		severitiesVisibilityFilter.addFilteredSeverity(severity);
 		ValidityModel model2 = model;
 		if (model2 != null) {
-			model2.addFilteredSeverity(severity);
+			model2.addConstrainingFilter(severitiesVisibilityFilter);
+			model2.addValidatableFilter(severitiesVisibilityFilter);
 		}
 	}
 
@@ -221,7 +239,8 @@ public class ValidityManager
 	public @NonNull Map<Object, Object> createDefaultContext() {
 		Map<Object, Object> context2 = context;
 		if (context2 == null) {		// Local ValidationRegistry context normally set by setInput().
-			context = Diagnostician.INSTANCE.createDefaultContext();
+			context = context2 = Diagnostician.INSTANCE.createDefaultContext();
+			assert context2 != null;
 		}
 		return context2;
 	}
@@ -238,6 +257,26 @@ public class ValidityManager
 	public /*synchronized*/ @Nullable ResultSet createResultSet(@Nullable IProgressMonitor monitor) {
 		ValidityModel model2 = model;
 		return model2 != null ? model2.createResultSet(monitor) : null;
+	}
+
+	public void deselectMetamodels(boolean deSelect) {
+		if (deselectMetamodels != deSelect) {
+			deselectMetamodels = deSelect;
+			ValidityModel model = getModel();
+			if (model != null) {
+				model.deselectMetamodels(deSelect);
+			}
+		}
+	}
+
+	public void deselectMultipleConstraints(boolean deSelect) {
+		if (deselectMultipleConstraints != deSelect) {
+			deselectMultipleConstraints = deSelect;
+			ValidityModel model = getModel();
+			if (model != null) {
+				model.deselectMultipleConstraints(deSelect);
+			}
+		}
 	}
 
 	public void dispose() {
@@ -373,6 +412,10 @@ public class ValidityManager
 		return model2 != null ? model2.getRootNode() : null;
 	}
 
+	public @NonNull SeveritiesVisibilityFilter getSeveritiesVisibilityFilter() {
+		return severitiesVisibilityFilter;
+	}
+
 	/**
 	 * Returns the eObject uri
 	 */
@@ -498,6 +541,14 @@ public class ValidityManager
 		return results;
 	}
 
+	public boolean isDeselectMetamodels() {
+		return deselectMetamodels;
+	}
+
+	public boolean isDeselectMultipleConstraints() {
+		return deselectMultipleConstraints;
+	}
+
 	public void removeConstrainingFilter(@NonNull IVisibilityFilter filter) {
 		ValidityModel model2 = model;
 		if (model2 != null) {
@@ -506,9 +557,12 @@ public class ValidityManager
 	}
 
 	public void removeFilteredSeverity(@NonNull Severity severity) {
-		ValidityModel model2 = model;
-		if (model2 != null) {
-			model2.removeFilteredSeverity(severity);
+		if (severitiesVisibilityFilter.removeFilteredSeverity(severity)) {
+			ValidityModel model2 = model;
+			if (model2 != null) {
+				model2.removeConstrainingFilter(severitiesVisibilityFilter);
+				model2.removeValidatableFilter(severitiesVisibilityFilter);
+			}
 		}
 	}
 

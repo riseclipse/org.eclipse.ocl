@@ -1,3 +1,5 @@
+def sleepTime = 15
+
 pipeline {
 	agent {
 		label 'ubuntu-latest'
@@ -7,7 +9,6 @@ pipeline {
 		buildDiscarder(logRotator(numToKeepStr: '5'))
 		disableConcurrentBuilds()
 		skipDefaultCheckout false
-		quietPeriod(300)						// 120 is not long enough to allow Jenkins to update upstream build reliably
 	}
 
 	tools {
@@ -83,15 +84,24 @@ pipeline {
 		//	Fetch the build to promote
 		//
 		stage('Copy Artifacts') {
+			options {
+				retry(7)
+			}
 			when {
 				expression { return params._BUILD_TYPE != 'reload' && currentBuild.getPreviousBuild() != null }
 			}
 			steps {
-				copyArtifacts(projectName: "${params._JOB_NAME}",
-					selector: specific("${params._BUILD_NUMBER}"),
-					target: '.',
-					filter: 'p2repo.zip')
-				sh 'unzip -ou p2repo.zip -d repository'
+				script {
+					echo "sleepTime = $sleepTime"
+					sleep(time: sleepTime)
+					sleepTime = sleepTime + sleepTime
+					echo "sleepTime = $sleepTime"
+					copyArtifacts(projectName: "${params._JOB_NAME}",
+						selector: specific("${params._BUILD_NUMBER}"),
+						target: '.',
+						filter: 'p2repo.zip')
+					sh 'unzip -ou p2repo.zip -d repository'
+				}
 			}
 		}
 		
@@ -100,7 +110,7 @@ pipeline {
 		//
 		stage('Publish') {
 			when {
-				expression { return params._BUILD_TYPE != 'reload' && currentBuild.getPreviousBuild() != null }
+				expression { return params._BUILD_TYPE != 'reload' && currentBuild.getPreviousBuild() != null && fileExists('p2repo.zip') }
 			}
 			steps {
 				sshagent(['projects-storage.eclipse.org-bot-ssh']) {
